@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'cnbold';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/cn_bold.woff') format('woff'),
+        url('../fonts/cn_bold.ttf') format('ttf'),
+        url('../fonts/cn_bold.otf') format('otf'),
+        url('../fonts/cn_bold.eot'),
+        url('../fonts/cn_bold.eot?#iefix') format('embedded-opentype');
+}
+
+body {
+	background-color: #000; /* "REFRESHING" DESIGN, LOL */
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+h1, h2, h3 {
+	font-family: 'cnbold', 'serif';
+}
+
+h1 {
+    color: #ec018c;
+	font-size: 48px;
+    line-height: 75px;
+	margin: 0 10px;
+}
+
+small {
+    font-size: 0.7em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.about {
+	background-color: #ffeb00;
+    color: #000;
+	line-height: 20px;
+    padding: 6px;
+	position: fixed;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	z-index: 10;
+}
+
+.as {
+    background-color: #000;
+    color: #fff;
+	padding: 0 5px;
+    text-decoration: none;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 900;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 2px;
+}
+
+th, td {
+    line-height: 1.2rem;
+    padding: 5px 10px;
+    vertical-align: middle;
+}
+
+th {
+    font-weight: bold;
+    text-align: center;
+}
+
+.dates {
+    color: #fff;
+    background-color: #262626;
+    width: 100%;
+}
+
+.dates td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    padding: 15px;
+}
+
+.dates td:hover {
+	background-color: #000;
+}
+
+.dates td.selected {
+	color: #86e0ff;
+}
+
+.dates td.about-link {
+    font-style: italic;
+    text-align: center;
+}
+
+.schedule {
+	width: 100%;
+}
+
+.schedule tr:nth-child(even) {
+    background-color: #333;
+}
+
+.schedule tr:nth-child(odd) {
+    background-color: #3e3e3e;
+}
+
+.field-time {
+    text-align: right;
+	width: 70px;
+}
+
+.field-show {
+    color: #00aeef;
+	font-weight: bold;
+}
+
+.field-title {
+    color: #eee;
+	font-style: italic;
+}
+
+/* Actually around 550px? */
+@media screen and (min-width: 610px) {
+    .dates {
+        float: left;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        width: 200px;
+    }
+
+    .dates td {
+        padding: 5px 10px;
+    }
+
+    .schedule {
+    	width: calc(100% - 200px);
+    }
+}
