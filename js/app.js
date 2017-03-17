@@ -1,6 +1,42 @@
 /* global jQuery, localStorage */
 // TODO: Comments
 
+var firstStart = true
+
+function Comparator(a, b) {
+  // http://stackoverflow.com/a/5435341
+  if (a[1] < b[1]) return -1
+  if (a[1] > b[1]) return 1
+  return 0
+}
+
+function count(array_elements) {
+  // http://stackoverflow.com/a/19395324
+  array_elements.sort()
+  var results = []
+  var current = null
+  var cnt = 0
+
+  for (var i = 0; i < array_elements.length; i++) {
+    if (array_elements[i] != current) {
+      if (cnt > 0) {
+        results.push([current, cnt])
+      }
+
+      current = array_elements[i]
+      cnt = 1
+    } else {
+      cnt++
+    }
+  }
+
+  if (cnt > 0) {
+    results.push([current, cnt])
+  }
+
+  return results.sort(Comparator).reverse()
+}
+
 function getToday () {
   var today = new Date()
   var d = today.getDate()
@@ -54,9 +90,11 @@ function getSchedule (day) {
   if (schedule === null) return
 
   window.location = '#' + day
+  var everyshow = []
 
   jQuery('.dates').empty()
   jQuery('.schedule').empty()
+  jQuery('.top-shows.day tbody').empty()
 
   jQuery('.dates').append('<tr><th>Select a date</th></tr>')
   for (var i in schedule) {
@@ -67,6 +105,7 @@ function getSchedule (day) {
     date += '>' + parseDate(i) + '</td></tr>'
     jQuery('.dates').append(date)
   }
+  jQuery('.dates').append('<tr><td onclick="toggleStats()" class="about-link">stats...</td></tr>')
   jQuery('.dates').append('<tr><td onclick="toggleAbout()" class="about-link">about...</td></tr>')
 
   for (var j in schedule[day]) {
@@ -79,11 +118,56 @@ function getSchedule (day) {
     // row += '<td class="field-rating">' + field['rating'] + '</td>'
     row += '</tr>'
     jQuery('.schedule').append(row)
+
+    everyshow.push(field['show'])
+  }
+
+  var totalblocks = everyshow.length
+  var showstats = count(everyshow)
+
+  for (var k in showstats) {
+    var field = showstats[k]
+    var row = '<tr>'
+    row += '<td>' + field[0] + '</td>'
+    row += '<td>' + field[1] + '</td>'
+    row += '<td>~' + Math.round((field[1] / totalblocks) * 100) + '%</td>'
+    row += '</tr>'
+    jQuery('.top-shows.day tbody').append(row)
+  }
+
+  jQuery('.stats-text.day').text('For ' + day + ', we have ' + totalblocks + ' time blocks with ' + showstats.length + ' shows.')
+
+  if (firstStart) {
+    for (var li in schedule) {
+      for (var lj in schedule[li]) {
+        everyshow.push(schedule[li][lj]['show'])
+      }
+    }
+
+    totalblocks = everyshow.length
+    showstats = count(everyshow)
+
+    for (var lk in showstats) {
+      var field = showstats[lk]
+      var row = '<tr>'
+      row += '<td>' + field[0] + '</td>'
+      row += '<td>' + field[1] + '</td>'
+      row += '<td>~' + Math.round((field[1] / totalblocks) * 100) + '%</td>'
+      row += '</tr>'
+      jQuery('.top-shows.all tbody').append(row)
+    }
+
+    jQuery('.stats-text.all').text('For all the dates available, we have ' + totalblocks + ' time blocks with ' + showstats.length + ' shows.')
+    firstStart = false
   }
 }
 
 function toggleAbout () { // eslint-disable-line
   jQuery('.about').slideToggle()
+}
+
+function toggleStats () { // eslint-disable-line
+  jQuery('.stats').slideToggle()
 }
 
 loadSchedule()

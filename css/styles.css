@@ -32,28 +32,8 @@ small {
 }
 
 a {
+    cursor: pointer;
     text-decoration: none;
-}
-
-.about {
-	background-color: #ffeb00;
-    color: #000;
-	line-height: 20px;
-    padding: 6px;
-	position: fixed;
-	text-align: center;
-	vertical-align: middle;
-	width: 100%;
-	z-index: 10;
-}
-
-.as {
-    background-color: #000;
-    color: #fff;
-	padding: 0 5px;
-    text-decoration: none;
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 900;
 }
 
 table {
@@ -70,6 +50,49 @@ th, td {
 th {
     font-weight: bold;
     text-align: center;
+}
+
+.stats {
+    background-color: #ffeb00;
+    color: #000;
+    line-height: 20px;
+    padding: 6px 0;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    z-index: 10;
+}
+
+.top-shows {
+    margin: 0 auto;
+    text-align: left;
+    border: rgba(0,0,0,.4) 1px solid;
+}
+
+.top-shows tr {
+    border-bottom: 1px solid rgba(0,0,0, .4);
+}
+
+.about {
+	background-color: #ffeb00;
+    color: #000;
+	line-height: 20px;
+    padding: 6px 0;
+	position: fixed;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	z-index: 10;
+}
+
+.as {
+    background-color: #000;
+    color: #fff;
+	padding: 0 5px;
+    text-decoration: none;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 900;
 }
 
 .dates {
