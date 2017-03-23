@@ -48,6 +48,11 @@
             align-items: center; /* Vertical center alignment */
             justify-content: center; /* Horizontal center alignment */
         }
+
+        .show {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>

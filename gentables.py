@@ -1,6 +1,7 @@
 import os
 import requests
 import xlsxwriter
+import collections
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -70,6 +71,8 @@ def gen_sheet():
     cont = r.json()
 
     j2_env = Environment(loader=FileSystemLoader(os.path.join(THIS_DIR)), trim_blocks=True)
+
+    cont = collections.OrderedDict(sorted(cont.items()))
 
     # Generate page
     j2_env.get_template('grid.tpl').stream(days=cont, times=times)\
