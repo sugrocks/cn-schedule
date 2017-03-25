@@ -98,6 +98,9 @@ function getSchedule (day) {
 
   jQuery('.dates').append('<tr><th>Select a date</th></tr>')
   for (var i in schedule) {
+    // Skip json "meta"
+    if (i === '_') continue
+
     var date = '<tr><td onclick="getSchedule(\'' + i + '\')"'
     if (day === i) {
       date += ' class="selected"'

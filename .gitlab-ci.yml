@@ -7,3 +7,10 @@ test:js:
    - npm install standard
   script:
    - ./node_modules/.bin/standard .
+
+test:python:
+  image: python:latest
+  before_script:
+   - pip3 install flake8
+  script:
+   - flake8 --max-line-length=140 .
