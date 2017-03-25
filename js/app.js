@@ -19,6 +19,8 @@ function count(array_elements) {
 
   for (var i = 0; i < array_elements.length; i++) {
     if (array_elements[i] != current) {
+      if (array_elements[i] === undefined) continue
+
       if (cnt > 0) {
         results.push([current, cnt])
       }
