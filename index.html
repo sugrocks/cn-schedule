@@ -7,13 +7,13 @@
 
     <title>CN Schedule</title>
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/styles.css?v0.0.3">
+    <link rel="stylesheet" href="css/styles.css?v0.0.4">
 </head>
 <body>
     <div class="about" style="display: none;">
-        Inspired by <a class="as" href="http://adultswim.x10.mx/">better [adult swim] schedule</i></a>. Using eastern time.<br>
-        Data extracted from the "backdoor" schedule.<br>
-        <small>Love from /sug/.rocks ❤️</small>️
+        Inspired by <a class="as" href="http://adultswim.x10.mx/">better [adult swim] schedule</i></a>.<br>
+        Date and time from the eastern timezone.<br>
+        <small>Love from /sug/.rocks ❤️ - <a onclick="toggleAbout()">(close)</a></small>
     </div>
     <div class="stats" style="display: none;">
         <span class="stats-text day">No statistics available for the moment.</span>
@@ -42,7 +42,7 @@
             </tbody>
         </table>
         <br>
-        <a onclick="toggleStats()">(close)</a>
+        <small><a onclick="toggleStats()">(close)</a></small>
     </div>
     <h1>CN Schedule</h1>
     <table class="dates">
@@ -52,6 +52,6 @@
         <tr><th>Loading...</th></tr>
     </table>
     <script src="js/jquery.min.js"></script>
-    <script src="js/app.js?v0.0.6-1"></script>
+    <script src="js/app.js?v0.0.7"></script>
 </body>
 </html>

@@ -65,7 +65,7 @@ function parseDate (date) {
 }
 
 function loadSchedule () {
-  var url = 'https://api.sug.rocks/ccnschedule.json'
+  var url = 'https://api.sug.rocks/cnschedule.json'
   jQuery.getJSON(url, function (result) {
     localStorage.setItem('schedule', JSON.stringify(result))
   })
@@ -103,18 +103,37 @@ function getSchedule (day) {
     // Skip json "meta"
     if (i === '_') continue
 
-    var date = '<tr><td onclick="getSchedule(\'' + i + '\')"'
-    if (day === i) {
-      date += ' class="selected"'
-    }
-    date += '>' + parseDate(i) + '</td></tr>'
+    var date = '<tr><td onclick="getSchedule(\'' + i + '\')" class="'
+    date += (day === i) ? 'selected' : 'not-selected'
+    date += (schedule[i]['source'] === 'Screener') ? ' screener' : ''
+    date += '">' + parseDate(i) + '</td></tr>'
     jQuery('.dates').append(date)
   }
   jQuery('.dates').append('<tr><td onclick="toggleStats()" class="about-link">stats...</td></tr>')
   jQuery('.dates').append('<tr><td onclick="toggleAbout()" class="about-link">about...</td></tr>')
 
-  for (var j in schedule[day]) {
-    var field = schedule[day][j]
+  var source = schedule[day]['source']
+  // Get timestamp for 7 days in the future
+  var max_ts = parseInt((Date.now() / 1000) + (7 * 86400), 10)
+
+  console.log(max_ts)
+  console.log(schedule[day]['schedule'][0]['timestamp'])
+  console.log(schedule[day]['schedule'][0]['timestamp'] < max_ts)
+  console.log(source)
+
+  if (schedule[day].length === 0 || schedule[day]['schedule'][0]['timestamp'] < max_ts && source === 'Screener') {
+    if (day !== '2017-04-01') {
+      jQuery('.schedule').append('<tr><td colspan="2" class="schedule-info">Once a month, the official schedule is kept blank and isn\'t updated for a while.</td></tr>')
+      jQuery('.schedule').append('<tr><td colspan="2" class="schedule-info">This is normal, please try again later!</td></tr>')
+    }
+  }
+
+  if (source === 'Screener') {
+    jQuery('.schedule').append('<tr><td colspan="2" class="schedule-screener">This schedule was extracted from Screener (Zap2it). Changes might happen.</td></tr>')
+  }
+
+  for (var j in schedule[day]['schedule']) {
+    var field = schedule[day]['schedule'][j]
     var eptitle = field['title'] ? field['title'] : '&nbsp;'
     var row = '<tr>'
     row += '<td class="field-time">' + field['time'] + '</td>'
@@ -125,13 +144,6 @@ function getSchedule (day) {
     jQuery('.schedule').append(row)
 
     everyshow.push(field['show'])
-  }
-
-  if (schedule[day].length === 0) {
-    jQuery('.schedule').append('<tr><td class="schedule-info">&nbsp;</td></tr>')
-    jQuery('.schedule').append('<tr><td class="schedule-info">Once a month, the schedule is kept blank and isn\'t updated for a while.</td></tr>')
-    jQuery('.schedule').append('<tr><td class="schedule-info"><strong>This is normal,</strong> please wait some days and it will come back!</td></tr>')
-    jQuery('.schedule').append('<tr><td class="schedule-info">&nbsp;</td></tr>')
   }
 
   var totalblocks = everyshow.length
@@ -151,8 +163,10 @@ function getSchedule (day) {
 
   if (firstStart) {
     for (var li in schedule) {
-      for (var lj in schedule[li]) {
-        everyshow.push(schedule[li][lj]['show'])
+      if (schedule[li]['source'] === 'Cartoon Network') {
+        for (var lj in schedule[li]['schedule']) {
+          everyshow.push(schedule[li]['schedule'][lj]['show'])
+        }
       }
     }
 
@@ -169,7 +183,7 @@ function getSchedule (day) {
       jQuery('.top-shows.all tbody').append(row)
     }
 
-    jQuery('.stats-text.all').text('For all the dates available, we have ' + totalblocks + ' time blocks with ' + showstats.length + ' shows.')
+    jQuery('.stats-text.all').text('For everything from the offical schedule, we have ' + totalblocks + ' time blocks with ' + showstats.length + ' shows.')
     firstStart = false
   }
 }
