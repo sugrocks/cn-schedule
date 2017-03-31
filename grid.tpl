@@ -72,14 +72,17 @@
     <div class="day">
         <div>
             {{ day }}
+{% if days[day]['source'] == 'Screener' %}
+            (from Zap2it)
+{% endif %}
         </div>
-{% if len(days[day]) == 0 %}
+{% if len(days[day]['schedule']) == 0 %}
         <div class="slot" style="height: 1400px; background-color: #ffeb00;">
             <span class="show">Empty<br>Waiting for updates.</span>
         </div>
 {% endif %}
-{% for show in days[day] %}
-        <div title="{{ show.title }} ({{ show.time }})" class="slot" style="height: {{ show.slots * 25 }}px; background-color: {{ show.color }};">
+{% for show in days[day]['schedule'] %}
+        <div title="{{ show.title }} ({{ show.time }})" class="slot" style="height: {{ show.slots * 25 }}px; color: {{ show.color_fg }}; background-color: {{ show.color_bg }};">
             <span class="show">{{ show.show }}</span>
         </div>
 {% endfor %}

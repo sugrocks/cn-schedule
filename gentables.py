@@ -69,7 +69,7 @@ times = [
 
 
 def gen_sheet():
-    r = requests.get('https://api.sug.rocks/ccnschedule.json')
+    r = requests.get('https://api.sug.rocks/cnschedule.json')
     cont = r.json()
 
     j2_env = Environment(loader=FileSystemLoader(os.path.join(THIS_DIR)), trim_blocks=True)
@@ -106,7 +106,7 @@ def gen_sheet():
         worksheet.write(row, col, day, cell_format)
 
         row += 1
-        for slot in cont[day]:
+        for slot in cont[day]['schedule']:
             name = slot['show']
             if name == 'MOVIE' or name == 'SPECIAL:':
                 name = slot['title']
@@ -114,7 +114,7 @@ def gen_sheet():
             cell_format = workbook.add_format({
                 'align': 'center',
                 'valign': 'vcenter',
-                'fg_color': slot['color']
+                'fg_color': slot['color_fg']
             })
 
             if slot['slots'] > 1:
