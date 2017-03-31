@@ -68,16 +68,23 @@
 {% endfor %}
     </div>
 {% for day in days %}
+{% if day != '_' %}
     <div class="day">
         <div>
             {{ day }}
         </div>
+{% if len(days[day]) == 0 %}
+        <div class="slot" style="height: 1400px; background-color: #ffeb00;">
+            <span class="show">Empty<br>Waiting for updates.</span>
+        </div>
+{% endif %}
 {% for show in days[day] %}
         <div title="{{ show.title }} ({{ show.time }})" class="slot" style="height: {{ show.slots * 25 }}px; background-color: {{ show.color }};">
             <span class="show">{{ show.show }}</span>
         </div>
 {% endfor %}
     </div>
+{% endif %}
 {% endfor %}
 </div>
 </body>

@@ -127,6 +127,13 @@ function getSchedule (day) {
     everyshow.push(field['show'])
   }
 
+  if (schedule[day].length === 0) {
+    jQuery('.schedule').append('<tr><td class="schedule-info">&nbsp;</td></tr>')
+    jQuery('.schedule').append('<tr><td class="schedule-info">Once a month, the schedule is kept blank and isn\'t updated for a while.</td></tr>')
+    jQuery('.schedule').append('<tr><td class="schedule-info"><strong>This is normal,</strong> please wait some days and it will come back!</td></tr>')
+    jQuery('.schedule').append('<tr><td class="schedule-info">&nbsp;</td></tr>')
+  }
+
   var totalblocks = everyshow.length
   var showstats = count(everyshow)
 

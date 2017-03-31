@@ -73,6 +73,7 @@ def gen_sheet():
     cont = r.json()
 
     j2_env = Environment(loader=FileSystemLoader(os.path.join(THIS_DIR)), trim_blocks=True)
+    j2_env.globals['len'] = len
 
     cont = collections.OrderedDict(sorted(cont.items()))
 
@@ -98,6 +99,9 @@ def gen_sheet():
     col = 1
 
     for day in cont:
+        if day == '_':
+            continue
+
         cell_format = workbook.add_format({'bold': True, 'align': 'center'})
         worksheet.write(row, col, day, cell_format)
 
