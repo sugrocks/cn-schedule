@@ -156,6 +156,10 @@ th {
     background-color: #3e3e3e;
 }
 
+.schedule tr.on-air {
+    background-color: #72010e !important;
+}
+
 .field-time {
     text-align: right;
 	width: 70px;

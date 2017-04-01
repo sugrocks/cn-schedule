@@ -2,6 +2,7 @@
 // TODO: Comments
 
 var firstStart = true
+var onAir = false
 
 function Comparator(a, b) {
   // http://stackoverflow.com/a/5435341
@@ -37,6 +38,19 @@ function count(array_elements) {
   }
 
   return results.sort(Comparator).reverse()
+}
+
+function whatsOnAir () {
+  var tsCurr = parseInt(Date.now() / 1000, 10)
+  jQuery('.schedule tr').each(function () {
+    var tsStart = jQuery(this).data('timestamp-start')
+    var tsEnd = jQuery(this).data('timestamp-end')
+    if (tsStart < tsCurr && tsCurr < tsEnd) {
+      jQuery(this).addClass('on-air')
+    } else {
+      jQuery(this).removeClass('on-air')
+    }
+  })
 }
 
 function getToday () {
@@ -116,11 +130,6 @@ function getSchedule (day) {
   // Get timestamp for 7 days in the future
   var max_ts = parseInt((Date.now() / 1000) + (7 * 86400), 10)
 
-  console.log(max_ts)
-  console.log(schedule[day]['schedule'][0]['timestamp'])
-  console.log(schedule[day]['schedule'][0]['timestamp'] < max_ts)
-  console.log(source)
-
   if (schedule[day].length === 0 || schedule[day]['schedule'][0]['timestamp'] < max_ts && source === 'Screener') {
     if (day !== '2017-04-01') {
       jQuery('.schedule').append('<tr><td colspan="2" class="schedule-info">Once a month, the official schedule is kept blank and isn\'t updated for a while.</td></tr>')
@@ -135,7 +144,7 @@ function getSchedule (day) {
   for (var j in schedule[day]['schedule']) {
     var field = schedule[day]['schedule'][j]
     var eptitle = field['title'] ? field['title'] : '&nbsp;'
-    var row = '<tr>'
+    var row = '<tr data-timestamp-start="' + field['timestamp'] + '" data-timestamp-end="' + field['timestamp_end'] + '">'
     row += '<td class="field-time">' + field['time'] + '</td>'
     row += '<td><span class="field-show">' + field['show'] + '</span>'
     row += '<br><span class="field-title">' + eptitle + '</span></td>'
@@ -185,6 +194,13 @@ function getSchedule (day) {
 
     jQuery('.stats-text.all').text('For everything from the offical schedule, we have ' + totalblocks + ' time blocks with ' + showstats.length + ' shows.')
     firstStart = false
+  }
+
+  if (day === getToday()) {
+    whatsOnAir()
+    onAir = setInterval(function () { whatsOnAir() }, 60000)
+  } else {
+    clearInterval(onAir)
   }
 }
 
