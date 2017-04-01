@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="site.appcache">
 <head>
     <!-- Cool, basic stuff -->
     <meta charset="utf-8">
