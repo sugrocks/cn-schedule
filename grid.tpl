@@ -17,7 +17,7 @@
     <meta name="twitter:site" content="@sugrocks">
     <meta name="twitter:title" content="CN Schedule - Grid View">
     <meta name="twitter:description" content="Quick access to the Cartoon Network schedule.">
-    <meta name="twitter:image" content="/img/CN-Pink-Round.png">
+    <meta name="twitter:image" content="https://cn.sug.rocks/img/CN-Pink-Round.png">
     <meta name="twitter:image:alt" content="CN Schedule">
 
     <!-- Open Graph hell -->
@@ -26,7 +26,7 @@
     <meta property="og:title" content="CN Schedule - Grid View">
     <meta property="og:description" content="Quick access to the Cartoon Network schedule.">
     <meta property="og:url" content="https://cn.sug.rocks/grid.html">
-    <meta property="og:image" content="/img/CN-Pink-Round.png">
+    <meta property="og:image" content="https://cn.sug.rocks/img/CN-Pink-Round.png">
 
     <!-- App Hell -->
     <meta name="apple-mobile-web-app-title" content="Schedule Grid">
