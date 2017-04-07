@@ -84,7 +84,7 @@ function loadSchedule () {
     localStorage.setItem('schedule', JSON.stringify(result))
   })
   .fail(function () {
-    jQuery('h1').append('<small>(offline)</small>')
+    jQuery('h1').append(' <small>(offline)</small>')
     jQuery('.dates').text('')
     jQuery('.schedule').text('Couldn\'t load the schedule. Once loaded, it\'ll be cached in your browser.')
   })
