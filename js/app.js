@@ -119,7 +119,7 @@ function getSchedule (day) {
 
     var date = '<tr><td onclick="getSchedule(\'' + i + '\')" class="'
     date += (day === i) ? 'selected' : 'not-selected'
-    date += (schedule[i]['source'] === 'Screener') ? ' screener' : ''
+    date += (schedule[i]['source'] === 'Screener') ? ' zap2it' : ''
     date += '">' + parseDate(i) + '</td></tr>'
     jQuery('.dates').append(date)
   }
@@ -138,7 +138,7 @@ function getSchedule (day) {
   }
 
   if (source === 'Screener') {
-    jQuery('.schedule').append('<tr><td colspan="2" class="schedule-screener">This schedule was extracted from Screener (Zap2it). Changes might happen.</td></tr>')
+    jQuery('.schedule').append('<tr><td colspan="2" class="schedule-zap2it">This schedule was extracted from Zap2it. Changes might happen.</td></tr>')
   }
 
   for (var j in schedule[day]['schedule']) {

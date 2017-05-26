@@ -115,16 +115,16 @@ th {
 	color: #86e0ff;
 }
 
-.dates td.screener:after {
-    background: url('../img/screener.png') no-repeat;
+.dates td.zap2it:after {
+    background: url('../img/zap2it.png') no-repeat;
     background-size: contain;
     content: '';
     display: inline-block;
-    height: 12px;
+    height: 14px;
     left: 5px;
     position: relative;
-    top: 1px;
-    width: 12px;
+    top: 2px;
+    width: 14px;
 }
 
 .dates td.about-link {
@@ -142,7 +142,7 @@ th {
     text-align: center;
 }
 
-.schedule-screener {
+.schedule-zap2it {
     background-color: #acffad;
     color: #000;
     text-align: center;
