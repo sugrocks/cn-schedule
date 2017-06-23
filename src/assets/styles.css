@@ -2,11 +2,11 @@
     font-family: 'cnbold';
     font-style: normal;
     font-weight: normal;
-    src: url('../fonts/cn_bold.woff') format('woff'),
-        url('../fonts/cn_bold.ttf') format('ttf'),
-        url('../fonts/cn_bold.otf') format('otf'),
-        url('../fonts/cn_bold.eot'),
-        url('../fonts/cn_bold.eot?#iefix') format('embedded-opentype');
+    src: url('./fonts/cn_bold.woff') format('woff'),
+        url('./fonts/cn_bold.ttf') format('ttf'),
+        url('./fonts/cn_bold.otf') format('otf'),
+        url('./fonts/cn_bold.eot'),
+        url('./fonts/cn_bold.eot?#iefix') format('embedded-opentype');
 }
 
 body {
@@ -116,7 +116,7 @@ th {
 }
 
 .dates td.zap2it:after {
-    background: url('../img/zap2it.png') no-repeat;
+    background: url('./zap2it.png') no-repeat;
     background-size: contain;
     content: '';
     display: inline-block;
@@ -161,6 +161,7 @@ th {
 }
 
 .field-time {
+    color: #eee;
     text-align: right;
 	width: 70px;
 }
