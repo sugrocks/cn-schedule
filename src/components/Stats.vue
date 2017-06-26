@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="stats">
+    <div class="stats modal">
       <span class="stats-text day no-data" v-if="dayStats.length === 0">
         No statistics available for this day.
       </span>

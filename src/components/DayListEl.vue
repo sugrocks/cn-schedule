@@ -1,6 +1,6 @@
 <template>
-  <tr>
-    <router-link :to="day.id" :class="day.source" tag="td">
+  <tr :class="displaySource">
+    <router-link :to="day.id" tag="td" colspan="3">
       {{ day.text }}
     </router-link>
   </tr>
@@ -9,6 +9,15 @@
 <script>
 export default {
   name: 'day-el',
-  props: ['day']
+  props: ['day'],
+  computed: {
+    displaySource: function () {
+      return {
+        'zap2it': (this.day.source === 'zap2it'),
+        'cn': (this.day.source === 'cn'),
+        'past': this.day.past
+      }
+    }
+  }
 }
 </script>

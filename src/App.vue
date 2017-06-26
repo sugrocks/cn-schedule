@@ -1,25 +1,27 @@
 <template>
   <div id="app">
     <app-about v-show="showAbout"></app-about>
+    <app-settings v-show="showSettings"></app-settings>
     <schedule-stats v-if="showStats"></schedule-stats>
 
     <h1>CN Schedule</h1>
 
     <!-- Left column with dates -->
-    <table class="dates">
+    <table :class="datesSettings">
       <day-el
         v-for="day in days"
         v-bind:day="day"
         v-bind:key="day.id">
       </day-el>
       <tr>
-        <td v-on:click="showStats = !showStats">
-          Stats
+        <td class="special-links" v-on:click="showSettings = !showSettings">
+          <img src="./assets/icons/settings.svg">
         </td>
-      </tr>
-      <tr>
-        <td v-on:click="showAbout = !showAbout">
-          About
+        <td class="special-links" v-on:click="showStats = !showStats">
+          <img src="./assets/icons/bars.svg">
+        </td>
+        <td class="special-links" v-on:click="showAbout = !showAbout">
+          <img src="./assets/icons/info.svg">
         </td>
       </tr>
     </table>
@@ -28,18 +30,28 @@
   </div>
 </template>
 
+<style lang="scss">
+@import './assets/app';
+</style>
+
 <script>
 var jQuery = require('jquery')
 import { count } from './assets/stats.js'
-import { parseDate } from './assets/dates.js'
+import { getToday, parseDate } from './assets/dates.js'
 
 export default {
   name: 'app',
   data () {
     return {
       isZap: false,
+      showSettings: false,
       showAbout: false,
       showStats: false,
+      config: {
+        showPast: false,
+        showZap: true,
+        showGlobal: true
+      },
       days: [],
       blocks: [],
       globalTotalBlocks: 0,
@@ -58,6 +70,7 @@ export default {
         d.$data.days.push({
           id: i,
           source: (result[i]['source'] === 'Screener' || result[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
+          past: (getToday().replace('-', '') > i.replace('-', '')),
           text: parseDate(i)
         })
       }
@@ -88,10 +101,15 @@ export default {
         })
       }
     })
+  },
+  computed: {
+    datesSettings: function () {
+      return {
+        'dates': true,
+        'noZap': !this.config.showZap,
+        'noPast': !this.config.showPast
+      }
+    }
   }
 }
 </script>
-
-<style>
-@import './assets/styles.css';
-</style>

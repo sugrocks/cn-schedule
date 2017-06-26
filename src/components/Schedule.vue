@@ -1,5 +1,5 @@
 <template>
-  <table id="schedule" class="schedule">
+  <table class="schedule">
     <tr v-if="isZap">
       <td colspan="3" class="schedule-zap2it">
         This schedule was extracted from Zap2it. Changes might happen.
