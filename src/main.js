@@ -6,7 +6,7 @@ import About from '@/components/About'
 import Stats from '@/components/Stats'
 import DayListEl from '@/components/DayListEl'
 import ScheduleListEl from '@/components/ScheduleListEl'
-import router from './router'
+import router from './Router'
 
 Vue.config.productionTip = false
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html land="en">
+<html lang="en">
   <head>
     <!-- Cool, basic stuff -->
     <meta charset="utf-8">
@@ -9,7 +9,8 @@
     <meta name="author" content="/sug/.rocks">
     <meta name="robots" content="nofollow">
 
-    <title>CN Schedule</title>
+    <title>CN Schedule - Grid View</title>
+    <link rel="stylesheet" href="grid.css?v0.0.2">
 
     <!-- Twitter hell -->
     <meta name="twitter:card" content="summary">
@@ -47,15 +48,41 @@
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="/static/img/ms-icon-144x144.png">
     <meta name="theme-color" content="#000000">
-
-    <% for (var chunk of webpack.chunks) {
-        for (var file of chunk.files) {
-          if (file.match(/\.(js|css)$/)) { %>
-    <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
   </head>
   <body>
-    <div id="app"></div>
-
-    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
+    <div class="container">
+      <div class="time-table">
+        <div>
+          Times
+        </div>
+{% for time in times %}
+        <div class="time-line">
+          <span class="time">{{ time }}</span>
+        </div>
+{% endfor %}
+      </div>
+{% for day in days %}
+{% if day != '_' %}
+      <div class="day">
+        <div>
+          {{ day }}
+{% if days[day]['source'] == 'Screener' %}
+          (from Zap2it)
+{% endif %}
+        </div>
+{% if len(days[day]['schedule']) == 0 %}
+        <div class="slot" style="height: 1400px; background-color: #ffeb00;">
+          <span class="show">Empty<br>Waiting for updates.</span>
+        </div>
+{% endif %}
+{% for show in days[day]['schedule'] %}
+        <div title="{{ show.title }} ({{ show.time }})" class="slot" style="height: {{ show.slots * 25 }}px; color: {{ show.color_fg }}; background-color: {{ show.color_bg }};">
+          <span class="show">{{ show.show }}</span>
+        </div>
+{% endfor %}
+      </div>
+{% endif %}
+{% endfor %}
+    </div>
   </body>
 </html>

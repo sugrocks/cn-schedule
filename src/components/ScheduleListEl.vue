@@ -1,5 +1,5 @@
 <template>
-  <tr :data-timestamp-start="block.timestamp" :data-timestamp-end="block.timestamp_end">
+  <tr :data-timestamp-start="block.timestamp" :data-timestamp-end="block.timestamp_end" :class="isOnAir">
     <td class="field-time">{{ block.time }}</td>
     <td>
       <span class="field-show">{{ block.show }}</span>
@@ -13,6 +13,14 @@
 <script>
 export default {
   name: 'schedule-el',
-  props: ['block']
+  props: ['block'],
+  computed: {
+    isOnAir: function () {
+      var tsCurr = parseInt(Date.now() / 1000, 10)
+      return {
+        'on-air': this.block.timestamp < tsCurr && tsCurr < this.block.timestamp_end
+      }
+    }
+  }
 }
 </script>

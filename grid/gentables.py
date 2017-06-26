@@ -79,7 +79,7 @@ def gen_sheet():
 
     # Generate page
     j2_env.get_template('grid.tpl').stream(days=cont, times=times)\
-        .dump(os.path.join(THIS_DIR, 'grid.html'))
+        .dump(os.path.join(THIS_DIR, 'index.html'))
 
     workbook = xlsxwriter.Workbook(os.path.join(THIS_DIR, 'schedule.xlsx'))
     worksheet = workbook.add_worksheet()

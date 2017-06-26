@@ -5,6 +5,8 @@ import Schedule from '@/components/Schedule'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  linkActiveClass: 'selected',
   routes: [
     {
       path: '/',
@@ -15,6 +17,12 @@ export default new Router({
       path: '/:date',
       name: 'Schedule',
       component: Schedule
+    },
+    {
+      path: '*',
+      redirect: function () {
+        window.location.href = '/404.html'
+      }
     }
   ]
 })

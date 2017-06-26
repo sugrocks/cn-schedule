@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <router-link :to="day.id" active-class="selected" :class="day.source" tag="td">
+    <router-link :to="day.id" :class="day.source" tag="td">
       {{ day.text }}
     </router-link>
   </tr>

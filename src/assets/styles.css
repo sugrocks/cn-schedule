@@ -1,3 +1,12 @@
+.slide-enter-active, .slide-leave-active {
+  transition: all .3s ease;
+}
+
+.slide-enter, .slide-leave-to /* .fade-leave-active in <2.1.8 */ {
+  transform: translateY(-100px);
+  opacity: 0;
+}
+
 @font-face {
     font-family: 'cnbold';
     font-style: normal;
