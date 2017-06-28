@@ -111,6 +111,10 @@ table {
 
         &.selected {
             color: #86e0ff;
+
+            svg * {
+                stroke: #86e0ff;
+            }
         }
 
         &.special-links {
@@ -118,14 +122,15 @@ table {
             text-align: center;
             padding-top: 8px;
 
-            img {
+            svg {
                 height: 1.2em;
+                width: 1.2em;
             }
         }
     }
 
     .zap2it td:before {
-        background: url('./assets/icons/zap2it.png') no-repeat;
+        background: url('./assets/zap2it.png') no-repeat;
         background-size: contain;
         content: '';
         display: inline-block;
