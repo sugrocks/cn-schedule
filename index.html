@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" manifest="site.appcache">
-<head>
+<html land="en">
+  <head>
     <!-- Cool, basic stuff -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,15 +10,13 @@
     <meta name="robots" content="nofollow">
 
     <title>CN Schedule</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/styles.css?v0.0.6">
 
     <!-- Twitter hell -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@sugrocks">
     <meta name="twitter:title" content="CN Schedule">
     <meta name="twitter:description" content="Quick access to the Cartoon Network schedule.">
-    <meta name="twitter:image" content="https://cn.sug.rocks/img/CN-Pink-Round.png">
+    <meta name="twitter:image" content="https://cn.sug.rocks/img/icon/CN-Pink-Round.png">
     <meta name="twitter:image:alt" content="CN Schedule">
 
     <!-- Open Graph hell -->
@@ -27,81 +25,29 @@
     <meta property="og:title" content="CN Schedule">
     <meta property="og:description" content="Quick access to the Cartoon Network schedule.">
     <meta property="og:url" content="https://cn.sug.rocks/">
-    <meta property="og:image" content="https://cn.sug.rocks/img/CN-Pink-Round.png">
+    <meta property="og:image" content="https://cn.sug.rocks/img/icon/CN-Pink-Round.png">
 
     <!-- App Hell -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/img/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/img/icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/img/icons/favicon-16x16.png">
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="mask-icon" href="/static/img/icons/safari-pinned-tab.svg" color="#ec018c">
     <meta name="apple-mobile-web-app-title" content="Schedule">
-    <meta name="application-name" content="Schedule">
-    <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/img/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="msapplication-TileColor" content="#000000">
-    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="apple-mobile-web-app-title" content="CN Schedule">
+    <meta name="application-name" content="CN Schedule">
+    <meta name="msapplication-config" content="/static/browserconfig.xml">
     <meta name="theme-color" content="#000000">
-</head>
-<body>
-    <!-- === Info content === -->
-    <!-- The "about" block, small -->
-    <div class="about" style="display: none;">
-        Inspired by <a class="as" href="http://adultswim.x10.mx/">better [adult swim] schedule</i></a>.<br>
-        Date and time from the eastern timezone.<br>
-        <small>Love from /sug/.rocks ❤️ - <a onclick="toggleAbout()">(close)</a></small>
-    </div>
-    <!-- The "stats" block, big -->
-    <div class="stats" style="display: none;">
-        <span class="stats-text day">No statistics available for the moment.</span>
-        <br>
-        <table class="top-shows day">
-            <thead>
-                <tr>
-                    <th>Show</th>
-                    <th colspan="2">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <br>
-        <span class="stats-text all">No statistics available for the moment.</span>
-        <br>
-        <table class="top-shows all">
-            <thead>
-                <tr>
-                    <th>Show</th>
-                    <th colspan="2">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <br>
-        <small><a onclick="toggleStats()">(close)</a></small>
-    </div>
 
-    <!-- === Main page === -->
-    <h1>CN Schedule</h1>
-    <!-- Left column with dates -->
-    <table class="dates">
-        <tr><th>Loading...</th></tr>
-    </table>
-    <!-- Main content with the schedule -->
-    <table class="schedule">
-        <tr><th>Loading...</th></tr>
-    </table>
+    <% for (var chunk of webpack.chunks) {
+        for (var file of chunk.files) {
+          if (file.match(/\.(js|css)$/)) { %>
+    <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+  </head>
+  <body>
+    <div id="app"></div>
 
-    <!-- Our scripts -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/app.js?v0.0.10"></script>
-</body>
+    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
+  </body>
 </html>

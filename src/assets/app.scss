@@ -1,0 +1,297 @@
+@font-face {
+    font-family: 'cnbold';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./assets/fonts/cn_bold.woff') format('woff'),
+         url('./assets/fonts/cn_bold.ttf') format('ttf'),
+         url('./assets/fonts/cn_bold.otf') format('otf'),
+         url('./assets/fonts/cn_bold.eot'),
+         url('./assets/fonts/cn_bold.eot?#iefix') format('embedded-opentype');
+}
+
+body {
+    background-color: #000; /* "REFRESHING" DESIGN, LOL */
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'cnbold', 'serif';
+}
+
+h1 {
+    color: #ec018c;
+    font-size: 48px;
+    line-height: 75px;
+    margin: 0 10px;
+}
+
+small {
+    font-size: 0.7em;
+}
+
+a {
+    color: #00aeef;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover, &:active {
+        text-decoration: underline;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 2px;
+
+    th, td {
+        line-height: 1.2rem;
+        padding: 5px 10px;
+        vertical-align: middle;
+    }
+
+    th {
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+.modal {
+    background-color: #ffeb00;
+    color: #000;
+    line-height: 20px;
+    padding: 6px 0;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    vertical-align: middle;
+    width: 100%;
+    z-index: 10;
+    max-height: calc(100vh - 12px);
+    overflow-y: auto;
+
+    &.stats {
+        .top-shows {
+            margin: 0 auto;
+            text-align: left;
+            border: rgba(0,0,0,.4) 1px solid;
+            
+            tr {
+                border-bottom: 1px solid rgba(0,0,0, .4);
+            }
+        }
+    }
+
+    &.about {
+        .as {
+            background-color: #000;
+            color: #fff;
+            padding: 0 5px;
+            text-decoration: none;
+            font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 900;
+        }
+    }
+}
+
+.dates {
+    color: #fff;
+    background-color: #262626;
+    width: 100%;
+
+    td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        padding: 15px;
+
+        &:hover {
+            background-color: #000;
+        }
+
+        &.selected {
+            color: #86e0ff;
+        }
+
+        &.special-links {
+            font-style: italic;
+            text-align: center;
+            padding-top: 8px;
+
+            img {
+                height: 1.2em;
+            }
+        }
+    }
+
+    .zap2it td:before {
+        background: url('./assets/icons/zap2it.png') no-repeat;
+        background-size: contain;
+        content: '';
+        display: inline-block;
+        height: 0.9em;
+        position: relative;
+        top: 2px;
+        width: 0.9em;
+    }
+
+    &.noZap .zap2it,
+    &.noPast .past {
+        display: none;
+    }
+}
+
+.schedule {
+    width: 100%;
+
+    .schedule-info {
+        background-color: #ffeb00;
+        color: #000;
+        text-align: center;
+    }
+
+    .schedule-zap2it {
+        background-color: #acffad;
+        color: #000;
+        text-align: center;
+    }
+
+    .schedule-notfound {
+        border: #f00 2px solid;
+        padding: 20px;
+    }
+
+    tr {
+        &:nth-child(even) {
+            background-color: #333;
+        }
+
+        &:nth-child(odd) {
+            background-color: #3e3e3e;
+        }
+
+        &.on-air {
+            background-color: #72010e !important;
+        }
+
+
+        .field-time {
+            color: #eee;
+            text-align: right;
+            width: 70px;
+        }
+
+        .field-show {
+            color: #00aeef;
+            font-weight: bold;
+        }
+
+        .field-title {
+            color: #eee;
+            font-style: italic;
+        }
+    }
+}
+
+.grid {
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+
+    .time-head, .date {
+        background-color: #ec018c;
+        color: #000;
+        font-weight: bold;
+        font-style: italic;
+        padding: 5px 0;
+        text-align: center;
+    }
+
+    .time-table {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 10px;
+        padding: 0 1px 5px 0;
+        position: sticky;
+        left: 0;
+        margin-right: -3px;
+
+        .time-line {
+            height: 50px;
+            display:flex;
+            align-items: center; /* Vertical center alignment */
+            justify-content: center; /* Horizontal center alignment */
+            padding: 0 5px;
+            box-shadow: inset 0px 0px 0px 1px #000;
+
+            &:nth-child(even) {
+                background-color: #333;
+            }
+
+            &:nth-child(odd) {
+                background-color: #3e3e3e;
+            }
+        }
+    }
+
+    .day {
+        display: inline-block;
+        vertical-align: top;
+        width: 150px !important;
+        font-size: 10px;
+        padding: 0 1px;
+
+        .slot {
+            overflow: hidden;
+            text-align: center;
+            -webkit-box-shadow: inset 0px 0px 0px 1px #000;
+            -moz-box-shadow: inset 0px 0px 0px 1px #f00;
+            box-shadow: inset 0px 0px 0px 1px #000;
+            display:flex;
+            align-items: center; /* Vertical center alignment */
+            justify-content: center; /* Horizontal center alignment */
+
+            .show {
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+
+.slide-enter-active, .slide-leave-active {
+    transition: all .3s ease;
+}
+
+.slide-enter, .slide-leave-to {
+    transform: translateY(-100px);
+    opacity: 0;
+}
+
+/* Actually around 550px? */
+@media screen and (min-width: 610px) {
+    .dates {
+        float: left;
+        width: 200px;
+
+        td {
+            padding: 5px 10px;
+        }
+    }
+
+    .schedule, .grid {
+        height: calc(100vh - 75px);
+        overflow-y: scroll;
+        width: calc(100% - 200px);
+    }
+}
+
+/* If high enough, make the dates list sticky */
+@media screen and (min-width: 610px) and (min-height: 580px) {
+    .dates {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+}

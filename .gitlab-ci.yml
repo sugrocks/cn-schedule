@@ -4,13 +4,6 @@ test:js:
     paths:
     - node_modules/
   before_script:
-   - npm install standard
+   - npm install standard eslint-plugin-standard
   script:
    - ./node_modules/.bin/standard .
-
-test:python:
-  image: python:latest
-  before_script:
-   - pip3 install flake8
-  script:
-   - flake8 --max-line-length=140 .

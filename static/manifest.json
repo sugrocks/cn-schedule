@@ -1,0 +1,20 @@
+{
+  "name": "CN Schedule",
+  "short_name": "Schedule",
+  "icons": [
+    {
+      "src": "/static/img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/android-chrome-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#ec018c",
+  "theme_color": "#000000",
+  "start_url": "https:\/\/cn.sug.rocks\/",
+  "display": "standalone"
+}

@@ -4,3 +4,14 @@
 
 
 > [cn.sug.rocks](https://cn.sug.rocks/)
+
+
+### Install
+
+- `git clone https://gitgud.io/sug/cn-schedule.git`
+- `yarn`
+- `npm run build`
+- Point webserver to `dist/`
+
+
+And set a crontab to run `grid/gentables.py` and copy the `index.html` from there to `dist/grid/`.
