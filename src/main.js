@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import VueResource from 'vue-resource'
 import About from '@/components/About'
 import Settings from '@/components/Settings'
 import Stats from '@/components/Stats'
@@ -16,6 +17,8 @@ Vue.component('app-settings', Settings)
 Vue.component('schedule-stats', Stats)
 Vue.component('day-el', DayListEl)
 Vue.component('schedule-el', ScheduleListEl)
+
+Vue.use(VueResource)
 
 /* eslint-disable no-new */
 new Vue({

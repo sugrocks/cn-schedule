@@ -35,7 +35,6 @@
 </style>
 
 <script>
-var jQuery = require('jquery')
 import { count } from './assets/stats.js'
 import { getToday, parseDate } from './assets/dates.js'
 
@@ -48,9 +47,9 @@ export default {
       showAbout: false,
       showStats: false,
       config: {
-        showPast: false,
-        showZap: true,
-        showGlobal: true
+        showPast: localStorage.getItem('cfgShowPast') || false,
+        showZap: localStorage.getItem('cfgShowZap') || true,
+        showGlobal: localStorage.getItem('cfgShowGlobal') || true
       },
       days: [],
       blocks: [],
@@ -61,46 +60,56 @@ export default {
   mounted () {
     var url = 'https://api.sug.rocks/cnschedule.json'
     var d = this
-    jQuery.getJSON(url, function (result) {
-      localStorage.setItem('schedule', JSON.stringify(result))
-      for (var i in result) {
-        // Skip json "meta"
-        if (i === '_') continue
+    d.$http.get(url)
+      .then(data => {
+        localStorage.setItem('schedule', JSON.stringify(data.body))
+      }, err => {
+        console.log(err)
+      })
+      .then(function () {
+        var j = JSON.parse(localStorage.getItem('schedule'))
 
-        d.$data.days.push({
-          id: i,
-          source: (result[i]['source'] === 'Screener' || result[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
-          past: (getToday().replace('-', '') > i.replace('-', '')),
-          text: parseDate(i)
-        })
-      }
-    })
-    .fail(function () {
-      document.querySelector('h1').innerHTML += ' <small>(offline)</small>'
-    })
-    .done(function (result) {
-      var everyshow = []
+        for (var i in j) {
+          // Skip json "meta"
+          if (i === '_') continue
 
-      for (var li in result) {
-        if (result[li]['source'] === 'Cartoon Network') {
-          for (var lj in result[li]['schedule']) {
-            everyshow.push(result[li]['schedule'][lj])
+          d.$data.days.push({
+            id: i,
+            source: (j[i]['source'] === 'Screener' || j[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
+            past: (getToday().replace('-', '') > i.replace('-', '')),
+            text: parseDate(i)
+          })
+        }
+
+        var everyshow = []
+
+        for (var li in j) {
+          if (j[li]['source'] === 'Cartoon Network') {
+            for (var lj in j[li]['schedule']) {
+              everyshow.push(j[li]['schedule'][lj])
+            }
           }
         }
-      }
 
-      d.$data.globalTotalBlocks = everyshow.length
-      var showstats = count(everyshow)
+        d.$data.globalTotalBlocks = everyshow.length
+        var showstats = count(everyshow)
 
-      for (var lk in showstats) {
-        var f = showstats[lk]
-        d.globalStats.push({
-          name: f[0],
-          count: f[1],
-          percentage: Math.round((f[1] / everyshow.length) * 100)
-        })
-      }
-    })
+        for (var lk in showstats) {
+          var f = showstats[lk]
+          d.globalStats.push({
+            name: f[0],
+            count: f[1],
+            percentage: Math.round((f[1] / everyshow.length) * 100)
+          })
+        }
+      })
+  },
+  methods: {
+    saveSettings () {
+      localStorage.setItem('cfgShowPast', this.config.showPast)
+      localStorage.setItem('cfgShowZap', this.config.showZap)
+      localStorage.setItem('cfgShowGlobal', this.config.showGlobal)
+    }
   },
   computed: {
     datesSettings: function () {
