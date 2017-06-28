@@ -7,17 +7,13 @@ module.exports = {
     sourceType: 'module'
   },
   env: {
-    browser: true,
-    jquery: true
+    browser: true
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: 'standard',
   // required to lint *.vue files
   plugins: [
     'html'
-  ],
-  globals: [
-    'jQuery'
   ],
   // add your custom rules here
   'rules': {

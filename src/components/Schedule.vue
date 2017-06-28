@@ -32,6 +32,15 @@ export default {
     getSchedule () {
       var d = this.$route.params.date
       var schedule = JSON.parse(localStorage.getItem('schedule'))
+
+      try {
+        console.log('Schedule generated', (new Date(schedule['_']['generated'] * 1000)))
+      } catch (e) {
+        console.log('Schedule not ready\n', e)
+        setTimeout(this.getSchedule, 1000)
+        return
+      }
+
       if (d === 'undefined' || d === undefined) {
         this.$router.replace({name: 'Schedule', params: {date: getToday()}})
       } else {

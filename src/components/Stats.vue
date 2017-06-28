@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { count } from '../assets/stats.js'
+import { getStats } from '../assets/stats.js'
 
 export default {
   name: 'stats',
@@ -69,19 +69,8 @@ export default {
     }
   },
   mounted () {
-    var d = this.$parent.$data
-    this.totalBlocks = d.blocks.length
-    var showstats = count(d.blocks)
-    for (var k in showstats) {
-      var f = showstats[k]
-      this.$data.dayStats.push(
-        {
-          name: f[0],
-          count: f[1],
-          percentage: Math.round((f[1] / d.blocks.length) * 100)
-        }
-      )
-    }
+    this.totalBlocks = this.$parent.blocks.length
+    getStats(this.$parent.blocks, this.dayStats)
   }
 }
 </script>

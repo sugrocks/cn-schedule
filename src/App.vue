@@ -35,7 +35,7 @@
 </style>
 
 <script>
-import { count } from './assets/stats.js'
+import { getStats } from './assets/stats.js'
 import { getToday, parseDate } from './assets/dates.js'
 
 export default {
@@ -47,9 +47,9 @@ export default {
       showAbout: false,
       showStats: false,
       config: {
-        showPast: localStorage.getItem('cfgShowPast') || false,
-        showZap: localStorage.getItem('cfgShowZap') || true,
-        showGlobal: localStorage.getItem('cfgShowGlobal') || true
+        showPast: false,
+        showZap: true,
+        showGlobal: false
       },
       days: [],
       blocks: [],
@@ -58,9 +58,14 @@ export default {
     }
   },
   mounted () {
+    var t = this
     var url = 'https://api.sug.rocks/cnschedule.json'
-    var d = this
-    d.$http.get(url)
+
+    t.config.showPast = (localStorage.getItem('cfgShowPast') === 'true')
+    t.config.showZap = (localStorage.getItem('cfgShowZap') === 'true' || localStorage.getItem('cfgShowZap') === null)
+    t.config.showGlobal = (localStorage.getItem('cfgShowGlobal') === 'true')
+
+    t.$http.get(url)
       .then(data => {
         localStorage.setItem('schedule', JSON.stringify(data.body))
       }, err => {
@@ -73,7 +78,7 @@ export default {
           // Skip json "meta"
           if (i === '_') continue
 
-          d.$data.days.push({
+          t.$data.days.push({
             id: i,
             source: (j[i]['source'] === 'Screener' || j[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
             past: (getToday().replace('-', '') > i.replace('-', '')),
@@ -81,27 +86,17 @@ export default {
           })
         }
 
-        var everyshow = []
-
+        var everythingCN = []
         for (var li in j) {
           if (j[li]['source'] === 'Cartoon Network') {
             for (var lj in j[li]['schedule']) {
-              everyshow.push(j[li]['schedule'][lj])
+              everythingCN.push(j[li]['schedule'][lj])
             }
           }
         }
 
-        d.$data.globalTotalBlocks = everyshow.length
-        var showstats = count(everyshow)
-
-        for (var lk in showstats) {
-          var f = showstats[lk]
-          d.globalStats.push({
-            name: f[0],
-            count: f[1],
-            percentage: Math.round((f[1] / everyshow.length) * 100)
-          })
-        }
+        t.globalTotalBlocks = everythingCN.length
+        getStats(everythingCN, t.globalStats)
       })
   },
   methods: {
