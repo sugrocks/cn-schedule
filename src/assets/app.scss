@@ -32,8 +32,13 @@ small {
 }
 
 a {
+    color: #00aeef;
     cursor: pointer;
     text-decoration: none;
+
+    &:hover, &:active {
+        text-decoration: underline;
+    }
 }
 
 table {
@@ -112,19 +117,22 @@ table {
             font-style: italic;
             text-align: center;
             padding-top: 8px;
+
+            img {
+                height: 1.2em;
+            }
         }
     }
 
-    .zap2it td:after {
+    .zap2it td:before {
         background: url('./assets/icons/zap2it.png') no-repeat;
         background-size: contain;
         content: '';
         display: inline-block;
-        height: 14px;
-        left: 5px;
+        height: 0.9em;
         position: relative;
         top: 2px;
-        width: 14px;
+        width: 0.9em;
     }
 
     &.noZap .zap2it,
@@ -146,6 +154,11 @@ table {
         background-color: #acffad;
         color: #000;
         text-align: center;
+    }
+
+    .schedule-notfound {
+        border: #f00 2px solid;
+        padding: 20px;
     }
 
     tr {

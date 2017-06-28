@@ -19,10 +19,15 @@ export default new Router({
       component: Schedule
     },
     {
-      path: '*',
+      path: '/404',
+      name: 'NotFound',
       redirect: function () {
         window.location.href = '/404.html'
       }
+    },
+    {
+      path: '*',
+      redirect: 'NotFound'
     }
   ]
 })
