@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build": "node build/build.js && cp -r grid/ dist/grid/ && cp 404.html dist/404.html",
+    "build": "node build/build.js && cp favicon.ico 404.html dist/",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
