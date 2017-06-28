@@ -14,13 +14,29 @@
         v-bind:key="day.id">
       </day-el>
       <tr>
-        <td class="special-links" v-on:click="showSettings = !showSettings">
+        <td
+          class="special-links"
+          title="Settings"
+          v-on:click="showSettings = !showSettings">
           <img src="./assets/icons/settings.svg">
         </td>
-        <td class="special-links" v-on:click="showStats = !showStats">
+        <td
+          class="special-links"
+          title="Stats"
+          v-on:click="showStats = !showStats">
           <img src="./assets/icons/bars.svg">
         </td>
-        <td class="special-links" v-on:click="showAbout = !showAbout">
+        <router-link
+          to="grid"
+          tag="td"
+          title="Grid"
+          class="special-links">
+          <img src="./assets/icons/grid.svg">
+        </router-link>
+        <td
+          class="special-links"
+          title="About"
+          v-on:click="showAbout = !showAbout">
           <img src="./assets/icons/info.svg">
         </td>
       </tr>
@@ -52,7 +68,7 @@ export default {
         showGlobal: false
       },
       days: [],
-      blocks: [],
+      json: {},
       globalTotalBlocks: 0,
       globalStats: []
     }
@@ -72,31 +88,31 @@ export default {
         console.log(err)
       })
       .then(function () {
-        var j = JSON.parse(localStorage.getItem('schedule'))
+        t.json = JSON.parse(localStorage.getItem('schedule'))
 
-        for (var i in j) {
+        for (var i in t.json) {
           // Skip json "meta"
           if (i === '_') continue
 
-          t.$data.days.push({
+          t.days.push({
             id: i,
-            source: (j[i]['source'] === 'Screener' || j[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
+            source: (t.json[i]['source'] === 'Screener' || t.json[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
             past: (getToday().replace('-', '') > i.replace('-', '')),
             text: parseDate(i)
           })
         }
 
         var everythingCN = []
-        for (var li in j) {
-          if (j[li]['source'] === 'Cartoon Network') {
-            for (var lj in j[li]['schedule']) {
-              everythingCN.push(j[li]['schedule'][lj])
+        for (var li in t.json) {
+          if (t.json[li]['source'] === 'Cartoon Network') {
+            for (var lj in t.json[li]['schedule']) {
+              everythingCN.push(t.json[li]['schedule'][lj])
             }
           }
         }
 
         t.globalTotalBlocks = everythingCN.length
-        getStats(everythingCN, t.globalStats)
+        t.globalStats = getStats(everythingCN)
       })
   },
   methods: {

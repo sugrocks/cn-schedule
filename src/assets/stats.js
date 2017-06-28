@@ -36,8 +36,9 @@ function count (els) {
   return results.sort(Comparator).reverse()
 }
 
-export function getStats (shows, stats) {
+export function getStats (shows) {
   var showstats = count(shows)
+  var stats = []
 
   for (var lk in showstats) {
     var f = showstats[lk]
@@ -47,4 +48,6 @@ export function getStats (shows, stats) {
       percentage: Math.round((f[1] / shows.length) * 100)
     })
   }
+
+  return stats
 }

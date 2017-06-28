@@ -68,10 +68,10 @@ table {
     vertical-align: middle;
     width: 100%;
     z-index: 10;
+    max-height: calc(100vh - 12px);
+    overflow-y: auto;
 
     &.stats {
-        position: absolute;
-
         .top-shows {
             margin: 0 auto;
             text-align: left;
@@ -193,6 +193,73 @@ table {
     }
 }
 
+.grid {
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+
+    .time-head, .date {
+        background-color: #ec018c;
+        color: #000;
+        font-weight: bold;
+        font-style: italic;
+        padding: 5px 0;
+        text-align: center;
+    }
+
+    .time-table {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 10px;
+        padding: 0 1px 5px 0;
+        position: sticky;
+        left: 0;
+        margin-right: -3px;
+
+        .time-line {
+            height: 50px;
+            display:flex;
+            align-items: center; /* Vertical center alignment */
+            justify-content: center; /* Horizontal center alignment */
+            padding: 0 5px;
+            box-shadow: inset 0px 0px 0px 1px #000;
+
+            &:nth-child(even) {
+                background-color: #333;
+            }
+
+            &:nth-child(odd) {
+                background-color: #3e3e3e;
+            }
+        }
+    }
+
+    .day {
+        display: inline-block;
+        vertical-align: top;
+        width: 150px !important;
+        font-size: 10px;
+        padding: 0 1px;
+
+        .slot {
+            overflow: hidden;
+            text-align: center;
+            -webkit-box-shadow: inset 0px 0px 0px 1px #000;
+            -moz-box-shadow: inset 0px 0px 0px 1px #f00;
+            box-shadow: inset 0px 0px 0px 1px #000;
+            display:flex;
+            align-items: center; /* Vertical center alignment */
+            justify-content: center; /* Horizontal center alignment */
+
+            .show {
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+
 .slide-enter-active, .slide-leave-active {
     transition: all .3s ease;
 }
@@ -213,12 +280,14 @@ table {
         }
     }
 
-    .schedule {
+    .schedule, .grid {
+        height: calc(100vh - 75px);
+        overflow-y: scroll;
         width: calc(100% - 200px);
     }
 }
 
-/* If height enough, make the dates list sticky */
+/* If high enough, make the dates list sticky */
 @media screen and (min-width: 610px) and (min-height: 580px) {
     .dates {
         position: -webkit-sticky;

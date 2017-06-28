@@ -1,7 +1,12 @@
 <template>
   <transition name="slide">
     <div class="stats modal">
-      <div class="day-stats">
+      <div class="day-stats" v-if="$route.name === 'grid'">
+        <span class="stats-text day no-data">
+          Please select a day to get stats from it.
+        </span>
+      </div>
+      <div class="day-stats" v-else>
         <span class="stats-text day no-data" v-if="dayStats.length === 0">
           No statistics available for this day.
         </span>
@@ -69,8 +74,8 @@ export default {
     }
   },
   mounted () {
-    this.totalBlocks = this.$parent.blocks.length
-    getStats(this.$parent.blocks, this.dayStats)
+    this.totalBlocks = this.$parent.$data.blocks.length
+    this.dayStats = getStats(this.$parent.$data.blocks)
   }
 }
 </script>

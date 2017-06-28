@@ -1,4 +1,0 @@
-XlsxWriter
-jinja2==2.9.5
-requests==2.13.0
-better_exceptions
