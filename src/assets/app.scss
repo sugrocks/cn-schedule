@@ -210,6 +210,8 @@ table {
         font-style: italic;
         padding: 5px 0;
         text-align: center;
+        position: sticky;
+        top: 0;
     }
 
     .time-table {
@@ -220,6 +222,7 @@ table {
         position: sticky;
         left: 0;
         margin-right: -3px;
+        z-index: 5;
 
         .time-line {
             height: 50px;
@@ -286,9 +289,12 @@ table {
     }
 
     .schedule, .grid {
+        width: calc(100% - 200px);
+    }
+
+    .grid {
         height: calc(100vh - 75px);
         overflow-y: scroll;
-        width: calc(100% - 200px);
     }
 }
 
