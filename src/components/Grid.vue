@@ -16,7 +16,7 @@
         class="date"
         :style="getHeadBg(day.source)">
         {{ index }}
-        <span v-if="day.source === 'Screener'">
+        <span v-if="day.source === 'Zap2it'">
           (Zap2it)
         </span>
       </div>
@@ -49,7 +49,7 @@ export default {
     },
     getHeadBg (source) {
       return {
-        'background-color': (source === 'Screener') ? '#ffeb00' : '#00aeef'
+        'background-color': (source === 'Zap2it') ? '#ffeb00' : '#00aeef'
       }
     }
   },

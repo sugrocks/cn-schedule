@@ -13,8 +13,8 @@ export default {
   computed: {
     displaySource: function () {
       return {
-        'zap2it': (this.day.source === 'zap2it'),
-        'cn': (this.day.source === 'cn'),
+        'zap2it': (this.day.source === 'Zap2it'),
+        'cn': (this.day.source === 'Cartoon Network'),
         'past': this.day.past
       }
     }

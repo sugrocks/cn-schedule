@@ -113,7 +113,7 @@ export default {
 
           t.days.push({
             id: i,
-            source: (t.json[i]['source'] === 'Screener' || t.json[i]['source'] === 'Zap2it') ? 'zap2it' : 'cn',
+            source: t.json[i]['source'],
             past: (getToday().replace('-', '') > i.replace('-', '')),
             text: parseDate(i)
           })

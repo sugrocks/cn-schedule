@@ -52,7 +52,7 @@ export default {
         if (d in schedule) {
           this.blocks = schedule[d]['schedule']
           this.$parent.$data.blocks = this.$data.blocks
-          this.isZap = (schedule[d]['source'] === 'Zap2it' || schedule[d]['source'] === 'Screener')
+          this.isZap = (schedule[d]['source'] === 'Zap2it')
           this.isNotfound = false
         } else {
           // Check if it's a proper date
