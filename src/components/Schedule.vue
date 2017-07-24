@@ -20,8 +20,8 @@
 </template>
 
 <script>
-var _ = require('lodash')
 import { getToday } from '../assets/dates.js'
+var _ = require('lodash')
 
 export default {
   name: 'schedule',
@@ -44,7 +44,7 @@ export default {
 
       // Check a schedule is available and loaded
       if (schedule === null || !('_' in schedule)) {
-        console.log('Schedule not ready')
+        console.log('Schedule not ready, wait a second please...')
         setTimeout(this.getSchedule, 1000)
         return
       }
