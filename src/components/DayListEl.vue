@@ -12,6 +12,7 @@ export default {
   props: ['day'],
   computed: {
     displaySource: function () {
+      // Load data in this component
       return {
         'zap2it': (this.day.source === 'Zap2it'),
         'cn': (this.day.source === 'Cartoon Network'),

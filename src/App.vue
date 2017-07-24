@@ -91,26 +91,33 @@ export default {
     }
   },
   mounted () {
+    // Shortcut and URL to our API
     var t = this
     var url = 'https://api.sug.rocks/cnschedule.json'
 
+    // Get config from localStorage
     t.config.showPast = (localStorage.getItem('cfgShowPast') === 'true')
     t.config.showZap = (localStorage.getItem('cfgShowZap') === 'true' || localStorage.getItem('cfgShowZap') === null)
     t.config.showGlobal = (localStorage.getItem('cfgShowGlobal') === 'true')
 
+    // Fetch our API
     t.$http.get(url)
       .then(data => {
+        // Save schedule in localStorage (for offline and faster next loads)
         localStorage.setItem('schedule', JSON.stringify(data.body))
       }, err => {
         console.log(err)
       })
       .then(function () {
+        // Parse the data saved on the localStorage (now or before)
         t.json = JSON.parse(localStorage.getItem('schedule'))
 
+        // Go through every day
         for (var i in t.json) {
           // Skip json "meta"
           if (i === '_') continue
 
+          // Push available dates to the menu
           t.days.push({
             id: i,
             source: t.json[i]['source'],
@@ -119,21 +126,26 @@ export default {
           })
         }
 
+        // For stats
         var everythingCN = []
         for (var li in t.json) {
+          // For every day who the source is Cartoon Network
           if (t.json[li]['source'] === 'Cartoon Network') {
+            // Push every episode to the array
             for (var lj in t.json[li]['schedule']) {
               everythingCN.push(t.json[li]['schedule'][lj])
             }
           }
         }
 
+        // Get total number of blocks and get stats per-show
         t.globalTotalBlocks = everythingCN.length
         t.globalStats = getStats(everythingCN)
       })
   },
   methods: {
     saveSettings () {
+      // Save your settings in your browser with localStorage
       localStorage.setItem('cfgShowPast', this.config.showPast)
       localStorage.setItem('cfgShowZap', this.config.showZap)
       localStorage.setItem('cfgShowGlobal', this.config.showGlobal)
@@ -141,6 +153,7 @@ export default {
   },
   computed: {
     datesSettings: function () {
+      // To style or show/hide elements on the menu based on the user settings
       return {
         'dates': true,
         'noZap': !this.config.showZap,

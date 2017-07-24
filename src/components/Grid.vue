@@ -42,12 +42,15 @@ export default {
   name: 'grid',
   methods: {
     getSlotStyle (show) {
+      // Get alternative color background every half hour
+      // And set height of slots based on their length
       return {
-        'height': show.slots * 25 + 'px',
-        'background-color': (show.time.search('00') > 1 || show.time.search('15') > 1) ? '#333' : '#3e3e3e'
+        'background-color': (show.time.search('00') > 1 || show.time.search('15') > 1) ? '#333' : '#3e3e3e',
+        'height': show.slots * 25 + 'px'
       }
     },
     getHeadBg (source) {
+      // Change color of the header based on the source
       return {
         'background-color': (source === 'Zap2it') ? '#ffeb00' : '#00aeef'
       }

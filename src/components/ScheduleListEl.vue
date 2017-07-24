@@ -16,6 +16,7 @@ export default {
   props: ['block'],
   computed: {
     isOnAir: function () {
+      // Get current timestamp and check if current element is on air
       var tsCurr = parseInt(Date.now() / 1000, 10)
       return {
         'on-air': this.block.timestamp < tsCurr && tsCurr < this.block.timestamp_end

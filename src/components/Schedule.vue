@@ -34,27 +34,33 @@ export default {
   },
   methods: {
     orderBlocks (list) {
+      // Order the schedule by date
       return _.orderBy(list, 'timestamp')
     },
     getSchedule () {
+      // Get date from route and the saved schedule
       var d = this.$route.params.date
       var schedule = JSON.parse(localStorage.getItem('schedule'))
 
-      if (!('_' in schedule)) {
+      // Check a schedule is available and loaded
+      if (schedule === null || !('_' in schedule)) {
         console.log('Schedule not ready')
         setTimeout(this.getSchedule, 1000)
         return
       }
 
       if (d === 'undefined' || d === undefined) {
+        // Redirect to today's date if route not set
         this.$router.replace({name: 'Schedule', params: {date: getToday()}})
       } else {
         if (d in schedule) {
+          // If day found, let's load it
           this.blocks = schedule[d]['schedule']
           this.$parent.$data.blocks = this.$data.blocks
           this.isZap = (schedule[d]['source'] === 'Zap2it')
           this.isNotfound = false
         } else {
+          // If day not found from the route
           // Check if it's a proper date
           if (d.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/)) {
             // If it is, say we don't have it
@@ -68,7 +74,7 @@ export default {
     }
   },
   watch: {
-    // on route changes
+    // on route changes, load schedule
     '$route': 'getSchedule'
   },
   mounted () {

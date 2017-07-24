@@ -74,6 +74,7 @@ export default {
     }
   },
   mounted () {
+    // Load data in this component
     this.totalBlocks = this.$parent.$data.blocks.length
     this.dayStats = getStats(this.$parent.$data.blocks)
   }

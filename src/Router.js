@@ -1,10 +1,13 @@
+// Vue and the router
 import Vue from 'vue'
 import Router from 'vue-router'
+// Our base components
 import Schedule from '@/components/Schedule'
 import Grid from '@/components/Grid'
 
 Vue.use(Router)
 
+// Specify our routes and names
 export default new Router({
   mode: 'history',
   linkActiveClass: 'selected',

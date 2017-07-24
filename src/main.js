@@ -3,24 +3,30 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
+// Our components
 import About from '@/components/About'
 import Settings from '@/components/Settings'
 import Stats from '@/components/Stats'
 import DayListEl from '@/components/DayListEl'
 import ScheduleListEl from '@/components/ScheduleListEl'
+// The router full code
 import router from './Router'
 
+// Stop posting tips
 Vue.config.productionTip = false
 
+// Load components
 Vue.component('app-about', About)
 Vue.component('app-settings', Settings)
 Vue.component('schedule-stats', Stats)
 Vue.component('day-el', DayListEl)
 Vue.component('schedule-el', ScheduleListEl)
 
+// Use that nice plugin
 Vue.use(VueResource)
 
 /* eslint-disable no-new */
+// Create vue app
 new Vue({
   el: '#app',
   router,
