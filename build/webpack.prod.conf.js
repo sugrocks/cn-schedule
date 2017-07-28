@@ -101,6 +101,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       filename: 'service-worker.js',
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
       minify: true,
+      navigateFallback: '/index.html',
       stripPrefix: 'dist/'
     })
   ]

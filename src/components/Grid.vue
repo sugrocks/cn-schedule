@@ -75,6 +75,9 @@ export default {
         '7:00 pm', '7:30 pm'
       ]
     }
+  },
+  mounted () {
+    this.$parent.isReady = true
   }
 }
 </script>

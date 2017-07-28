@@ -11,7 +11,7 @@
           No statistics available for this day.
         </span>
         <span class="stats-text day" v-else>
-          For {{ day }}, we have {{ totalBlocks }} time blocks with {{ dayStats.length }} shows.
+          For {{ day }}, we have {{ totalBlocks }} time slots with {{ dayStats.length }} shows.
         </span>
         <br>
         <table class="top-shows day" v-if="dayStats.length > 0">
@@ -36,7 +36,7 @@
           No global statistics available for the moment.
         </span>
         <span class="stats-text all" v-else>
-          From official sources, we have {{ $parent.globalTotalBlocks }} time blocks with {{ $parent.globalStats.length }} shows.
+          From official sources, we have {{ $parent.globalTotalBlocks }} time slots with {{ $parent.globalStats.length }} shows.
         </span>
         <br>
         <table class="top-shows all" v-if="$parent.globalStats.length > 0">

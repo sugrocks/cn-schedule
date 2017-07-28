@@ -6,6 +6,10 @@
 
     <h1>CN Schedule</h1>
 
+    <transition name="slideOut">
+      <h2 v-if="!isReady" class="loading">Loading data...</h2>
+    </transition>
+
     <!-- Left column with dates -->
     <table :class="datesSettings">
       <day-el
@@ -75,6 +79,8 @@ export default {
   name: 'app',
   data () {
     return {
+      isReady: false,
+      scheduleReloaded: false,
       isZap: false,
       showSettings: false,
       showAbout: false,
@@ -138,9 +144,10 @@ export default {
           }
         }
 
-        // Get total number of blocks and get stats per-show
+        // Get total number of slots and get stats per-show
         t.globalTotalBlocks = everythingCN.length
         t.globalStats = getStats(everythingCN)
+        t.scheduleReloaded = true
       })
   },
   methods: {

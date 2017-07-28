@@ -1,14 +1,19 @@
 <template>
   <table class="schedule">
     <tr v-if="isNotfound">
-      <td colspan="3" class="schedule-notfound">
+      <td colspan="2" class="schedule-notfound">
         <b>There's nothing at this date!</b><br>
-        Either you're trying to load an old entry <small>(and you should take a look at the <a href="https://cnschedulearchive.tumblr.com/tagged/cartoon-network">CN Schedule Archive</a>)</small> or you're way too much in the future.
+        Either you're trying to load an old entry
+        <small>
+          (and you should take a look at the <a target="_blank" rel="noopener" href="https://cnschedulearchive.tumblr.com/tagged/cartoon-network">CN Schedule Archive</a>)
+        </small>
+        or you're way too much in the future.
       </td>
     </tr>
     <tr v-if="isZap">
-      <td colspan="3" class="schedule-zap2it">
-        This schedule was extracted from Zap2it. Changes might happen.
+      <td colspan="2" class="schedule-zap2it">
+        This schedule was extracted from Zap2it.<br>
+        Expect it to be wrong as changes <i>might</i> happen.
       </td>
     </tr>
     <schedule-el
@@ -42,8 +47,7 @@ export default {
       var d = this.$route.params.date
       var schedule = JSON.parse(localStorage.getItem('schedule'))
 
-      // Check a schedule is available and loaded
-      if (schedule === null || !('_' in schedule)) {
+      if (schedule === null || !this.$parent.scheduleReloaded) {
         console.log('Schedule not ready, wait a second please...')
         setTimeout(this.getSchedule, 1000)
         return
@@ -70,6 +74,7 @@ export default {
             this.$router.replace({name: 'NotFound'})
           }
         }
+        this.$parent.isReady = true
       }
     }
   },

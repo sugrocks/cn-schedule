@@ -6,7 +6,6 @@
       <br>
       <span class="field-title">{{ block.title }}</span>
     </td>
-    <td class="field-rating">{{ block.rating }}</td>
   </tr>
 </template>
 

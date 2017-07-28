@@ -1,6 +1,7 @@
 {
   "name": "CN Schedule",
   "short_name": "Schedule",
+  "start_url": "./?utm_source=web_app_manifest",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -11,10 +12,19 @@
       "src": "/static/img/icons/android-chrome-256x256.png",
       "sizes": "256x256",
       "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/android-chrome-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "background_color": "#ec018c",
+  "background_color": "#EC018C",
   "theme_color": "#000000",
-  "start_url": "https:\/\/cn.sug.rocks\/",
   "display": "standalone"
 }
