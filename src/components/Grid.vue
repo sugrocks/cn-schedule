@@ -27,9 +27,9 @@
       </div>
       <div
         class="slot"
-        v-for="show in day.schedule"
+        v-for="(show, sIndex) in day.schedule"
         :title="show.title + ' (' + show.time +')'"
-        :style="getSlotStyle(show)">
+        :style="getSlotStyle(show, sIndex)">
         <span class="show">{{
             (show.show === 'SPECIAL') ? show.title + ' (SPECIAL)' :
               (show.show === 'MOVIE') ? show.title + ' (MOVIE)' : show.show
@@ -54,12 +54,12 @@ export default {
     }
   },
   methods: {
-    getSlotStyle (show) {
+    getSlotStyle (show, index) {
       // Get alternative color background every half hour
       // And set height of slots based on their length
       // Also add margin top if somehow day starts later than 6:00
       var marginTopPlz = 0
-      if (show.date !== this.parsingDay) {
+      if (index === 0) {
         if (show.time === '6:15 am') {
           marginTopPlz = 25
         } else if (show.time === '6:30 am') {
@@ -70,7 +70,6 @@ export default {
           marginTopPlz = 100
         }
       }
-      this.parsingDay = show.date
 
       return {
         'background-color': (show.time.search(':00') > 0 || show.time.search(':15') > 0) ? '#333' : '#3e3e3e',
@@ -105,8 +104,7 @@ export default {
         '5:00 pm', '5:30 pm',
         '6:00 pm', '6:30 pm',
         '7:00 pm', '7:30 pm'
-      ],
-      parsingDay: ''
+      ]
     }
   },
   mounted () {
