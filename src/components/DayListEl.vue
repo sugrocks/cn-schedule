@@ -12,7 +12,7 @@ export default {
   props: ['day'],
   computed: {
     displaySource: function () {
-      // Load data in this component
+      // Add classes to specify source and if it's an old entry
       return {
         'zap2it': (this.day.source === 'Zap2it'),
         'cn': (this.day.source === 'Cartoon Network'),

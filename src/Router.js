@@ -1,11 +1,13 @@
-// Vue and the router
+// Vue stuff
 import Vue from 'vue'
 import Router from 'vue-router'
+import Meta from 'vue-meta'
 // Our base components
 import Schedule from '@/components/Schedule'
 import Grid from '@/components/Grid'
 
 Vue.use(Router)
+Vue.use(Meta)
 
 // Specify our routes and names
 export default new Router({

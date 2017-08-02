@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="datesSettings">
     <app-about v-show="showAbout"></app-about>
     <app-settings v-show="showSettings"></app-settings>
     <schedule-stats v-if="showStats"></schedule-stats>
@@ -11,7 +11,7 @@
     </transition>
 
     <!-- Left column with dates -->
-    <table :class="datesSettings">
+    <table class="dates">
       <day-el
         v-for="day in days"
         v-bind:day="day"
@@ -96,6 +96,12 @@ export default {
       globalStats: []
     }
   },
+  metaInfo () {
+    return {
+      title: 'Loading...',
+      titleTemplate: '%s | CN Schedule'
+    }
+  },
   mounted () {
     // Shortcut and URL to our API
     var t = this
@@ -162,7 +168,6 @@ export default {
     datesSettings: function () {
       // To style or show/hide elements on the menu based on the user settings
       return {
-        'dates': true,
         'noZap': !this.config.showZap,
         'noPast': !this.config.showPast
       }

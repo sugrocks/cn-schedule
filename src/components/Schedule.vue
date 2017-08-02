@@ -34,7 +34,18 @@ export default {
     return {
       isZap: false,
       isNotfound: false,
+      pageTitle: 'Loading...',
       blocks: []
+    }
+  },
+  metaInfo () {
+    return {
+      title: this.pageTitle,
+      meta: [
+        { name: 'twitter:title', content: this.pageTitle + ' | CN Schedule' },
+        { name: 'og:title', content: this.pageTitle + ' | CN Schedule' },
+        { name: 'og:url', content: 'https://cn.sug.rocks' + this.$route.path }
+      ]
     }
   },
   methods: {
@@ -47,16 +58,21 @@ export default {
       var d = this.$route.params.date
       var schedule = JSON.parse(localStorage.getItem('schedule'))
 
-      if (schedule === null || !this.$parent.scheduleReloaded) {
-        console.log('Schedule not ready, wait a second please...')
-        setTimeout(this.getSchedule, 1000)
-        return
-      }
-
       if (d === 'undefined' || d === undefined) {
         // Redirect to today's date if route not set
         this.$router.replace({name: 'Schedule', params: {date: getToday()}})
       } else {
+        // Change page title early for search engines and stuff
+        this.pageTitle = d
+
+        // Check if data is loaded
+        if (schedule === null || !this.$parent.scheduleReloaded) {
+          console.log('Schedule not ready, wait a second please...')
+          setTimeout(this.getSchedule, 1000)
+          return
+        }
+
+        // Now we try to find that date
         if (d in schedule) {
           // If day found, let's load it
           this.blocks = schedule[d]['schedule']
@@ -69,11 +85,14 @@ export default {
           if (d.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/)) {
             // If it is, say we don't have it
             this.isNotfound = true
+            this.pageTitle = '404'
           } else {
             // else, fucking 404
             this.$router.replace({name: 'NotFound'})
           }
         }
+
+        // And our first loading is done!
         this.$parent.isReady = true
       }
     }

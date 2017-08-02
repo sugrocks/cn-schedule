@@ -78,6 +78,13 @@ table {
     }
 }
 
+#app {
+    &.noZap .zap2it,
+    &.noPast .past {
+        display: none;
+    }
+}
+
 .modal {
     background-color: #ffeb00;
     color: #000;
@@ -161,11 +168,6 @@ table {
         top: 2px;
         width: 0.9em;
     }
-
-    &.noZap .zap2it,
-    &.noPast .past {
-        display: none;
-    }
 }
 
 .schedule {
@@ -226,7 +228,8 @@ table {
     white-space: nowrap;
     z-index: 20;
 
-    .time-head, .date {
+    .time-head,
+    .date {
         background-color: #ec018c;
         color: #000;
         font-style: italic;
@@ -237,6 +240,14 @@ table {
         text-align: center;
         top: 0;
         z-index: 23;
+    }
+
+    .zap2it .date {
+        background-color: #ffeb00;
+    }
+
+    .cn .date {
+        background-color: #00aeef;
     }
 
     .time-table {
@@ -285,7 +296,8 @@ table {
 
             .show {
                 overflow: hidden;
-                text-overflow: ellipsis;
+                white-space: normal;
+                word-break: break-word;
             }
         }
     }

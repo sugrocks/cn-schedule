@@ -9,12 +9,11 @@
       </div>
     </div>
     <div
-      class="day"
       v-for="(day, index) in $parent.json"
+      :class="displaySource(day, index)"
       v-if="index !== '_'">
       <div
-        class="date"
-        :style="getHeadBg(day.source)">
+        class="date">
         {{ index }}
         <span v-if="day.source === 'Zap2it'">
           (Zap2it)
@@ -31,28 +30,61 @@
         v-for="show in day.schedule"
         :title="show.title + ' (' + show.time +')'"
         :style="getSlotStyle(show)">
-        <span class="show">{{ show.show }}</span>
+        <span class="show">{{
+            (show.show === 'SPECIAL') ? show.title + ' (SPECIAL)' :
+              (show.show === 'MOVIE') ? show.title + ' (MOVIE)' : show.show
+          }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getToday } from '../assets/dates.js'
 export default {
   name: 'grid',
+  metaInfo () {
+    return {
+      title: 'Grid',
+      meta: [ // Metadata for social media and stuff
+        { name: 'twitter:title', content: 'Grid | CN Schedule' },
+        { name: 'og:title', content: 'Grid | CN Schedule' },
+        { name: 'og:url', content: 'https://cn.sug.rocks/grid' }
+      ]
+    }
+  },
   methods: {
     getSlotStyle (show) {
       // Get alternative color background every half hour
       // And set height of slots based on their length
+      // Also add margin top if somehow day starts later than 6:00
+      var marginTopPlz = 0
+      if (show.date !== this.parsingDay) {
+        if (show.time === '6:15 am') {
+          marginTopPlz = 25
+        } else if (show.time === '6:30 am') {
+          marginTopPlz = 50
+        } else if (show.time === '6:45 am') {
+          marginTopPlz = 75
+        } else if (show.time === '7:00 am') {
+          marginTopPlz = 100
+        }
+      }
+      this.parsingDay = show.date
+
       return {
-        'background-color': (show.time.search('00') > 1 || show.time.search('15') > 1) ? '#333' : '#3e3e3e',
-        'height': show.slots * 25 + 'px'
+        'background-color': (show.time.search(':00') > 0 || show.time.search(':15') > 0) ? '#333' : '#3e3e3e',
+        'height': show.slots * 25 + 'px',
+        'margin-top': marginTopPlz + 'px'
       }
     },
-    getHeadBg (source) {
-      // Change color of the header based on the source
+    displaySource (day, index) {
+      // Add classes to specify source and if it's an old entry
       return {
-        'background-color': (source === 'Zap2it') ? '#ffeb00' : '#00aeef'
+        'zap2it': (day.source === 'Zap2it'),
+        'cn': (day.source === 'Cartoon Network'),
+        'past': (getToday().replace('-', '') > index.replace('-', '')),
+        'day': true
       }
     }
   },
@@ -73,7 +105,8 @@ export default {
         '5:00 pm', '5:30 pm',
         '6:00 pm', '6:30 pm',
         '7:00 pm', '7:30 pm'
-      ]
+      ],
+      parsingDay: ''
     }
   },
   mounted () {

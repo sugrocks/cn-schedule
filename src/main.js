@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
+import VueAnalytics from 'vue-analytics'
 // Our components
 import About from '@/components/About'
 import Settings from '@/components/Settings'
@@ -24,6 +25,10 @@ Vue.component('schedule-el', ScheduleListEl)
 
 // Use that nice plugin
 Vue.use(VueResource)
+Vue.use(VueAnalytics, {
+  id: 'UA-103935709-2',
+  router
+})
 
 /* eslint-disable no-new */
 // Create vue app
