@@ -13,16 +13,16 @@
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-html": "^3.1.1",
+    "eslint-plugin-html": "^3.2.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "vue-analytics": "^4.2.1",
-    "vue-meta": "^1.0.5"
+    "vue-meta": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "babel-core": "^6.25.0",
     "babel-loader": "^7.1.2",
+    "babel-core": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
