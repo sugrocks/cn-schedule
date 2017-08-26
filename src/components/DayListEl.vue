@@ -1,6 +1,9 @@
 <template>
   <tr :class="displaySource">
-    <router-link :to="day.id" tag="td" colspan="4">
+    <router-link
+      :to="day.id"
+      tag="td"
+      colspan="4">
       {{ day.text }}
     </router-link>
   </tr>

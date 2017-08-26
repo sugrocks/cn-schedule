@@ -16,10 +16,16 @@
         Expect it to be wrong as changes <i>might</i> happen.
       </td>
     </tr>
+    <tr v-if="blocks.length == 0">
+      <td colspan="2" class="schedule-info">
+        <b>This schedule is empty and is waiting for an update.</b><br>
+        Please come later when CN has provided new data.
+      </td>
+    </tr>
     <schedule-el
       v-for="block in orderBlocks(blocks)"
-      v-bind:block="block"
-      v-bind:key="block.timestamp">
+      :block="block"
+      :key="block.timestamp">
     </schedule-el>
   </table>
 </template>

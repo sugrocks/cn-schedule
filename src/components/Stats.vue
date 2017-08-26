@@ -22,7 +22,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="show in dayStats">
+            <tr
+              v-for="show in dayStats"
+              :key="show.name">
               <td>{{ show.name }}</td>
               <td style="text-align: right;">{{ show.count }}</td>
               <td>~{{ show.percentage }}%</td>
@@ -47,7 +49,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="show in $parent.globalStats">
+            <tr
+              v-for="show in $parent.globalStats"
+              :key="show.name">
               <td>{{ show.name }}</td>
               <td style="text-align: right;">{{ show.count }}</td>
               <td>~{{ show.percentage }}%</td>
@@ -56,7 +60,7 @@
         </table>
       </div>
       <br>
-      <small><a v-on:click="$parent.showStats = !$parent.showStats">(close)</a></small>
+      <small><a @click="$parent.showStats = !$parent.showStats">(close)</a></small>
     </div>
   </transition>
 </template>

@@ -4,12 +4,16 @@
       <div class="time-head">
         Times
       </div>
-      <div class="time-line" v-for="time in times">
+      <div
+        class="time-line"
+        v-for="time in times"
+        :key="time">
         <span class="time">{{ time }}</span>
       </div>
     </div>
     <div
       v-for="(day, index) in $parent.json"
+      :key="index"
       :class="displaySource(day, index)"
       v-if="index !== '_'">
       <div
@@ -22,12 +26,13 @@
       <div
         class="slot"
         v-if="day.schedule.length === 0"
-        style="height: 1400px; background-color: #ffeb00;">
+        style="height: 1400px; background-color: #ffeb00; color: #000; font-weight: bold;">
         <span class="show">Empty<br>Waiting for updates.</span>
       </div>
       <div
         class="slot"
         v-for="(show, sIndex) in day.schedule"
+        :key="sIndex"
         :title="show.title + ' (' + show.time +')'"
         :style="getSlotStyle(show, sIndex)">
         <span class="show">{{

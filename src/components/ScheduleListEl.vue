@@ -1,5 +1,8 @@
 <template>
-  <tr :data-timestamp-start="block.timestamp" :data-timestamp-end="block.timestamp_end" :class="isOnAir">
+  <tr
+    :data-timestamp-start="block.timestamp"
+    :data-timestamp-end="block.timestamp_end"
+    :class="isOnAir">
     <td class="field-time">{{ block.time }}</td>
     <td>
       <span class="field-show">{{ block.show }}</span>
