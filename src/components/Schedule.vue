@@ -16,7 +16,7 @@
         Expect it to be wrong as changes <i>might</i> happen.
       </td>
     </tr>
-    <tr v-if="blocks.length == 0">
+    <tr v-if="$parent.isReady && blocks.length == 0">
       <td colspan="2" class="schedule-info">
         <b>This schedule is empty and is waiting for an update.</b><br>
         Please come later when CN has provided new data.
