@@ -5,7 +5,7 @@
   "author": "MKody <im@kdy.ch>",
   "private": true,
   "scripts": {
-    "build": "node build/build.js && cp favicon.ico 404.html dist/",
+    "build": "node build/build.js && cp _redirects favicon.ico 404.html dist/",
     "dev": "node build/dev-server.js",
     "lint": "eslint --ext .js,.vue src",
     "start": "node build/dev-server.js"
