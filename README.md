@@ -1,5 +1,7 @@
 # CN Schedule
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-green.svg)](http://standardjs.com/)
+[![Code Climate](https://img.shields.io/codeclimate/github/sugrocks/cn-schedule.svg)](https://codeclimate.com/github/sugrocks/cn-schedule)
+[![Travis Build Status](https://travis-ci.org/sugrocks/cn-schedule.svg?branch=master)](https://travis-ci.org/sugrocks/cn-schedule)
 [![Gitgud Build Status](https://gitgud.io/sug/cn-schedule/badges/master/build.svg)](https://gitgud.io/sug/cn-schedule/commits/master)
 
 
