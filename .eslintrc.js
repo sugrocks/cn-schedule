@@ -15,6 +15,11 @@ module.exports = {
   plugins: [
     'html'
   ],
+  'globals': {
+    'VERSION': true,
+    'COMMITHASH': true,
+    'BRANCH': true
+  },
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions

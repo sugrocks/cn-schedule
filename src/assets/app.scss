@@ -171,54 +171,56 @@ table {
 }
 
 .schedule {
-    width: 100%;
-    z-index: 20;
+    table {
+        width: 100%;
+        z-index: 20;
 
-    .schedule-info {
-        background-color: #ffeb00;
-        color: #000;
-        padding: 20px;
-        text-align: center;
-    }
-
-    .schedule-zap2it {
-        background-color: #acffad;
-        color: #000;
-        text-align: center;
-    }
-
-    .schedule-notfound {
-       border: #f00 2px solid;
-        padding: 20px;
-    }
-
-    tr {
-        &:nth-child(even) {
-            background-color: #333;
+        .schedule-info {
+            background-color: #ffeb00;
+            color: #000;
+            padding: 20px;
+            text-align: center;
         }
 
-        &:nth-child(odd) {
-            background-color: #3e3e3e;
+        .schedule-zap2it {
+            background-color: #acffad;
+            color: #000;
+            text-align: center;
         }
 
-        &.on-air {
-            background-color: #72010e !important;
+        .schedule-notfound {
+        border: #f00 2px solid;
+            padding: 20px;
         }
 
-        .field-time {
-            color: #eee;
-            text-align: right;
-            width: 70px;
-        }
+        tr {
+            &:nth-child(even) {
+                background-color: #333;
+            }
 
-        .field-show {
-            color: #00aeef;
-            font-weight: bold;
-        }
+            &:nth-child(odd) {
+                background-color: #3e3e3e;
+            }
 
-        .field-title {
-            color: #eee;
-            font-style: italic;
+            &.on-air {
+                background-color: #72000D !important;
+            }
+
+            .field-time {
+                color: #eee;
+                text-align: right;
+                width: 70px;
+            }
+
+            .field-show {
+                color: #00aeef;
+                font-weight: bold;
+            }
+
+            .field-title {
+                color: #eee;
+                font-style: italic;
+            }
         }
     }
 }
@@ -345,7 +347,7 @@ table {
         }
     }
 
-    .schedule, .grid {
+    .schedule table, .grid {
         width: calc(100% - 200px);
     }
 

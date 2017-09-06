@@ -1,33 +1,35 @@
 <template>
-  <table class="schedule">
-    <tr v-if="isNotfound">
-      <td colspan="2" class="schedule-notfound">
-        <b>There's nothing at this date!</b><br>
-        Either you're trying to load an old entry
-        <small>
-          (and you should take a look at the <a target="_blank" rel="noopener" href="https://cnschedulearchive.tumblr.com/tagged/cartoon-network">CN Schedule Archive</a>)
-        </small>
-        or you're way too much in the future.
-      </td>
-    </tr>
-    <tr v-if="isZap">
-      <td colspan="2" class="schedule-zap2it">
-        This schedule was extracted from Zap2it.<br>
-        Expect it to be wrong as changes <i>might</i> happen.
-      </td>
-    </tr>
-    <tr v-if="$parent.isReady && blocks.length == 0">
-      <td colspan="2" class="schedule-info">
-        <b>This schedule is empty and is waiting for an update.</b><br>
-        Please come later when CN has provided new data.
-      </td>
-    </tr>
-    <schedule-el
-      v-for="block in orderBlocks(blocks)"
-      :block="block"
-      :key="block.timestamp">
-    </schedule-el>
-  </table>
+  <span class="schedule">
+    <table>
+      <tr v-if="isNotfound">
+        <td colspan="2" class="schedule-notfound">
+          <b>There's nothing at this date!</b><br>
+          Either you're trying to load an old entry
+          <small>
+            (and you should take a look at the <a target="_blank" rel="noopener" href="https://cnschedulearchive.tumblr.com/tagged/cartoon-network">CN Schedule Archive</a>)
+          </small>
+          or you're way too much in the future.
+        </td>
+      </tr>
+      <tr v-if="isZap">
+        <td colspan="2" class="schedule-zap2it">
+          This schedule was extracted from Zap2it.<br>
+          Expect it to be wrong as changes <i>might</i> happen.
+        </td>
+      </tr>
+      <tr v-if="$parent.isReady && blocks.length == 0 && !isNotfound">
+        <td colspan="2" class="schedule-info">
+          <b>This schedule is empty and is waiting for an update.</b><br>
+          Please come later when CN has provided new data.
+        </td>
+      </tr>
+      <schedule-el
+        v-for="block in blocks"
+        :block="block"
+        :key="block.timestamp">
+      </schedule-el>
+    </table>
+  </span>
 </template>
 
 <script>
@@ -81,7 +83,7 @@ export default {
         // Now we try to find that date
         if (d in schedule) {
           // If day found, let's load it
-          this.blocks = schedule[d]['schedule']
+          this.blocks = this.orderBlocks(schedule[d]['schedule'])
           this.$parent.$data.blocks = this.$data.blocks
           this.isZap = (schedule[d]['source'] === 'Zap2it')
           this.isNotfound = false
