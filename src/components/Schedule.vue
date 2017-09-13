@@ -1,7 +1,7 @@
 <template>
   <span class="schedule">
     <table>
-      <tr v-if="isNotfound">
+      <tr v-if="$parent.isNotFound">
         <td colspan="2" class="schedule-notfound">
           <b>There's nothing at this date!</b><br>
           Either you're trying to load an old entry
@@ -17,7 +17,7 @@
           Expect it to be wrong as changes <i>might</i> happen.
         </td>
       </tr>
-      <tr v-if="$parent.isReady && blocks.length == 0 && !isNotfound">
+      <tr v-if="$parent.isReady && blocks.length == 0 && !$parent.isNotFound">
         <td colspan="2" class="schedule-info">
           <b>This schedule is empty and is waiting for an update.</b><br>
           Please come later when CN has provided new data.
@@ -41,7 +41,6 @@ export default {
   data () {
     return {
       isZap: false,
-      isNotfound: false,
       pageTitle: 'Loading...',
       blocks: []
     }
@@ -86,13 +85,13 @@ export default {
           this.blocks = this.orderBlocks(schedule[d]['schedule'])
           this.$parent.$data.blocks = this.$data.blocks
           this.isZap = (schedule[d]['source'] === 'Zap2it')
-          this.isNotfound = false
+          this.$parent.$data.isNotFound = false
         } else {
           // If day not found from the route
           // Check if it's a proper date
           if (d.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/)) {
             // If it is, say we don't have it
-            this.isNotfound = true
+            this.$parent.$data.isNotFound = true
             this.pageTitle = '404'
           } else {
             // else, fucking 404

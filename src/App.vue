@@ -82,6 +82,7 @@ export default {
       isReady: false,
       scheduleReloaded: false,
       isZap: false,
+      isNotFound: false,
       showSettings: false,
       showAbout: false,
       showStats: false,
