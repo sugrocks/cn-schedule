@@ -8,7 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Dev",
-      "program": "${workspaceRoot}/build/dev-server.js"
+      "program": "${workspaceRoot}/build/dev-server.js",
+      "protocol": "inspector"
     }
   ]
 }
