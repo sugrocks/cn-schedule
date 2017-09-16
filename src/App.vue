@@ -12,6 +12,15 @@
 
     <!-- Left column with dates -->
     <table class="dates">
+      <tr v-if="newUpdate">
+        <td
+          class="update"
+          colspan="4"
+          @click="reload">
+          <b>APP UPDATE</b><br>
+          Click here to reload.
+        </td>
+      </tr>
       <day-el
         v-for="day in days"
         :day="day"
@@ -79,6 +88,7 @@ export default {
   name: 'app',
   data () {
     return {
+      newUpdate: false,
       isReady: false,
       scheduleReloaded: false,
       isZap: false,
@@ -107,6 +117,12 @@ export default {
     // Shortcut and URL to our API
     var t = this
     var url = 'https://api.sug.rocks/cnschedule.json'
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        t.newUpdate = true
+      })
+    }
 
     // Get config from localStorage
     t.config.showPast = (localStorage.getItem('cfgShowPast') === 'true')
@@ -163,6 +179,9 @@ export default {
       localStorage.setItem('cfgShowPast', this.config.showPast)
       localStorage.setItem('cfgShowZap', this.config.showZap)
       localStorage.setItem('cfgShowGlobal', this.config.showGlobal)
+    },
+    reload () {
+      window.location.reload()
     }
   },
   computed: {
