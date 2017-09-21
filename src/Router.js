@@ -35,10 +35,6 @@ export default new Router({
       redirect: function () {
         window.location.href = '/404.html'
       }
-    },
-    {
-      path: '*',
-      redirect: 'NotFound'
     }
   ]
 })
