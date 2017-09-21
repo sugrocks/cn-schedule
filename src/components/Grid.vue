@@ -1,5 +1,5 @@
 <template>
-  <div class="grid">
+  <VuePerfectScrollbar class="grid">
     <div class="time-table">
       <div class="time-head">
         Times
@@ -41,13 +41,18 @@
           }}</span>
       </div>
     </div>
-  </div>
+  </VuePerfectScrollbar>
 </template>
 
 <script>
 import { getToday } from '../assets/dates.js'
+import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+
 export default {
   name: 'grid',
+  components: {
+    VuePerfectScrollbar
+  },
   metaInfo () {
     return {
       title: 'Grid',

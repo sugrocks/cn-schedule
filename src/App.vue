@@ -188,6 +188,7 @@ export default {
     datesSettings: function () {
       // To style or show/hide elements on the menu based on the user settings
       return {
+        'app': true,
         'noZap': !this.config.showZap,
         'noPast': !this.config.showPast
       }

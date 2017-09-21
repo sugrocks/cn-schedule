@@ -1,43 +1,60 @@
+// sass-lint:disable force-element-nesting, nesting-depth, class-name-format, no-transition-all
+$black: #000;
+$white: #fff;
+$red: #f00;
+
+$semi-black: rgba(0, 0, 0, .4);
+$light-white: #eee;
+$semi-white: rgba(255, 255, 255, .5);
+$touch-white: rgba(255, 255, 255, .1);
+
+$dark: #262626;
+$selected: #86e0ff;
+
+$line-even: #333;
+$line-odd: #3e3e3e;
+$dark-red: #72000d;
+
+$cn-blue: #00aeef;
+$cn-pink: #ec018c;
+$cn-yellow: #ffeb00;
+$zap2it: #acffad;
+
 @font-face {
-    font-family: 'cnbold';
-    font-style: normal;
-    font-weight: normal;
-    src: url('./assets/fonts/cn_bold.woff') format('woff'),
-         url('./assets/fonts/cn_bold.ttf') format('ttf'),
-         url('./assets/fonts/cn_bold.otf') format('otf'),
-         url('./assets/fonts/cn_bold.eot'),
-         url('./assets/fonts/cn_bold.eot?#iefix') format('embedded-opentype');
+  font-family: 'cnbold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/cn_bold.woff') format('woff'), url('./assets/fonts/cn_bold.ttf') format('ttf'), url('./assets/fonts/cn_bold.otf') format('otf'), url('./assets/fonts/cn_bold.eot'), url('./assets/fonts/cn_bold.eot?#iefix') format('embedded-opentype');
 }
 
 body {
-    background-color: #000; /* "REFRESHING" DESIGN, LOL */
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
+  // "REFRESHING" DESIGN, LOL
+  background-color: $black;
+  color: $white;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
 }
 
-h1, h2, h3 {
-    font-family: 'cnbold', sans-serif;
-    font-weight: 900;
+h1,
+h2,
+h3 {
+  font-family: 'cnbold', sans-serif;
+  font-weight: 900;
 }
 
 h1 {
-    color: #ec018c;
-    font-size: 48px;
-    line-height: 75px;
-    margin: 0 10px;
-    z-index: 5;
+  color: $cn-pink;
+  font-size: 48px;
+  line-height: 75px;
+  margin: 0 10px;
+  z-index: 5;
 }
 
-h2.loading {
+h2 {
+  &.loading {
     animation: loading 1.5s linear infinite;
-    background-color: #000;
-    background-image: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 35px,
-        rgba(255, 255, 255, 0.5) 35px,
-        rgba(255, 255, 255, 0.5) 70px);
+    background-color: $black;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, $semi-white 35px, $semi-white 70px);
     background-size: 100px 100px;
     margin: 0;
     padding: 22px;
@@ -47,326 +64,341 @@ h2.loading {
     top: 0;
     width: calc(100% - 44px);
     z-index: 50;
+  }
 }
 
 small {
-    font-size: 0.7em;
+  font-size: .7em;
 }
 
 a {
-    color: #00aeef;
-    cursor: pointer;
-    text-decoration: none;
+  color: $cn-blue;
+  cursor: pointer;
+  text-decoration: none;
 
-    &:hover, &:active {
-        text-decoration: underline;
-    }
+  &:hover,
+  &:active {
+    text-decoration: underline;
+  }
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 2px;
+  border-collapse: collapse;
+  border-spacing: 2px;
 
-    th, td {
-        line-height: 1.2rem;
-        padding: 5px 10px;
-        vertical-align: middle;
-    }
+  th,
+  td {
+    line-height: 1.2rem;
+    padding: 5px 10px;
+    vertical-align: middle;
+  }
 
-    th {
-        font-weight: bold;
-        text-align: center;
-    }
+  th {
+    font-weight: bold;
+    text-align: center;
+  }
 }
 
-#app {
-    &.noZap .zap2it,
-    &.noPast .past {
-        display: none;
-    }
+.app {
+  &.nozap .zap2it,
+  &.nopast .past {
+    display: none;
+  }
 }
 
 .modal {
-    background-color: #ffeb00;
-    color: #000;
-    line-height: 20px;
-    max-height: calc(100vh - 12px);
-    overflow-y: auto;
-    padding: 6px 0;
-    position: fixed;
-    text-align: center;
-    top: 0;
-    vertical-align: middle;
-    width: 100%;
-    z-index: 40;
+  background-color: $cn-yellow;
+  color: $black;
+  line-height: 20px;
+  max-height: calc(100vh - 12px);
+  overflow-y: auto;
+  padding: 6px 0;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  vertical-align: middle;
+  width: 100%;
+  z-index: 40;
 
-    &.stats {
-        .top-shows {
-            border: rgba(0,0,0,.4) 1px solid;
-            margin: 0 auto;
-            text-align: left;
+  &.stats {
+    .top-shows {
+      border: $semi-black 1px solid;
+      margin: 0 auto;
+      text-align: left;
 
-            tr {
-                border-bottom: 1px solid rgba(0,0,0, .4);
-            }
-        }
+      tr {
+        border-bottom: 1px solid $semi-black;
+      }
     }
+  }
 
-    &.about {
-        .as {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-weight: 900;
-            padding: 0 5px;
-            text-decoration: none;
-        }
+  &.about {
+    .as {
+      background-color: $black;
+      color: $white;
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 900;
+      padding: 0 5px;
+      text-decoration: none;
     }
+  }
 }
 
 .dates {
-    background-color: #262626;
-    color: #fff;
-    width: 100%;
-    z-index: 10;
+  background-color: $dark;
+  color: $white;
+  width: 100%;
+  z-index: 10;
 
-    td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        cursor: pointer;
-        padding: 15px;
+  td {
+    border-bottom: 1px solid $touch-white;
+    cursor: pointer;
+    padding: 15px;
 
-        &:hover {
-            background-color: #000;
-        }
-
-        &.selected {
-            color: #86e0ff;
-
-            svg * {
-                stroke: #86e0ff;
-            }
-        }
-
-        &.update {
-            background-color: red;
-        }
-
-        &.special-links {
-            font-style: italic;
-            padding-top: 8px;
-            text-align: center;
-
-            svg {
-                height: 1.2em;
-                width: 1.2em;
-            }
-        }
+    &:hover {
+      background-color: $black;
     }
 
-    .zap2it td:before {
-        background: url('./assets/zap2it.png') no-repeat;
-        background-size: contain;
-        content: '';
-        display: inline-block;
-        height: 0.9em;
-        position: relative;
-        top: 2px;
-        width: 0.9em;
+    &.selected {
+      color: $selected;
+
+      svg * {
+        stroke: $selected;
+      }
     }
+
+    &.update {
+      background-color: $red;
+    }
+
+    &.special-links {
+      font-style: italic;
+      padding-top: 8px;
+      text-align: center;
+
+      svg {
+        height: 1.2em;
+        width: 1.2em;
+      }
+    }
+  }
+
+  .zap2it td {
+    &::before {
+      background: url('./assets/zap2it.png') no-repeat;
+      background-size: contain;
+      content: '';
+      display: inline-block;
+      height: .9em;
+      position: relative;
+      top: 2px;
+      width: .9em;
+    }
+  }
 }
 
 .schedule {
-    table {
-        width: 100%;
-        z-index: 20;
+  table {
+    width: 100%;
+    z-index: 20;
 
-        .schedule-info {
-            background-color: #ffeb00;
-            color: #000;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .schedule-zap2it {
-            background-color: #acffad;
-            color: #000;
-            text-align: center;
-        }
-
-        .schedule-notfound {
-        border: #f00 2px solid;
-            padding: 20px;
-        }
-
-        tr {
-            &:nth-child(even) {
-                background-color: #333;
-            }
-
-            &:nth-child(odd) {
-                background-color: #3e3e3e;
-            }
-
-            &.on-air {
-                background-color: #72000D !important;
-            }
-
-            .field-time {
-                color: #eee;
-                text-align: right;
-                width: 70px;
-            }
-
-            .field-show {
-                color: #00aeef;
-                font-weight: bold;
-            }
-
-            .field-title {
-                color: #eee;
-                font-style: italic;
-            }
-        }
+    .schedule-info {
+      background-color: $cn-yellow;
+      color: $black;
+      padding: 20px;
+      text-align: center;
     }
+
+    .schedule-zap2it {
+      background-color: $zap2it;
+      color: $black;
+      text-align: center;
+    }
+
+    .schedule-notfound {
+      border: $red 2px solid;
+      padding: 20px;
+    }
+
+    tr {
+      &:nth-child(even) {
+        background-color: $line-even;
+      }
+
+      &:nth-child(odd) {
+        background-color: $line-odd;
+      }
+
+      &.on-air {
+        background-color: $dark-red;
+      }
+
+      .field-time {
+        color: $light-white;
+        text-align: right;
+        width: 70px;
+      }
+
+      .field-show {
+        color: $cn-blue;
+        font-weight: bold;
+      }
+
+      .field-title {
+        color: $light-white;
+        font-style: italic;
+      }
+    }
+  }
 }
 
 .grid {
-    overflow-x: scroll;
-    width: 100%;
-    white-space: nowrap;
-    z-index: 20;
+  overflow-x: scroll;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 20;
 
-    .time-head,
-    .date {
-        background-color: #ec018c;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-        padding: 5px 0;
-        position: -webkit-sticky;
-        position: sticky;
-        text-align: center;
-        top: 0;
-        z-index: 23;
+  // Scrollbar
+  .ps__scrollbar-x-rail,
+  .ps__scrollbar-y-rail {
+    z-index: 30;
+  }
+
+  .time-head,
+  .date {
+    background-color: $cn-pink;
+    color: $black;
+    font-style: italic;
+    font-weight: bold;
+    padding: 5px 0;
+    position: sticky;
+    text-align: center;
+    top: 0;
+    z-index: 23;
+  }
+
+  .zap2it .date {
+    background-color: $zap2it;
+  }
+
+  .cn .date {
+    background-color: $cn-blue;
+  }
+
+  .time-table {
+    display: inline-block;
+    font-size: 10px;
+    left: 0;
+    margin-right: -3px;
+    padding: 0 1px 5px 0;
+    position: sticky;
+    vertical-align: top;
+    z-index: 26;
+
+    .time-line {
+      // Vertical center alignment
+      align-items: center;
+      box-shadow: inset 0 0 0 1px $black;
+      display: flex;
+      height: 50px;
+      // Horizontal center alignment
+      justify-content: center;
+      padding: 0 5px;
+
+      &:nth-child(even) {
+        background-color: $line-even;
+      }
+
+      &:nth-child(odd) {
+        background-color: $line-odd;
+      }
     }
+  }
 
-    .zap2it .date {
-        background-color: #ffeb00;
+  .day {
+    display: inline-block;
+    font-size: 10px;
+    padding: 0 1px;
+    vertical-align: top;
+    width: 150px;
+
+    .slot {
+      // Vertical center alignment
+      align-items: center;
+      box-shadow: inset 0 0 0 1px $black;
+      display: flex;
+      // Horizontal center alignment
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+
+      .show {
+        overflow: hidden;
+        white-space: normal;
+        word-break: break-word;
+      }
     }
-
-    .cn .date {
-        background-color: #00aeef;
-    }
-
-    .time-table {
-        display: inline-block;
-        font-size: 10px;
-        left: 0;
-        margin-right: -3px;
-        padding: 0 1px 5px 0;
-        position: -webkit-sticky;
-        position: sticky;
-        vertical-align: top;
-        z-index: 26;
-
-        .time-line {
-            align-items: center; /* Vertical center alignment */
-            box-shadow: inset 0px 0px 0px 1px #000;
-            display:flex;
-            height: 50px;
-            justify-content: center; /* Horizontal center alignment */
-            padding: 0 5px;
-
-            &:nth-child(even) {
-                background-color: #333;
-            }
-
-            &:nth-child(odd) {
-                background-color: #3e3e3e;
-            }
-        }
-    }
-
-    .day {
-        display: inline-block;
-        font-size: 10px;
-        padding: 0 1px;
-        vertical-align: top;
-        width: 150px !important;
-
-        .slot {
-            align-items: center; /* Vertical center alignment */
-            box-shadow: inset 0px 0px 0px 1px #000;
-            display:flex;
-            justify-content: center; /* Horizontal center alignment */
-            overflow: hidden;
-            text-align: center;
-
-            .show {
-                overflow: hidden;
-                white-space: normal;
-                word-break: break-word;
-            }
-        }
-    }
+  }
 }
 
-
-.slide-enter-active, .slide-leave-active {
-    transition: all .3s ease;
+.slide-enter-active,
+.slide-leave-active {
+  transition: all .3s ease;
 }
 
-.slide-enter, .slide-leave-to {
-    opacity: 0;
-    transform: translateY(-100px);
+.slide-enter,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(-100px);
 }
 
-
-.slideOut-enter-active, .slideOut-leave-active {
-    transition: all 1s ease;
+.slideOut-enter-active,
+.slideOut-leave-active {
+  transition: all 1s ease;
 }
 
 .slideOut-leave-to {
-    transform: translateY(-100px);
+  transform: translateY(-100px);
 }
 
-/* Barber pole animation */
+// Barber pole animation
 @keyframes loading {
-    from {
-        background-position: 0 0;
-    }
+  from {
+    background-position: 0 0;
+  }
 
-    to {
-        background-position: 100px 0px;
-    }
+  to {
+    background-position: 100px 0;
+  }
 }
 
-/* Actually around 550px? */
+// Actually around 550px?
 @media screen and (min-width: 610px) {
-    .dates {
-        float: left;
-        width: 200px;
+  .dates {
+    float: left;
+    width: 200px;
 
-        td {
-            padding: 5px 10px;
-        }
+    td {
+      padding: 5px 10px;
     }
+  }
 
-    .schedule table, .grid {
-        width: calc(100% - 200px);
-    }
+  .schedule table,
+  .grid {
+    width: calc(100% - 200px);
+  }
 
-    .grid {
-        height: calc(100vh - 75px);
-        overflow-y: scroll;
-    }
+  .grid {
+    height: calc(100vh - 75px);
+    overflow-y: scroll;
+  }
 }
 
-/* If high enough, make the dates list sticky */
+
+// If high enough, make the dates list sticky
 @media screen and (min-width: 610px) and (min-height: 580px) {
-    .dates {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-    }
+  .dates {
+    position: sticky;
+    top: 0;
+  }
 }
