@@ -3,17 +3,15 @@ $black: #000;
 $white: #fff;
 $red: #f00;
 
-$semi-black: rgba(0, 0, 0, .4);
-$light-white: #eee;
-$semi-white: rgba(255, 255, 255, .5);
-$touch-white: rgba(255, 255, 255, .1);
+$loading-stripes: rgba(255, 255, 255, .5); // White strips in "Loading..."
+$semi-transparent-black: rgba(0, 0, 0, .4); // Stats borders
+$semi-transparent-white: rgba(255, 255, 255, .1); // Date list borders
+$dates-bg: #262626; // Date list background
+$selected: #86e0ff; // Selected link, lighter than $cn-blue
 
-$dark: #262626;
-$selected: #86e0ff;
-
-$line-even: #333;
-$line-odd: #3e3e3e;
-$dark-red: #72000d;
+$line-even: #333; // List even lines
+$line-odd: #3e3e3e; // List odd lines
+$dark-red: #72000d; // On Air line
 
 $cn-blue: #00aeef;
 $cn-pink: #ec018c;
@@ -54,7 +52,7 @@ h2 {
   &.loading {
     animation: loading 1.5s linear infinite;
     background-color: $black;
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, $semi-white 35px, $semi-white 70px);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, $loading-stripes 35px, $loading-stripes 70px);
     background-size: 100px 100px;
     margin: 0;
     padding: 22px;
@@ -122,12 +120,12 @@ table {
 
   &.stats {
     .top-shows {
-      border: $semi-black 1px solid;
+      border: $semi-transparent-black 1px solid;
       margin: 0 auto;
       text-align: left;
 
       tr {
-        border-bottom: 1px solid $semi-black;
+        border-bottom: 1px solid $semi-transparent-black;
       }
     }
   }
@@ -145,13 +143,13 @@ table {
 }
 
 .dates {
-  background-color: $dark;
+  background-color: $dates-bg;
   color: $white;
   width: 100%;
   z-index: 10;
 
   td {
-    border-bottom: 1px solid $touch-white;
+    border-bottom: 1px solid $semi-transparent-white;
     cursor: pointer;
     padding: 15px;
 
@@ -234,7 +232,7 @@ table {
       }
 
       .field-time {
-        color: $light-white;
+        color: $white;
         text-align: right;
         width: 70px;
       }
@@ -245,7 +243,7 @@ table {
       }
 
       .field-title {
-        color: $light-white;
+        color: $white;
         font-style: italic;
       }
     }
