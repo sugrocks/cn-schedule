@@ -78,9 +78,12 @@ export default {
     }
   },
   mounted () {
-    // Load data in this component
-    this.totalBlocks = this.$parent.$data.blocks.length
-    this.dayStats = getStats(this.$parent.$data.blocks)
+    // Don't fetch data that doesn't exist if 404
+    if (!this.$parent.$data.isNotFound) {
+      // Load data in this component
+      this.totalBlocks = this.$parent.$data.blocks.length
+      this.dayStats = getStats(this.$parent.$data.blocks)
+    }
   }
 }
 </script>

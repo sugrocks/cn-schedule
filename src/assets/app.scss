@@ -17,7 +17,8 @@ body {
 }
 
 h1, h2, h3 {
-    font-family: 'cnbold', 'serif';
+    font-family: 'cnbold', sans-serif;
+    font-weight: 900;
 }
 
 h1 {
@@ -144,6 +145,10 @@ table {
             svg * {
                 stroke: #86e0ff;
             }
+        }
+
+        &.update {
+            background-color: red;
         }
 
         &.special-links {

@@ -45,14 +45,17 @@
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
   </head>
   <body>
-    <noscript>
-      <h1>CN Schedule</h1>
-      <p>
-          <b>Please enable Javascript!</b>
-          Our app rely on it to fetch, store and display the data.<br>
-          Thanks!
-      </p>
-    </noscript>
+    <div id="jserror">
+      <noscript>
+        <h1>CN Schedule</h1>
+        <p>
+            <b>Please enable Javascript!</b>
+            Our app rely on it to fetch, store and display the data.<br>
+            Thanks!
+        </p>
+      </noscript>
+    </div>
+
     <div id="app"></div>
 
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>

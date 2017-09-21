@@ -1,14 +1,12 @@
+/* globals VERSION COMMITHASH BRANCH */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-
 // Raven to use with Sentry.io
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
-
 // Our app
 import App from './App'
-
 // Some cool plugins
 import VueResource from 'vue-resource'
 import VueAnalytics from 'vue-analytics'
@@ -18,8 +16,34 @@ import Settings from '@/components/Settings'
 import Stats from '@/components/Stats'
 import DayListEl from '@/components/DayListEl'
 import ScheduleListEl from '@/components/ScheduleListEl'
-// The router full code
+// The router
 import router from './Router'
+
+// Test if the browser doesn't support console and localStorage
+if (typeof console === 'undefined' || typeof localStorage === 'undefined') {
+  var errorMsgUnsupported = '<h1>CN Schedule</h1>'
+  errorMsgUnsupported = '<b>You\'re currently using an unsupported browser</b>.<br>'
+  errorMsgUnsupported += 'Please upgrade to the latest version of Chrome, Opera, Brave, Firefox, Microsoft Edge or Safari to continue.<br>'
+  errorMsgUnsupported += '<a href="https://whatbrowser.org/">More details on having a good and updated browser here.</a>'
+
+  document.getElementById('jserror').innerHTML = errorMsgUnsupported
+  throw new Error('Unsupported browser')
+}
+
+// Test if we can write things to localStorage (IE's "Access Denied" / iOS Private Browsing)
+try {
+  window.localStorage.setItem('Are You CN', 'What We\'re Sayin\'?')
+} catch (error) {
+  var errorMsgLS = '<h1>CN Schedule</h1>'
+  errorMsgLS = '<b>This app doesn\'t work with your current browser state.</b><br>'
+  errorMsgLS += 'iOS users: Private browsing mode breaks the saving/loading feature of the app. Please go to normal mode.<br>'
+  errorMsgLS += 'Internet Explorer users: Your browser doesn\'t allow this website to save local content.'
+  errorMsgLS += 'This might be a security measure from your computer or your company.'
+  errorMsgLS += 'If you can, add this website to the thrusted sites list or temporarly use an another browser.'
+
+  document.getElementById('jserror').innerHTML = errorMsgLS
+  throw new Error('Can\'t write to localStorage')
+}
 
 // Stop posting tips
 Vue.config.productionTip = false
