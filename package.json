@@ -20,7 +20,7 @@
     "raven-js": "^3.17.0",
     "vue-analytics": "^5.1.1",
     "vue-meta": "^1.2.0",
-    "vue-perfect-scrollbar": "^0.0.12"
+    "vue-perfect-scrollbar": "^0.0.13"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",
