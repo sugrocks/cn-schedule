@@ -28,11 +28,20 @@ build:
     paths:
       - dist
 
-deploy:
+deploy live:
   image: golang:latest
   stage: deploy
   only:
     - live
   script:
     - go get github.com/netlify/netlifyctl
-    - netlifyctl -y -A $NETLIFY_KEY deploy
+    - netlifyctl -y -A $NETLIFY_KEY deploy -m "$(git log -1 --pretty=%B)"
+
+deploy draft:
+  image: golang:latest
+  stage: deploy
+  only:
+    - master
+  script:
+    - go get github.com/netlify/netlifyctl
+    - netlifyctl -y -A $NETLIFY_KEY deploy -d -m "$(git log -1 --pretty=%B)"
