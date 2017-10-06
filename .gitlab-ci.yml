@@ -18,15 +18,13 @@ lint:
 build:
   image: node:latest
   stage: build
-  except:
-    - master
   cache:
     paths:
       - node_modules/
   script:
     - npm run build
   artifacts:
-    expire_in: 1 week
+    expire_in: 3 days
     paths:
       - dist
 
