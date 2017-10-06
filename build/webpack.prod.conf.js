@@ -61,6 +61,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: 'index.html',
+      favicon: 'favicon.ico',
       inject: true,
       minify: {
         removeComments: true,
@@ -100,11 +101,19 @@ var webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
+      },
+      {
+        // redirects config for netlify
+        from: path.resolve(__dirname, '../_redirects')
+      },
+      {
+        // 404 page
+        from: path.resolve(__dirname, '../404.html')
       }
     ]),
     // service worker caching
     new SWPrecacheWebpackPlugin({
-      cacheId: 'my-vue-app',
+      cacheId: 'cn-schedule',
       filename: 'service-worker.js',
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
       minify: true,
