@@ -18,6 +18,9 @@ lint:
 build:
   image: node:latest
   stage: build
+  except:
+    refs:
+      - master
   cache:
     paths:
       - node_modules/
@@ -34,9 +37,6 @@ deploy:
   only:
     refs:
       - live
-  except:
-    refs:
-      - master
   script:
     - go get github.com/netlify/netlifyctl
     - netlifyctl -y -A $NETLIFY_KEY deploy
