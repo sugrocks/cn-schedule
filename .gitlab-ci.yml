@@ -1,33 +1,41 @@
 cache:
-  key: "$CI_COMMIT_REF_NAME"
-  untracked: true
   paths:
-  - node_modules/
-  - .yarn/
+    - node_modules/
+    - .yarn/
 
-before_script:
- - yarn config set cache-folder .yarn
- - yarn
+stages:
+  - test
+  - build
+  - deploy
 
 lint:
   image: node:latest
   stage: test
+  before_script:
+    - yarn config set cache-folder .yarn
+    - yarn
   script:
-   - npm run lint
+    - npm run lint
 
 build:
   image: node:latest
   stage: build
+  before_script:
+    - yarn config set cache-folder .yarn
+    - yarn
   script:
-   - npm run build
+    - npm run build
   artifacts:
     expire_in: 1 week
     paths:
       - dist
 
 deploy:
-  image: go:latest
+  image: golang:latest
   stage: deploy
+  only:
+    refs:
+      - live
   script:
-   - go get github.com/netlify/netlifyctl
-   - netlifyctl -y -A $NETLIFY_KEY deploy
+    - go get github.com/netlify/netlifyctl
+    - netlifyctl -y -A $NETLIFY_KEY deploy
