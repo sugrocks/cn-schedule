@@ -3,7 +3,10 @@ test:js:
   cache:
     paths:
     - node_modules/
+    - .yarn/
   before_script:
-   - npm install standard eslint-plugin-standard
+   - npm install yarn
+   - yarn
+   - yarn config set cache-folder .yarn
   script:
-   - ./node_modules/.bin/standard .
+   - npm run lint
