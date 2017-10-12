@@ -18,7 +18,7 @@
       v-if="index !== '_'">
       <div
         class="date">
-        {{ index }}
+        {{ pd(index) }}
         <span v-if="day.source === 'Zap2it'">
           (Zap2it)
         </span>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { getToday } from '../assets/dates.js'
+import { getToday, parseDate } from '../assets/dates.js'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
 export default {
@@ -95,6 +95,9 @@ export default {
         'past': (getToday().replace('-', '') > index.replace('-', '')),
         'day': true
       }
+    },
+    pd (date) {
+      return parseDate(date)
     }
   },
   data () {

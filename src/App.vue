@@ -105,6 +105,7 @@ export default {
       days: [],
       json: {},
       globalTotalBlocks: 0,
+      globalMinMax: [],
       globalStats: [],
       globalStatsCharts: {
         labels: [],
@@ -173,6 +174,11 @@ export default {
               everythingCN.push(t.json[li]['schedule'][lj])
             }
           }
+        }
+
+        t.globalMinMax = {
+          min: everythingCN[0].date,
+          max: everythingCN[everythingCN.length - 1].date
         }
 
         // Get total number of slots and get stats per-show

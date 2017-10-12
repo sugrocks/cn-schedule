@@ -1,5 +1,6 @@
 // sass-lint:disable force-element-nesting, nesting-depth, class-name-format, no-transition-all
 $black: #000;
+$gray: #aaa;
 $white: #fff;
 $red: #f00;
 
@@ -202,6 +203,10 @@ table {
       width: .9em;
     }
   }
+
+  .past {
+    color: $gray;
+  }
 }
 
 .schedule {
@@ -290,6 +295,10 @@ table {
 
   .cn .date {
     background-color: $cn-blue;
+  }
+
+  .cn.past .date {
+    background-color: $cn-yellow;
   }
 
   .time-table {

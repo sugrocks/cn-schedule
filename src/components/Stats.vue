@@ -11,7 +11,7 @@
           No statistics available for this day.
         </span>
         <span class="stats-text day" v-else>
-          For {{ day }}, we have {{ totalBlocks }} time slots with {{ dayStats.length }} shows.
+          For {{ pd(day) }}, we have {{ totalBlocks }} time slots with {{ dayStats.length }} shows.
         </span>
         <br>
         <div class="two-columns-stats" v-if="dayStats.length > 0">
@@ -41,7 +41,7 @@
           No global statistics available for the moment.
         </span>
         <span class="stats-text all" v-else>
-          From official sources, we have {{ $parent.globalTotalBlocks }} time slots with {{ $parent.globalStats.length }} shows.
+          From {{ pd($parent.globalMinMax.min) }} to {{ pd($parent.globalMinMax.max) }}, we have {{ $parent.globalTotalBlocks }} time slots with {{ $parent.globalStats.length }} shows.
         </span>
         <br>
         <div class="two-columns-stats">
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { parseDate } from '../assets/dates.js'
 import { getStats } from '../assets/stats.js'
 import StatsChart from './StatsChart'
 import ColorHash from 'color-hash'
@@ -91,6 +92,11 @@ export default {
           data: []
         }]
       }
+    }
+  },
+  methods: {
+    pd (date) {
+      return parseDate(date, true)
     }
   },
   mounted () {

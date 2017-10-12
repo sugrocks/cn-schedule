@@ -10,13 +10,13 @@ export function getToday () {
   return y + '-' + m + '-' + d
 }
 
-export function parseDate (date) {
+export function parseDate (date, shorter) {
   var dateSplit = date.split('-')
   var dobj = new Date(dateSplit[0], (dateSplit[1] - 1), dateSplit[2])
   return dobj.toLocaleDateString(
     'en-US',
     {
-      weekday: 'short',
+      weekday: shorter ? undefined : 'short',
       month: 'long',
       day: 'numeric'
     }
