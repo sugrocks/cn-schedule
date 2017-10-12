@@ -83,6 +83,7 @@
 <script>
 import { getStats } from './assets/stats.js'
 import { getToday, parseDate } from './assets/dates.js'
+import ColorHash from 'color-hash'
 
 export default {
   name: 'app',
@@ -104,7 +105,14 @@ export default {
       days: [],
       json: {},
       globalTotalBlocks: 0,
-      globalStats: []
+      globalStats: [],
+      globalStatsCharts: {
+        labels: [],
+        datasets: [{
+          backgroundColor: [],
+          data: []
+        }]
+      }
     }
   },
   metaInfo () {
@@ -169,7 +177,14 @@ export default {
 
         // Get total number of slots and get stats per-show
         t.globalTotalBlocks = everythingCN.length
-        t.globalStats = getStats(everythingCN)
+        var s = getStats(everythingCN)
+        t.globalStats = s[0]
+        t.globalStatsCharts.labels = s[1]
+        t.globalStatsCharts.datasets[0].data = s[2]
+        for (var si = 0; si < s[1].length; si++) {
+          var colorHash = new ColorHash({lightness: 0.5})
+          t.globalStatsCharts.datasets[0].backgroundColor.push(colorHash.hex(s[1][si]))
+        }
         t.scheduleReloaded = true
       })
   },

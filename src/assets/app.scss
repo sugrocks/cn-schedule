@@ -119,13 +119,22 @@ table {
   z-index: 40;
 
   &.stats {
-    .top-shows {
-      border: $semi-transparent-black 1px solid;
+    .two-columns-stats {
+      display: inline-block;
       margin: 0 auto;
-      text-align: left;
 
-      tr {
-        border-bottom: 1px solid $semi-transparent-black;
+      .top-shows {
+        border: $semi-transparent-black 1px solid;
+        text-align: left;
+
+        tr {
+          border-bottom: 1px solid $semi-transparent-black;
+        }
+      }
+
+      > div {
+        margin: 0 auto;
+        max-width: 200px;
       }
     }
   }
@@ -370,8 +379,8 @@ table {
   }
 }
 
-// Actually around 550px?
-@media screen and (min-width: 610px) {
+// Make a two-column layout starting 630px in width
+@media screen and (min-width: 630px) {
   .dates {
     float: left;
     width: 200px;
@@ -389,6 +398,14 @@ table {
   .grid {
     height: calc(100vh - 75px);
     overflow-y: scroll;
+  }
+
+  .modal {
+    &.stats {
+      .two-columns-stats {
+        display: inline-flex;
+      }
+    }
   }
 }
 
