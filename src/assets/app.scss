@@ -98,8 +98,8 @@ table {
 }
 
 .app {
-  &.nozap .zap2it,
-  &.nopast .past {
+  &.no-zap .zap2it,
+  &.no-past .past {
     display: none;
   }
 }

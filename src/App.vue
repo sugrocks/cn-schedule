@@ -204,8 +204,8 @@ export default {
       // To style or show/hide elements on the menu based on the user settings
       return {
         'app': true,
-        'noZap': !this.config.showZap,
-        'noPast': !this.config.showPast
+        'no-zap': !this.config.showZap,
+        'no-past': !this.config.showPast
       }
     }
   }
