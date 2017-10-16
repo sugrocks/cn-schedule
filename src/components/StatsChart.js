@@ -1,8 +1,8 @@
 import { Doughnut, mixins } from 'vue-chartjs'
 
-export default Doughnut.extend({
+export default {
   name: 'stats-chart',
-  mixins: [mixins.reactiveProp],
+  mixins: [Doughnut, mixins.reactiveProp],
   props: ['chartData'],
   mounted () {
     this.renderChart(this.chartData, {
@@ -14,4 +14,4 @@ export default Doughnut.extend({
       }
     })
   }
-})
+}
