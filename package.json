@@ -17,7 +17,7 @@
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-html": "^3.2.2",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-node": "^5.2.1",
     "perfect-scrollbar": "^1.1.0",
     "raven-js": "^3.19.1",
     "vue-analytics": "^5.1.1",
