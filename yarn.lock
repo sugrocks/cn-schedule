@@ -5779,9 +5779,9 @@ vue-analytics@^5.3.0:
   dependencies:
     load-script "^1.0.0"
 
-vue-chartjs@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-3.0.0.tgz#a94f79072ed9a6d51b62c23269d874af0bc48718"
+vue-chartjs@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-3.0.1.tgz#e1b61174fe2bf55d03bad026338ceea70567099a"
   dependencies:
     lodash.merge "^4.6.0"
 
