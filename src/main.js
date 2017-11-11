@@ -80,7 +80,7 @@ console.log(
 )
 console.log(
   '%cby CTOON Webmedia Group' +
-  '\nGithub: https://github.com/sugrocks/cn-schedule',
+  '\nGithub: https://gitlab.com/ctoon/cn-schedule',
   'font-style:italic;'
 )
 console.log(
