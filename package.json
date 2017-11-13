@@ -15,7 +15,7 @@
     "chart.js": "^2.7.1",
     "color-hash": "^1.0.3",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-html": "^3.2.2",
+    "eslint-plugin-html": "^4.0.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "perfect-scrollbar": "^1.2.0",
