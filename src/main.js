@@ -80,12 +80,11 @@ console.log(
 )
 console.log(
   '%cby CTOON Webmedia Group' +
-  '\nGithub: https://gitlab.com/ctoon/cn-schedule',
+  '\nGit: https://gitlab.com/ctoon/cn-schedule',
   'font-style:italic;'
 )
 console.log(
-  '%cVersion: ' + VERSION +
-  '\nCommit: ' + COMMITHASH +
+  '%cCommit: ' + COMMITHASH +
   '\nBranch: ' + BRANCH,
   'color:green;'
 )
