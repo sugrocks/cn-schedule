@@ -5839,9 +5839,9 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-analytics@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.4.0.tgz#09efda3bafb46e8e34d5f7aebd61277b12986398"
+vue-analytics@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.5.0.tgz#076364c64861039aba3f26d7cc11a41572f2e2dd"
 
 vue-chartjs@^3.0.2:
   version "3.0.2"
