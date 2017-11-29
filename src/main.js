@@ -5,6 +5,9 @@ import Vue from 'vue'
 // Raven to use with Sentry.io
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
+// Polyfills
+import Promise from 'promise-polyfill'
+import 'whatwg-fetch'
 // Our app
 import App from './App'
 // Some cool plugins
@@ -19,8 +22,13 @@ import ScheduleListEl from '@/components/ScheduleListEl'
 // The router
 import router from './Router'
 
-// Test if the browser doesn't support console and localStorage
-if (typeof console === 'undefined' || typeof localStorage === 'undefined') {
+// Apply polyfill
+if (!window.Promise) {
+  window.Promise = Promise
+}
+
+// Test if the browser doesn't support console, we're doomed
+if (typeof console === 'undefined') {
   var errorMsgUnsupported = '<h1>CN Schedule</h1>'
   errorMsgUnsupported += '<b>You\'re currently using an unsupported browser</b>.<br>'
   errorMsgUnsupported += 'Please upgrade to the latest version of Chrome, Opera, Brave, Firefox, Microsoft Edge or Safari to continue.<br>'
@@ -28,21 +36,6 @@ if (typeof console === 'undefined' || typeof localStorage === 'undefined') {
 
   document.getElementById('jserror').innerHTML = errorMsgUnsupported
   throw new Error('Unsupported browser')
-}
-
-// Test if we can write things to localStorage (IE's "Access Denied" / iOS Private Browsing)
-try {
-  window.localStorage.setItem('Are You CN', 'What We\'re Sayin\'?')
-} catch (error) {
-  var errorMsgLS = '<h1>CN Schedule</h1>'
-  errorMsgLS += '<b>This app doesn\'t work with your current browser state.</b><br>'
-  errorMsgLS += 'iOS users: Private browsing mode breaks the saving/loading feature of the app. Please go to normal mode.<br>'
-  errorMsgLS += 'Internet Explorer users: Your browser doesn\'t allow this website to save local content.'
-  errorMsgLS += 'This might be a security measure from your computer or your company.'
-  errorMsgLS += 'If you can, add this website to the thrusted sites list or temporarly use an another browser.'
-
-  document.getElementById('jserror').innerHTML = errorMsgLS
-  throw new Error('Can\'t write to localStorage')
 }
 
 // Stop posting tips

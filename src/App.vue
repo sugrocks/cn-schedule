@@ -7,7 +7,7 @@
     <h1>CN Schedule</h1>
 
     <transition name="slideOut">
-      <h2 v-if="!isReady" class="loading">Loading data...</h2>
+      <h2 v-if="!isReady || !scheduleReloaded" class="loading">Loading data...</h2>
     </transition>
 
     <!-- Left column with dates -->
@@ -84,6 +84,7 @@
 import { getStats } from './assets/stats.js'
 import { getToday, parseDate } from './assets/dates.js'
 import ColorHash from 'color-hash'
+import store from 'store/dist/store.modern'
 
 export default {
   name: 'app',
@@ -103,7 +104,7 @@ export default {
         showGlobal: false
       },
       days: [],
-      json: {},
+      json: undefined,
       globalTotalBlocks: 0,
       globalMinMax: [],
       globalStats: [],
@@ -133,73 +134,94 @@ export default {
       })
     }
 
-    // Get config from localStorage
-    t.config.showPast = (localStorage.getItem('cfgShowPast') === 'true')
-    t.config.showZap = (localStorage.getItem('cfgShowZap') === 'true' || localStorage.getItem('cfgShowZap') === null)
-    t.config.showGlobal = (localStorage.getItem('cfgShowGlobal') === 'true')
+    // Get config from store
+    let conf = store.get('appConfig')
+    if (conf === undefined) {
+      conf = {
+        showPast: false,
+        showZap: true,
+        showGlobal: false
+      }
+    }
 
-    // Fetch our API
-    t.$http.get(url)
-      .then(data => {
-        // Save schedule in localStorage (for offline and faster next loads)
-        localStorage.setItem('schedule', JSON.stringify(data.body))
-      }, err => {
-        console.log(err)
-      })
-      .then(function () {
-        // Parse the data saved on the localStorage (now or before)
-        t.json = JSON.parse(localStorage.getItem('schedule'))
+    t.config = conf
 
-        // Go through every day
-        for (var i in t.json) {
-          // Skip json "meta"
-          if (i === '_') continue
-
-          // Push available dates to the menu
-          t.days.push({
-            id: i,
-            source: t.json[i]['source'],
-            past: (getToday().replace('-', '') > i.replace('-', '')),
-            text: parseDate(i)
-          })
-        }
-
-        // For stats
-        var everythingCN = []
-        for (var li in t.json) {
-          // For every day who the source is Cartoon Network
-          if (t.json[li]['source'] === 'Cartoon Network') {
-            // Push every episode to the array
-            for (var lj in t.json[li]['schedule']) {
-              everythingCN.push(t.json[li]['schedule'][lj])
-            }
-          }
-        }
-
-        t.globalMinMax = {
-          min: everythingCN[0].date,
-          max: everythingCN[everythingCN.length - 1].date
-        }
-
-        // Get total number of slots and get stats per-show
-        t.globalTotalBlocks = everythingCN.length
-        var s = getStats(everythingCN)
-        t.globalStats = s[0]
-        t.globalStatsCharts.labels = s[1]
-        t.globalStatsCharts.datasets[0].data = s[2]
-        for (var si = 0; si < s[1].length; si++) {
-          var colorHash = new ColorHash({lightness: 0.5})
-          t.globalStatsCharts.datasets[0].backgroundColor.push(colorHash.hex(s[1][si]))
-        }
-        t.scheduleReloaded = true
-      })
+    // Test if online
+    if (navigator.onLine) {
+      // Fetch our API
+      fetch(url)
+        .then(response => {
+          // Directly return the JSON to our next promise
+          return response.json()
+        }, err => {
+          console.log(err)
+        })
+        .then(data => {
+          // Save schedule in store (for offline use)
+          store.set('schedule', data)
+          // Save json in an accessible variable
+          t.json = data
+          t.loadData(data)
+        })
+    } else {
+      console.log('You are offline.')
+      t.loadData(store.get('schedule'))
+    }
   },
   methods: {
     saveSettings () {
-      // Save your settings in your browser with localStorage
-      localStorage.setItem('cfgShowPast', this.config.showPast)
-      localStorage.setItem('cfgShowZap', this.config.showZap)
-      localStorage.setItem('cfgShowGlobal', this.config.showGlobal)
+      // Save your settings in your browser with store (add a delay to make sure model updates)
+      setTimeout(() => {
+        store.set('appConfig', this.config)
+      }, 500)
+    },
+    loadData (data) {
+      var t = this
+
+      // Go through every day
+      for (var i in data) {
+        // Skip json "meta"
+        if (i === '_') continue
+
+        // Push available dates to the menu
+        t.days.push({
+          id: i,
+          source: data[i]['source'],
+          past: (getToday().replace('-', '') > i.replace('-', '')),
+          text: parseDate(i)
+        })
+      }
+
+      // For stats
+      var everythingCN = []
+      for (var li in data) {
+        // For every day who the source is Cartoon Network
+        if (data[li]['source'] === 'Cartoon Network') {
+          // Push every episode to the array
+          for (var lj in data[li]['schedule']) {
+            everythingCN.push(data[li]['schedule'][lj])
+          }
+        }
+      }
+
+      t.globalMinMax = {
+        min: everythingCN[0].date,
+        max: everythingCN[everythingCN.length - 1].date
+      }
+
+      // Get total number of slots and get stats per-show
+      t.globalTotalBlocks = everythingCN.length
+      var s = getStats(everythingCN)
+      t.globalStats = s[0]
+      t.globalStatsCharts.labels = s[1]
+      t.globalStatsCharts.datasets[0].data = s[2]
+
+      for (var si = 0; si < s[1].length; si++) {
+        var colorHash = new ColorHash({lightness: 0.5})
+        t.globalStatsCharts.datasets[0].backgroundColor.push(colorHash.hex(s[1][si]))
+      }
+
+      t.scheduleReloaded = true
     },
     reload () {
       window.location.reload()

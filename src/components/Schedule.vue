@@ -63,7 +63,7 @@ export default {
     getSchedule () {
       // Get date from route and the saved schedule
       var d = this.$route.params.date
-      var schedule = JSON.parse(localStorage.getItem('schedule'))
+      var schedule = this.$parent.json
 
       if (d === 'undefined' || d === undefined) {
         // Redirect to today's date if route not set
@@ -73,8 +73,7 @@ export default {
         this.pageTitle = d
 
         // Check if data is loaded
-        if (schedule === null || !this.$parent.scheduleReloaded) {
-          console.log('Schedule not ready, wait a second please...')
+        if (schedule === undefined || !this.$parent.scheduleReloaded) {
           setTimeout(this.getSchedule, 1000)
           return
         }
