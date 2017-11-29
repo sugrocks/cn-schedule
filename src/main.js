@@ -11,7 +11,6 @@ import 'whatwg-fetch'
 // Our app
 import App from './App'
 // Some cool plugins
-import VueResource from 'vue-resource'
 import VueAnalytics from 'vue-analytics'
 // Our components
 import About from '@/components/About'
@@ -60,7 +59,6 @@ Raven
   })
   .addPlugin(RavenVue, Vue)
   .install()
-Vue.use(VueResource)
 Vue.use(VueAnalytics, {
   id: 'UA-103935709-2',
   router
