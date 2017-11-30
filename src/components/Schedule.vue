@@ -1,5 +1,9 @@
 <template>
   <span class="schedule">
+    <div v-if="hasAlt" class="alt-toggle">
+      <label for="alt">Use Zap2it</label>
+      <input id="alt" type="checkbox" v-model="showAlt"></a>
+    </div>
     <table>
       <tr v-if="$parent.isNotFound">
         <td colspan="2" class="schedule-notfound">
@@ -11,7 +15,7 @@
           or you're way too much in the future.
         </td>
       </tr>
-      <tr v-if="isZap">
+      <tr v-if="isZap || showAlt">
         <td colspan="2" class="schedule-zap2it">
           This schedule was extracted from Zap2it.<br>
           Expect it to be wrong as changes <i>might</i> happen.
@@ -24,7 +28,14 @@
         </td>
       </tr>
       <schedule-el
+        v-if="!showAlt || !hasAlt"
         v-for="block in blocks"
+        :block="block"
+        :key="block.timestamp">
+      </schedule-el>
+      <schedule-el
+        v-if="hasAlt && showAlt"
+        v-for="block in altBlocks"
         :block="block"
         :key="block.timestamp">
       </schedule-el>
@@ -42,7 +53,10 @@ export default {
     return {
       isZap: false,
       pageTitle: 'Loading...',
-      blocks: []
+      hasAlt: false,
+      showAlt: false,
+      blocks: [],
+      altBlocks: []
     }
   },
   metaInfo () {
@@ -85,6 +99,11 @@ export default {
           this.$parent.$data.blocks = this.$data.blocks
           this.isZap = (schedule[d]['source'] === 'Zap2it')
           this.$parent.$data.isNotFound = false
+
+          this.hasAlt = ('alt' in schedule[d])
+          if (this.hasAlt) {
+            this.altBlocks = this.orderBlocks(schedule[d]['alt']['schedule'])
+          }
         } else {
           // If day not found from the route
           // Check if it's a proper date

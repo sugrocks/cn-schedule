@@ -210,6 +210,14 @@ table {
 }
 
 .schedule {
+  .alt-toggle {
+    background-color: $cn-yellow;
+    color: $black;
+    font-size: 15px;
+    padding: 15px 5px;
+    text-align: center;
+  }
+
   table {
     width: 100%;
     z-index: 20;
@@ -399,14 +407,23 @@ table {
     }
   }
 
-  .schedule table,
-  .grid {
-    width: calc(100% - 200px);
+  .schedule {
+    .alt-toggle {
+      border-radius: 5px 0 0;
+      float: right;
+      margin-top: -29px;
+      padding: 5px;
+    }
+
+    table {
+      width: calc(100% - 200px);
+    }
   }
 
   .grid {
     height: calc(100vh - 75px);
     overflow-y: scroll;
+    width: calc(100% - 200px);
   }
 
   .modal {
