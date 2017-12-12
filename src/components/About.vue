@@ -5,7 +5,7 @@
       Date and time from the eastern timezone.<br>
       <small>
         Love from CTOON ❤️ -
-        <a href="https://www.tipeee.com/ctoon">Want to tip us?</a><br>
+        <a href="https://twitter.com/CTOONnet">@CTOONnet</a><br>
         <a @click="$parent.showAbout = !$parent.showAbout">(close)</a>
       </small>
     </div>
