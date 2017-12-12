@@ -126,7 +126,7 @@ export default {
   mounted () {
     // Shortcut and URL to our API
     var t = this
-    var url = 'https://api.sug.rocks/cnschedule.json'
+    var url = 'https://api.ctoon.network/schedule/all.json'
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.addEventListener('controllerchange', () => {
