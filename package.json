@@ -22,7 +22,7 @@
     "promise-polyfill": "^6.1.0",
     "raven-js": "^3.21.0",
     "store": "^2.0.12",
-    "vue-analytics": "^5.6.0",
+    "vue-analytics": "^5.7.1",
     "vue-chartjs": "^3.0.2",
     "vue-meta": "^1.4.0",
     "vue-perfect-scrollbar": "^0.0.14",
