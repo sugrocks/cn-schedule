@@ -154,7 +154,8 @@ export default {
           // Directly return the JSON to our next promise
           return response.json()
         }, err => {
-          console.log(err)
+          console.error(err)
+          t.loadData(store.get('schedule'))
         })
         .then(data => {
           // Save schedule in store (for offline use)
