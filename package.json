@@ -62,7 +62,7 @@
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.6",
     "semver": "^5.4.1",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.0",
     "sw-precache-webpack-plugin": "^0.11.4",
     "url-loader": "^0.6.2",
     "vue": "^2.5.13",
