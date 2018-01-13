@@ -1,119 +1,55 @@
 <template>
-  <div id="app" :class="datesSettings">
-    <app-about v-show="showAbout"></app-about>
-    <app-settings v-show="showSettings"></app-settings>
-    <schedule-stats v-if="showStats"></schedule-stats>
+  <div id="app" :class="config.theme">
+    <div>
+      <router-link
+        to="/"
+        title="CN Schedule"
+        tag="h1">
+        CN Schedule
+      </router-link>
+    </div>
 
-    <h1>CN Schedule</h1>
-
-    <transition name="slideOut">
-      <h2 v-if="!isReady || !scheduleReloaded" class="loading">Loading data...</h2>
+    <template v-if="status.ready">
+      <app-navbar></app-navbar>
+      <router-view></router-view>
+    </template>
+    <transition v-else name="fade">
+      <app-loading></app-loading>
     </transition>
-
-    <!-- Left column with dates -->
-    <table class="dates">
-      <tr v-if="newUpdate">
-        <td
-          class="update"
-          colspan="4"
-          @click="reload">
-          <b>APP UPDATE</b><br>
-          Click here to reload.
-        </td>
-      </tr>
-      <day-el
-        v-for="day in days"
-        :day="day"
-        :key="day.id">
-      </day-el>
-      <tr>
-        <td
-          class="special-links"
-          title="Settings"
-          :class="((showSettings) ? 'selected ' : '') + 'special-links'"
-          @click="showSettings = !showSettings">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
-          </svg>
-        </td>
-        <td
-          title="Stats"
-          :class="((showStats) ? 'selected ' : '') + 'special-links'"
-          @click="showStats = !showStats">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <rect x="10" y="3" width="4" height="18" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <rect x="18" y="8" width="4" height="13" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <rect x="2" y="13" width="4" height="8" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-          </svg>
-        </td>
-        <router-link
-          to="grid"
-          tag="td"
-          title="Grid"
-          class="special-links">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="7" height="7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <rect x="14" y="3" width="7" height="7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <rect x="14" y="14" width="7" height="7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-            <rect x="3" y="14" width="7" height="7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-          </svg>
-        </router-link>
-        <td
-          title="About"
-          :class="((showAbout) ? 'selected ' : '') + 'special-links'"
-         @click="showAbout = !showAbout">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="16" x2="12" y2="12"/>
-            <line x1="12" y1="8" x2="12" y2="8"/>
-          </svg>
-        </td>
-      </tr>
-    </table>
-
-    <router-view></router-view>
   </div>
 </template>
 
-<style lang="scss">
-@import './assets/app';
-</style>
-
 <script>
-import { getStats } from './assets/stats.js'
-import { getToday, parseDate } from './assets/dates.js'
-import ColorHash from 'color-hash'
+import { getDate } from './assets/dates.js'
 import store from 'store/dist/store.modern'
+import Loading from '@/components/Loading.vue'
+import NavBar from '@/components/NavBar.vue'
+import NotFound from '@/components/NotFound.vue'
 
 export default {
   name: 'app',
+  components: {
+    'app-loading': Loading,
+    'app-navbar': NavBar,
+    'app-notfound': NotFound
+  },
   data () {
     return {
-      newUpdate: false,
-      isReady: false,
-      scheduleReloaded: false,
-      isZap: false,
-      isNotFound: false,
-      showSettings: false,
-      showAbout: false,
-      showStats: false,
-      config: {
-        showPast: false,
-        showZap: true,
-        showGlobal: false
+      status: {
+        ready: false,
+        update: false
       },
-      days: [],
-      json: undefined,
-      globalTotalBlocks: 0,
-      globalMinMax: [],
-      globalStats: [],
-      globalStatsCharts: {
-        labels: [],
-        datasets: [{
-          backgroundColor: [],
-          data: []
-        }]
+      config: {
+        colors: false,
+        listSize: 'normal',
+        localTime: false,
+        theme: 'dark'
+      },
+      schedule: {
+        available: [],
+        days: {},
+        selected: [],
+        stats: {}
       }
     }
   },
@@ -124,119 +60,249 @@ export default {
     }
   },
   mounted () {
-    // Shortcut and URL to our API
-    var t = this
-    var url = 'https://api.ctoon.network/schedule/all.json'
-
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        t.newUpdate = true
+      navigator.serviceWorker.addEventListener('controllerchange', _ => {
+        this.status.update = true
       })
     }
 
     // Get config from store
-    let conf = store.get('appConfig')
-    if (conf === undefined) {
-      conf = {
-        showPast: false,
-        showZap: true,
-        showGlobal: false
-      }
+    let conf = store.get('appDisplayConfig')
+    if (conf !== undefined) {
+      this.config = conf
     }
-
-    t.config = conf
 
     // Test if online
     if (navigator.onLine) {
+      // If we start the app with a selected date
+      let sel = this.$route.params.date
+
       // Fetch our API
-      fetch(url)
+      fetch('https://api.ctoon.network/schedule/days')
         .then(response => {
           // Directly return the JSON to our next promise
           return response.json()
         }, err => {
           console.error(err)
-          t.loadData(store.get('schedule'))
         })
         .then(data => {
-          // Save schedule in store (for offline use)
-          store.set('schedule', data)
-          // Save json in an accessible variable
-          t.json = data
-          t.loadData(data)
+          let offset = -2
+          let early = data.indexOf(getDate(null, offset))
+          let late = 0
+          let firstRange = data.slice(late, early)
+
+          if (sel) {
+            if (data.indexOf(sel) === -1) {
+              console.log('404')
+              this.$router.push({ name: 'NotFound', params: { lastPath: this.$route.path } })
+            } else if (firstRange.indexOf(sel) === -1) {
+              late = data.indexOf(sel) - early - offset
+              early = data.indexOf(sel) - offset
+
+              if (early >= data.length) early = data.length - 1
+            }
+          }
+
+          this.schedule.available = data
+          this.loadRange(data[early], data[late])
         })
     } else {
       console.log('You are offline.')
-      t.loadData(store.get('schedule'))
     }
   },
   methods: {
-    saveSettings () {
-      // Save your settings in your browser with store (add a delay to make sure model updates)
-      setTimeout(() => {
-        store.set('appConfig', this.config)
-      }, 500)
-    },
-    loadData (data) {
-      var t = this
+    loadRange (from, to) {
+      this.status.ready = false
 
-      // Go through every day
-      for (var i in data) {
-        // Skip json "meta"
-        if (i === '_') continue
-
-        // Push available dates to the menu
-        t.days.push({
-          id: i,
-          source: data[i]['source'],
-          past: (getToday().replace('-', '') > i.replace('-', '')),
-          text: parseDate(i)
+      fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to)
+        .then(response => {
+          // Directly return the JSON to our next promise
+          return response.json()
+        }, err => {
+          console.error(err)
         })
-      }
+        .then(data => {
+          this.schedule.selected = Object.keys(data)
+          this.schedule.days = data
 
-      // For stats
-      var everythingCN = []
-      for (var li in data) {
-        // For every day who the source is Cartoon Network
-        if (data[li]['source'] === 'Cartoon Network') {
-          // Push every episode to the array
-          for (var lj in data[li]['schedule']) {
-            everythingCN.push(data[li]['schedule'][lj])
-          }
-        }
-      }
+          fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to + '/stats')
+            .then(response => {
+              // Directly return the JSON to our next promise
+              return response.json()
+            }, err => {
+              console.error(err)
+            })
+            .then(data => {
+              this.schedule.stats = data
 
-      t.globalMinMax = {
-        min: everythingCN[0].date,
-        max: everythingCN[everythingCN.length - 1].date
-      }
+              // If the current route isn't in the selection, change path
+              if (this.$route.name === 'Schedule' && this.schedule.selected.indexOf(this.$route.params.date) === -1) {
+                this.$router.push({ name: 'Schedule', params: { date: from } })
+              }
 
-      // Get total number of slots and get stats per-show
-      t.globalTotalBlocks = everythingCN.length
-      var s = getStats(everythingCN)
-      t.globalStats = s[0]
-      t.globalStatsCharts.labels = s[1]
-      t.globalStatsCharts.datasets[0].data = s[2]
-
-      for (var si = 0; si < s[1].length; si++) {
-        var colorHash = new ColorHash({lightness: 0.5})
-        t.globalStatsCharts.datasets[0].backgroundColor.push(colorHash.hex(s[1][si]))
-      }
-
-      t.scheduleReloaded = true
-    },
-    reload () {
-      window.location.reload()
-    }
-  },
-  computed: {
-    datesSettings: function () {
-      // To style or show/hide elements on the menu based on the user settings
-      return {
-        'app': true,
-        'no-zap': !this.config.showZap,
-        'no-past': !this.config.showPast
-      }
+              setTimeout(_ => {
+                this.status.ready = true
+              }, 1000)
+            })
+        })
     }
   }
 }
 </script>
+
+<style lang="scss">
+@import './assets/colors';
+
+// Basic stuff
+@font-face {
+  font-family: 'cnbold';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/cn_bold.woff') format('woff'), url('./assets/fonts/cn_bold.ttf') format('ttf'), url('./assets/fonts/cn_bold.otf') format('otf'), url('./assets/fonts/cn_bold.eot'), url('./assets/fonts/cn_bold.eot?#iefix') format('embedded-opentype');
+}
+
+body {
+  background-color: $black;
+  color: $white;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+// Titles
+h1,
+h2 {
+  font-family: 'cnbold', sans-serif;
+  font-weight: 900;
+  margin: 0;
+}
+
+h1 {
+  color: $cn-pink;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 28px;
+  height: 38px;
+  padding: 5px 10px 0;
+  z-index: 5;
+}
+
+h2 {
+  margin-bottom: .5em;
+}
+
+// Transitions
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
+
+// Scrollbars
+.ps__scrollbar-x-rail,
+.ps__scrollbar-y-rail {
+  z-index: 30;
+}
+
+// Default <table> styles
+table {
+  border-collapse: collapse;
+  border-spacing: 2px;
+
+  th,
+  td {
+    line-height: 1.2rem;
+    padding: 5px 10px;
+    vertical-align: middle;
+  }
+
+  th {
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+// Tabs
+.tabs-component {
+  .tabs-component-tabs {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid $black;
+    border-top: 1px solid $black;
+
+    .tabs-component-tab {
+      background-color: $gray;
+      color: $black;
+      font-size: 14px;
+      font-weight: 600;
+      list-style: none;
+      margin: 0;
+
+      &.is-active {
+        background-color: $dark-red;
+        color: $white;
+      }
+
+      .tabs-component-tab-a {
+        align-items: center;
+        color: inherit;
+        display: flex;
+        outline: 0;
+        padding: .75em 1em;
+        text-decoration: none;
+
+        &::before {
+          background-repeat: no-repeat;
+          background-size: contain;
+          content: '';
+          height: 16px;
+          margin-right: 5px;
+          width: 16px;
+        }
+
+        &[href="#official"]::before {
+          background-image: url('./assets/cn.png');
+        }
+
+        &[href="#zap2it"]::before {
+          background-image: url('./assets/zap2it.png');
+        }
+
+        &[href="#stats"]::before {
+          background-image: url('./assets/pie-chart.svg');
+        }
+      }
+    }
+  }
+
+  .tabs-component-panel {
+    background-color: $line-even;
+  }
+}
+
+// If the browser width >= 630px
+@media screen and (min-width: 630px) {
+  .tabs-component {
+    .tabs-component-tabs {
+      border-bottom: 0;
+      border-top: 0;
+      display: grid;
+      grid-auto-columns: 33.33333333333333%;
+
+      .tabs-component-tab {
+        border-bottom: 3px solid $black;
+        grid-row: 1;
+
+        &.is-active {
+          border-bottom: 3px solid $dark-red;
+        }
+      }
+    }
+
+    .tabs-component-panel {
+      margin-left: 200px;
+    }
+  }
+}
+</style>

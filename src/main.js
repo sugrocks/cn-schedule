@@ -2,22 +2,19 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-// Raven to use with Sentry.io
-import Raven from 'raven-js'
-import RavenVue from 'raven-js/plugins/vue'
 // Polyfills
 import Promise from 'promise-polyfill'
 import 'whatwg-fetch'
 // Our app
 import App from './App'
-// Some cool plugins
+// Some plugins and components
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
 import VueAnalytics from 'vue-analytics'
-// Our components
-import About from '@/components/About'
-import Settings from '@/components/Settings'
-import Stats from '@/components/Stats'
-import DayListEl from '@/components/DayListEl'
-import ScheduleListEl from '@/components/ScheduleListEl'
+import Tabs from 'vue-tabs-component/src/index' // Broke?
+import flatPickr from 'vue-flatpickr-component'
+import 'flatpickr/dist/flatpickr.css'
+import 'flatpickr/dist/themes/dark.css'
 // The router
 import router from './Router'
 
@@ -26,8 +23,10 @@ if (!window.Promise) {
   window.Promise = Promise
 }
 
-// Test if the browser doesn't support console, we're doomed
-if (typeof console === 'undefined') {
+// Tests for old browsers (no console.* for weird browsers || ie 7-10 || Server-side Opera Mini)
+if (typeof console === 'undefined' ||
+    (document.all && window.XMLHttpRequest) ||
+    Object.prototype.toString.call(window.operamini) === '[object OperaMini]') {
   var errorMsgUnsupported = '<h1>CN Schedule</h1>'
   errorMsgUnsupported += '<b>You\'re currently using an unsupported browser</b>.<br>'
   errorMsgUnsupported += 'Please upgrade to the latest version of Chrome, Opera, Brave, Firefox, Microsoft Edge or Safari to continue.<br>'
@@ -40,29 +39,29 @@ if (typeof console === 'undefined') {
 // Stop posting tips
 Vue.config.productionTip = false
 
-// Load components
-Vue.component('app-about', About)
-Vue.component('app-settings', Settings)
-Vue.component('schedule-stats', Stats)
-Vue.component('day-el', DayListEl)
-Vue.component('schedule-el', ScheduleListEl)
-
 // Enable plugins
-Raven
-  .config('https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540', {
-    release: VERSION,
-    tags: {
-      git_commit: COMMITHASH,
-      git_branch: BRANCH
-    },
-    environment: process.env
+if (process.env.NODE_ENV !== 'development') {
+  Raven
+    .config('https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540', {
+      release: VERSION,
+      tags: {
+        git_commit: COMMITHASH,
+        git_branch: BRANCH
+      },
+      environment: process.env
+    })
+    .addPlugin(RavenVue, Vue)
+    .install()
+  Vue.use(VueAnalytics, {
+    id: 'UA-103935709-2',
+    router
   })
-  .addPlugin(RavenVue, Vue)
-  .install()
-Vue.use(VueAnalytics, {
-  id: 'UA-103935709-2',
-  router
-})
+} else {
+  console.log('%cRaven and Analytics disabled in dev', 'color:orange;')
+}
+
+Vue.use(Tabs)
+Vue.use(flatPickr)
 
 // Say hi to whoever opens the console
 console.log(
@@ -76,7 +75,9 @@ console.log(
 )
 console.log(
   '%cCommit: ' + COMMITHASH +
-  '\nBranch: ' + BRANCH,
+  '\nVersion: ' + VERSION +
+  '\nBranch: ' + BRANCH +
+  '\nEnv: ' + process.env.NODE_ENV,
   'color:green;'
 )
 

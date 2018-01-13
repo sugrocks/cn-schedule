@@ -1,22 +1,4 @@
 /grid       /index.html 200
-/*          /index.html 200
-
-# Might be needed at first
-/2017-08-25 /index.html 200
-/2017-08-26 /index.html 200
-/2017-08-27 /index.html 200
-/2017-08-28 /index.html 200
-/2017-08-29 /index.html 200
-/2017-08-30 /index.html 200
-/2017-08-31 /index.html 200
-/2017-09-01 /index.html 200
-/2017-09-02 /index.html 200
-/2017-09-03 /index.html 200
-/2017-09-04 /index.html 200
-/2017-09-05 /index.html 200
-/2017-09-06 /index.html 200
-/2017-09-07 /index.html 200
-/2017-09-08 /index.html 200
-/2017-09-09 /index.html 200
-/2017-09-10 /index.html 200
-/2017-09-11 /index.html 200
+/settings   /index.html 200
+/view/*     /index.html 200
+/404        /index.html 404
