@@ -1,12 +1,13 @@
 stages:
   - test
   - build
+  - deploy
 
 lint:
   image: node:latest
   stage: test
   cache:
-    key: "v1-$CI_COMMIT_REF_NAME"
+    key: "v2-$CI_COMMIT_REF_NAME"
     paths:
       - node_modules/
       - .yarn/
@@ -19,7 +20,7 @@ build:
   image: node:latest
   stage: build
   cache:
-    key: "v1-$CI_COMMIT_REF_NAME"
+    key: "v2-$CI_COMMIT_REF_NAME"
     paths:
       - node_modules/
     policy: pull
@@ -29,3 +30,12 @@ build:
     expire_in: 3 days
     paths:
       - dist
+  except:
+    - live
+
+deploy_master:
+  stage: deploy
+  script:
+    - curl -X POST -d '' https://api.netlify.com/build_hooks/$NETLIFY_MASTER
+  only:
+    - master
