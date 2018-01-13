@@ -5,7 +5,7 @@
 [![Gitlab Build Status](https://gitlab.com/ctoon/cn-schedule/badges/master/build.svg)](https://gitlab.com/ctoon/cn-schedule/commits/master)
 
 
-> [cn.sug.rocks](https://cn.sug.rocks/)
+> [schedule.ctoon.network](https://schedule.ctoon.network/)
 
 
 ### Install

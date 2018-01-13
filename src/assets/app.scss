@@ -229,15 +229,15 @@ table {
       text-align: center;
     }
 
+    .schedule-notfound {
+      border: $red 2px solid;
+      padding: 20px;
+    }
+
     .schedule-zap2it {
       background-color: $zap2it;
       color: $black;
       text-align: center;
-    }
-
-    .schedule-notfound {
-      border: $red 2px solid;
-      padding: 20px;
     }
 
     tr {

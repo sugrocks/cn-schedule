@@ -1,5 +1,5 @@
 <template>
-  <VuePerfectScrollbar class="grid">
+  <VuePerfectScrollbar class="grid content">
     <div class="time-table">
       <div class="time-head">
         Times
@@ -12,28 +12,20 @@
       </div>
     </div>
     <div
-      v-for="(day, index) in $parent.json"
+      v-for="(day, index) in $parent.schedule.days"
       :key="index"
-      :class="displaySource(day, index)"
-      v-if="index !== '_'">
-      <div
-        class="date">
+      :class="displaySource(day, index)">
+      <div class="date">
         {{ pd(index) }}
-        <span v-if="day.source === 'Zap2it'">
+        <span class="zapSrc">
           (Zap2it)
         </span>
       </div>
       <div
         class="slot"
-        v-if="day.schedule.length === 0"
-        style="height: 1400px; background-color: #ffeb00; color: #000; font-weight: bold;">
-        <span class="show">Empty<br>Waiting for updates.</span>
-      </div>
-      <div
-        class="slot"
-        v-for="(show, sIndex) in day.schedule"
+        v-for="(show, sIndex) in getSchedule(day)"
         :key="sIndex"
-        :title="show.title + ' (' + show.time +')'"
+        :title="show.title + ' (' + getTime(show.timestamp, show.time) +')'"
         :style="getSlotStyle(show, sIndex)">
         <span class="show">{{
             (show.show === 'SPECIAL') ? show.title + ' (SPECIAL)' :
@@ -45,8 +37,10 @@
 </template>
 
 <script>
-import { getToday, parseDate } from '../assets/dates.js'
+import { getDate, parseDate } from '../assets/dates'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import ColorHash from 'color-hash'
+import { DateTime } from 'luxon'
 
 export default {
   name: 'grid',
@@ -55,12 +49,7 @@ export default {
   },
   metaInfo () {
     return {
-      title: 'Grid',
-      meta: [ // Metadata for social media and stuff
-        { name: 'twitter:title', content: 'Grid | CN Schedule' },
-        { name: 'og:title', content: 'Grid | CN Schedule' },
-        { name: 'og:url', content: 'https://cn.sug.rocks/grid' }
-      ]
+      title: 'Grid'
     }
   },
   methods: {
@@ -68,7 +57,10 @@ export default {
       // Get alternative color background every half hour
       // And set height of slots based on their length
       // Also add margin top if somehow day starts later than 6:00
-      var marginTopPlz = 0
+      let colorPlz = '#fff'
+      let bgPlz = ''
+      let marginTopPlz = 0
+
       if (index === 0) {
         if (show.time === '6:15 am') {
           marginTopPlz = 25
@@ -81,8 +73,20 @@ export default {
         }
       }
 
+      if (show.color) {
+        bgPlz = show.color
+      } else if (this.$parent.config.colors && (show.show !== 'SPECIAL' && show.show !== 'MOVIE')) {
+        let li = (show.show.length % 10) / 10
+        let colorHash = new ColorHash({ lightness: li })
+        if (li >= 0.8) colorPlz = '#000'
+        bgPlz = colorHash.hex(show.show)
+      } else {
+        bgPlz = (show.time.search(':00') > 0 || show.time.search(':15') > 0) ? '#333' : '#3e3e3e'
+      }
+
       return {
-        'background-color': (show.time.search(':00') > 0 || show.time.search(':15') > 0) ? '#333' : '#3e3e3e',
+        'color': colorPlz,
+        'background-color': bgPlz,
         'height': show.slots * 25 + 'px',
         'margin-top': marginTopPlz + 'px'
       }
@@ -90,38 +94,153 @@ export default {
     displaySource (day, index) {
       // Add classes to specify source and if it's an old entry
       return {
-        'zap2it': (day.source === 'Zap2it'),
-        'cn': (day.source === 'Cartoon Network'),
-        'past': (getToday().replace('-', '') > index.replace('-', '')),
+        'zap2it': (day.cn === null && day.zap),
+        'cn': (day.cn),
+        'past': (getDate().replace('-', '') > index.replace('-', '')),
         'day': true
       }
+    },
+    getSchedule (day) {
+      if (day.cn) return day.cn
+      if (day.zap) return day.zap
+      return day.other
+    },
+    getTime (ts, str) {
+      if (!this.$parent.config.localTime) return str
+
+      let dt = DateTime.fromMillis(ts * 1000)
+      return dt.toLocaleString(DateTime.TIME_SIMPLE)
     },
     pd (date) {
       return parseDate(date)
     }
   },
-  data () {
-    return {
-      times: [
-        '6:00 am', '6:30 am',
-        '7:00 am', '7:30 am',
-        '8:00 am', '8:30 am',
-        '9:00 am', '9:30 am',
-        '10:00 am', '10:30 am',
-        '11:00 am', '11:30 am',
-        '12:00 pm', '12:30 pm',
-        '1:00 pm', '1:30 pm',
-        '2:00 pm', '2:30 pm',
-        '3:00 pm', '3:30 pm',
-        '4:00 pm', '4:30 pm',
-        '5:00 pm', '5:30 pm',
-        '6:00 pm', '6:30 pm',
-        '7:00 pm', '7:30 pm'
-      ]
+  mounted () {
+    this.times = []
+
+    for (let i = 6; i < 20; i += 0.5) {
+      let dt = DateTime.fromObject({
+        hour: i,
+        minute: (i % 1 === 0 ? 0 : 30),
+        zone: 'America/New_York'
+      })
+      if (this.$parent.config.localTime) dt = dt.setZone('local')
+      this.times.push(
+        dt.toLocaleString(DateTime.TIME_SIMPLE)
+      )
     }
   },
-  mounted () {
-    this.$parent.isReady = true
+  data () {
+    return {
+      times: []
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/colors';
+
+.grid {
+  overflow-x: scroll;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 20;
+
+  .time-head,
+  .date {
+    background-color: $cn-pink;
+    color: $black;
+    font-style: italic;
+    font-weight: bold;
+    padding: 5px 0;
+    position: sticky;
+    text-align: center;
+    top: 0;
+    z-index: 23;
+
+    span {
+      display: none;
+    }
+  }
+
+  .zap2it .date {
+    background-color: $zap2it;
+
+    span {
+      display: inline;
+    }
+  }
+
+  .cn .date {
+    background-color: $cn-blue;
+  }
+
+  .past .date {
+    background-color: $cn-yellow !important;
+  }
+
+  .time-table {
+    display: inline-block;
+    font-size: 10px;
+    left: 0;
+    margin-right: -3px;
+    padding: 0 1px 5px 0;
+    position: sticky;
+    vertical-align: top;
+    z-index: 26;
+
+    .time-line {
+      // Vertical center alignment
+      align-items: center;
+      box-shadow: inset 0 0 0 1px $black;
+      display: flex;
+      height: 50px;
+      // Horizontal center alignment
+      justify-content: center;
+      padding: 0 5px;
+
+      &:nth-child(even) {
+        background-color: $line-even;
+      }
+
+      &:nth-child(odd) {
+        background-color: $line-odd;
+      }
+    }
+  }
+
+  .day {
+    display: inline-block;
+    font-size: 10px;
+    padding: 0 1px;
+    vertical-align: top;
+    width: 150px;
+
+    .slot {
+      // Vertical center alignment
+      align-items: center;
+      box-shadow: inset 0 0 0 1px $black;
+      display: flex;
+      // Horizontal center alignment
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+
+      .show {
+        overflow: hidden;
+        white-space: normal;
+        word-break: break-word;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 630px) {
+  .grid {
+    height: calc(100vh - 45px);
+    overflow-y: scroll;
+    width: calc(100% - 200px);
+  }
+}
+</style>

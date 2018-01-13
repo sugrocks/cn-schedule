@@ -1,90 +1,51 @@
 <template>
-  <transition name="slide">
-    <div class="stats modal">
-      <div class="day-stats" v-if="$route.name === 'grid'">
-        <span class="stats-text day no-data">
-          Please select a day to get stats from it.
-        </span>
-      </div>
-      <div class="day-stats" v-else>
-        <span class="stats-text day no-data" v-if="dayStats.length === 0">
-          No statistics available for this day.
-        </span>
-        <span class="stats-text day" v-else>
-          For {{ pd(day) }}, we have {{ totalBlocks }} time slots with {{ dayStats.length }} shows.
-        </span>
-        <br>
-        <div class="two-columns-stats" v-if="dayStats.length > 0">
-          <table class="top-shows day">
-            <thead>
-              <tr>
-                <th>Show</th>
-                <th colspan="2">Slots</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="show in dayStats"
-                :key="show.name">
-                <td>{{ show.name }}</td>
-                <td style="text-align: right;">{{ show.count }}</td>
-                <td>~{{ show.percentage }}%</td>
-              </tr>
-            </tbody>
-          </table>
-          <stats-chart :chartData="dayStatsCharts" />
-        </div>
-      </div>
-      <div class="global-stats" v-if="$parent.config.showGlobal">
-        <br>
-        <span class="stats-text all no-data" v-if="$parent.globalStats.length === 0">
-          No global statistics available for the moment.
-        </span>
-        <span class="stats-text all" v-else>
-          From {{ pd($parent.globalMinMax.min) }} to {{ pd($parent.globalMinMax.max) }}, we have {{ $parent.globalTotalBlocks }} time slots with {{ $parent.globalStats.length }} shows.
-        </span>
-        <br>
-        <div class="two-columns-stats">
-          <table class="top-shows all" v-if="$parent.globalStats.length > 0">
-            <thead>
-              <tr>
-                <th>Show</th>
-                <th colspan="2">Slots</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="show in $parent.globalStats"
-                :key="show.name">
-                <td>{{ show.name }}</td>
-                <td style="text-align: right;">{{ show.count }}</td>
-                <td>~{{ show.percentage }}%</td>
-              </tr>
-            </tbody>
-          </table>
-          <stats-chart :chartData="$parent.globalStatsCharts" />
-        </div>
-      </div>
-      <br>
-      <small><a @click="$parent.showStats = !$parent.showStats">(close)</a></small>
+  <div class="stats">
+    <div class="stats-resume">
+      We have {{ totalBlocks }} time slots with {{ dayStats.length }} shows.
     </div>
-  </transition>
+    <div class="two-columns-stats">
+      <table class="top-shows">
+        <thead>
+          <tr>
+            <th>Show</th>
+            <th colspan="2">Slots</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="show in dayStats"
+            :key="show.title">
+            <td>{{ show.title }}</td>
+            <td style="text-align: right;">{{ show.slots }}</td>
+            <td>~{{ show.percentage }}%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="show-chart">
+        <stats-chart v-if="ready" :chartData="dayStatsCharts" />
+      </div>
+    </div>
+    <div class="source">
+      Source of data: {{ source }}
+    </div>
+  </div>
 </template>
 
 <script>
-import { parseDate } from '../assets/dates.js'
-import { getStats } from '../assets/stats.js'
-import StatsChart from './StatsChart'
+import { parseDate } from '../assets/dates'
+import StatsChart from '../assets/StatsChart'
 import ColorHash from 'color-hash'
 
 export default {
   name: 'stats',
+  props: ['day'],
   components: { StatsChart },
   data () {
     return {
-      day: this.$route.params.date,
       totalBlocks: 0,
-      dayStats: [],
+      dayStats: {},
+      source: '',
+      ready: false,
       dayStatsCharts: {
         labels: [],
         datasets: [{
@@ -97,22 +58,96 @@ export default {
   methods: {
     pd (date) {
       return parseDate(date, true)
+    },
+    showStats (day) {
+      let s = {}
+      this.dayStatsCharts.labels = []
+      this.dayStatsCharts.datasets[0].data = []
+      this.dayStatsCharts.datasets[0].backgroundColor = []
+
+      if (day.cn) {
+        this.source = 'Cartoon Network'
+        s = day.cn
+      } else {
+        this.source = 'Zap2it'
+        s = day.zap
+      }
+
+      this.dayStats = s
+      this.totalBlocks = s.length
+
+      for (let i = 0; i < s.length; i++) {
+        let colorHash = new ColorHash({ lightness: (s[i]['title'].length % 10) / 10 })
+
+        this.dayStatsCharts.labels.push(s[i]['title'])
+        this.dayStatsCharts.datasets[0].data.push(s[i]['slots'])
+        this.dayStatsCharts.datasets[0].backgroundColor.push(colorHash.hex(s[i]['title']))
+      }
+
+      setTimeout(_ => {
+        this.ready = true
+      }, 500)
+    }
+  },
+  watch: {
+    day: function () {
+      this.ready = false
+      this.showStats(this.day)
     }
   },
   mounted () {
-    // Don't fetch data that doesn't exist if 404
-    if (!this.$parent.$data.isNotFound && this.$route.params.date !== undefined) {
-      // Load data in this component
-      this.totalBlocks = this.$parent.$data.blocks.length
-      var s = getStats(this.$parent.$data.blocks)
-      this.dayStats = s[0]
-      this.dayStatsCharts.labels = s[1]
-      this.dayStatsCharts.datasets[0].data = s[2]
-      for (var si = 0; si < s[1].length; si++) {
-        var colorHash = new ColorHash({lightness: 0.5})
-        this.dayStatsCharts.datasets[0].backgroundColor.push(colorHash.hex(s[1][si]))
+    this.ready = false
+    this.showStats(this.day)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '../assets/colors';
+
+.stats {
+  padding: 15px;
+  text-align: center;
+
+  .stats-resume {
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+
+  .top-shows {
+    text-align: left;
+    width: 100%;
+
+    tr + tr {
+      border-top: 1px solid $semi-transparent-black;
+    }
+  }
+
+  .show-chart {
+    padding: 50px;
+  }
+
+  .source {
+    font-size: small;
+    margin-top: 1em;
+  }
+}
+
+@media screen and (min-width: 630px) {
+  .stats {
+    .two-columns-stats {
+      .top-shows {
+        display: inline-block;
+        width: initial;
+      }
+
+      .show-chart {
+        display: inline-block;
+        padding: 0;
+        vertical-align: top;
+        width: 200px;
       }
     }
   }
 }
-</script>
+</style>
