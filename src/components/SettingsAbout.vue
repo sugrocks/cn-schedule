@@ -11,7 +11,7 @@
       </h2>
 
       <p>
-        <label for="localTime">Convert times to your local timezone: </label>
+        <label for="localTime">Convert times to your timezone: </label>
         <input
           type="checkbox"
           id="localTime"
