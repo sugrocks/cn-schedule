@@ -82,6 +82,11 @@ export default {
       saved: false
     }
   },
+  metaInfo () {
+    return {
+      title: 'Settings & About'
+    }
+  },
   methods: {
     saveSettings () {
       // Save your settings in your browser with store (add a delay to make sure model updates)
