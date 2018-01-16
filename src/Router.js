@@ -39,6 +39,18 @@ let router = new Router({
       component: Schedule
     },
     {
+      path: '/201([0-9]-[0-9]{2}-[0-9]{2})', // Redirects from old urls
+      redirect: from => {
+        console.log(from)
+        return {
+          name: 'Schedule',
+          params: {
+            date: '201' + from.params['0']
+          }
+        }
+      }
+    },
+    {
       path: '/404',
       name: 'NotFound',
       component: NotFound
