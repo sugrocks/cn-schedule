@@ -16,8 +16,6 @@ var GitRevisionPlugin = require('git-revision-webpack-plugin')
 var gitRevisionPlugin = new GitRevisionPlugin()
 
 var env = config.build.env
-if (process.env.COMMIT_REF) var gitHash = '"' + process.env.COMMIT_REF + '"'
-if (process.env.HEAD) var gitBranch = '"' + process.env.HEAD + '"'
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -36,8 +34,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'VERSION': JSON.stringify(gitRevisionPlugin.version()),
-      'COMMITHASH': gitHash || JSON.stringify(gitRevisionPlugin.commithash()),
-      'BRANCH': gitBranch || JSON.stringify(gitRevisionPlugin.branch()),
+      'COMMITHASH': JSON.stringify(process.env.COMMIT_REF || gitRevisionPlugin.commithash()),
+      'BRANCH': JSON.stringify(process.env.HEAD || gitRevisionPlugin.branch()),
       'process.env': env
     }),
     new webpack.optimize.UglifyJsPlugin({
