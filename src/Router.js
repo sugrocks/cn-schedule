@@ -71,7 +71,7 @@ let router = new Router({
 
 // After route, scroll to the content if in mobile width (but not on first load)
 router.afterEach((to, from) => {
-  if (from.name && screen.width <= 630) {
+  if (from.name && window.screen.width <= 630) {
     SmoothScroll(document.querySelector('.content'))
   }
 })
