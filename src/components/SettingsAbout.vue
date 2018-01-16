@@ -62,7 +62,7 @@
         Cartoon Network's data extracted from "The Backdoor". Zap2it's from their APIs.<br/>
         We check for updates every 30 minutes.<br/>
         <small>
-          Want to know when a new day is available? <a href="https://discord.gg/Jr9Pnq9">Join our Discord.</a><br/>
+          Want to know when a new day is available? <a class="discord" target="_blank" rel="noopener" href="https://discord.gg/Jr9Pnq9">Join our Discord.</a><br/>
           Love from CTOON ❤️ · 2017-2018 ·
           <a class="twitter" target="_blank" rel="noopener" href="https://twitter.com/CTOONnet">
             @CTOONnet</a>
@@ -134,6 +134,7 @@ export default {
         text-decoration: none;
       }
 
+      .discord,
       .twitter {
         color: $black;
       }
