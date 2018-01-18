@@ -1,11 +1,11 @@
 <template>
-  <div id="app" :class="config.theme">
+  <div id="app" :class="[config.theme, (status.offline ? 'offline' : null)]">
     <div>
       <router-link
         to="/"
-        title="CN Schedule"
+        :title="appTitle"
         tag="h1">
-        CN Schedule
+        {{ appTitle }}
       </router-link>
     </div>
 
@@ -35,7 +35,10 @@ export default {
   },
   data () {
     return {
+      appTitle: 'CN Schedule',
       status: {
+        error: false,
+        offline: false,
         ready: false,
         update: false
       },
@@ -56,7 +59,7 @@ export default {
   metaInfo () {
     return {
       title: 'Loading...',
-      titleTemplate: '%s | CN Schedule'
+      titleTemplate: '%s | ' + this.appTitle
     }
   },
   mounted () {
@@ -83,7 +86,7 @@ export default {
           // Directly return the JSON to our next promise
           return response.json()
         }, err => {
-          console.error(err)
+          throw Error(err)
         })
         .then(data => {
           let offset = -2
@@ -106,45 +109,76 @@ export default {
           this.schedule.available = data
           this.loadRange(data[early], data[late])
         })
+        .catch(err => {
+          this.status.error = '' + err
+          console.log(this.status.error)
+        })
     } else {
-      console.log('You are offline.')
+      console.warn('You are offline.')
+      this.status.offline = true
+      this.appTitle += ' (offline)'
+
+      let cached = store.get('cachedSchedules')
+      if (cached === undefined) {
+        this.status.error = 'We asked the browser, it says you\'re offline.\n Also, no cached schedule was found.'
+      } else {
+        this.loadRange()
+      }
     }
   },
   methods: {
     loadRange (from, to) {
       this.status.ready = false
+      console.log(from)
 
-      fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to)
-        .then(response => {
-          // Directly return the JSON to our next promise
-          return response.json()
-        }, err => {
-          console.error(err)
-        })
-        .then(data => {
-          this.schedule.selected = Object.keys(data)
-          this.schedule.days = data
+      if (from !== undefined) {
+        fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to)
+          .then(response => {
+            // Directly return the JSON to our next promise
+            return response.json()
+          }, err => {
+            console.error(err)
+          })
+          .then(data => {
+            this.schedule.selected = Object.keys(data)
+            this.schedule.days = data
 
-          fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to + '/stats')
-            .then(response => {
-              // Directly return the JSON to our next promise
-              return response.json()
-            }, err => {
-              console.error(err)
+            let cache = store.get('cachedSchedules')
+            if (!cache) cache = {}
+            Object.keys(data).forEach(i => {
+              cache[i] = data[i]
             })
-            .then(data => {
-              this.schedule.stats = data
+            store.set('cachedSchedules', cache)
 
-              // If the current route isn't in the selection, change path
-              if (this.$route.name === 'Schedule' && this.schedule.selected.indexOf(this.$route.params.date) === -1) {
-                this.$router.push({ name: 'Schedule', params: { date: from } })
-              }
+            fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to + '/stats')
+              .then(response => {
+                // Directly return the JSON to our next promise
+                return response.json()
+              }, err => {
+                console.error(err)
+              })
+              .then(data => {
+                this.schedule.stats = data
 
-              setTimeout(_ => {
-                this.status.ready = true
-              }, 1000)
-            })
-        })
+                // If the current route isn't in the selection, change path
+                if (this.$route.name === 'Schedule' && this.schedule.selected.indexOf(this.$route.params.date) === -1) {
+                  this.$router.push({ name: 'Schedule', params: { date: from } })
+                }
+
+                setTimeout(_ => {
+                  this.status.ready = true
+                }, 1000)
+              })
+          })
+      } else {
+        // load everything we have when offline
+        this.schedule.days = store.get('cachedSchedules')
+        this.schedule.selected = Object.keys(this.schedule.days)
+
+        setTimeout(_ => {
+          this.status.ready = true
+        }, 1000)
+      }
     }
   }
 }
@@ -203,6 +237,14 @@ h2 {
 .ps__scrollbar-x-rail,
 .ps__scrollbar-y-rail {
   z-index: 30;
+}
+
+// Offline
+.offline {
+  td[data-toggle] {
+    opacity: 0.2;
+    pointer-events: none;
+  }
 }
 
 // Default <table> styles

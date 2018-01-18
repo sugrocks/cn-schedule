@@ -41,7 +41,6 @@ let router = new Router({
     {
       path: '/201([0-9]-[0-9]{2}-[0-9]{2})', // Redirects from old urls
       redirect: from => {
-        console.log(from)
         return {
           name: 'Schedule',
           params: {

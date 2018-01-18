@@ -31,6 +31,9 @@
 
         <tab name="Stats">
           <schedule-stats v-if="stats" :day="stats"></schedule-stats>
+          <div class="message warn" v-if="$parent.status.offline">
+            No stats available when browsing offline.
+          </div>
         </tab>
     </tabs>
   </span>
