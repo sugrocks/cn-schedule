@@ -6064,9 +6064,9 @@ vue-meta@^1.4.2:
     lodash.isplainobject "^4.0.6"
     object-assign "^4.1.1"
 
-vue-perfect-scrollbar@^0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/vue-perfect-scrollbar/-/vue-perfect-scrollbar-0.0.14.tgz#3219c10cac2773203abf8b6454ce863e56ef6a5a"
+vue-perfect-scrollbar@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/vue-perfect-scrollbar/-/vue-perfect-scrollbar-0.1.0.tgz#be12c23d1753a013fa81ceb9872cb5fc0b1b4960"
 
 vue-router@^3.0.1:
   version "3.0.1"
