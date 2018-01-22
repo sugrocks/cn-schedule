@@ -45,20 +45,16 @@ export default {
       return parseDate(date, true)
     },
     showStats (day) {
-      let s = {}
-      this.totalBlocks = 0
-
       if (day.cn) {
         this.source = 'Cartoon Network'
-        s = day.cn
+        this.dayStats = day.cn
       } else {
         this.source = 'Zap2it'
-        s = day.zap
+        this.dayStats = day.zap
       }
 
-      this.dayStats = s
-
-      s.forEach(el => {
+      this.totalBlocks = 0
+      this.dayStats.forEach(el => {
         this.totalBlocks += el.slots
       })
 
