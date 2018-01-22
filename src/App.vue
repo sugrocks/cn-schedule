@@ -96,7 +96,6 @@ export default {
 
           if (sel) {
             if (data.indexOf(sel) === -1) {
-              console.log('404')
               this.$router.push({ name: 'NotFound', params: { lastPath: this.$route.path } })
             } else if (firstRange.indexOf(sel) === -1) {
               late = data.indexOf(sel) - early - offset
@@ -111,7 +110,6 @@ export default {
         })
         .catch(err => {
           this.status.error = '' + err
-          console.log(this.status.error)
         })
     } else {
       console.warn('You are offline.')
@@ -129,7 +127,6 @@ export default {
   methods: {
     loadRange (from, to) {
       this.status.ready = false
-      console.log(from)
 
       if (from !== undefined) {
         fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to)

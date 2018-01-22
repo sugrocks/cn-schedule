@@ -8,6 +8,7 @@ var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var GitRevisionPlugin = require('git-revision-webpack-plugin')
+var Jarvis = require('webpack-jarvis')
 
 // init GitRevisionPlugin
 var gitRevisionPlugin = new GitRevisionPlugin()
@@ -41,6 +42,9 @@ module.exports = merge(baseWebpackConfig, {
       serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
         './service-worker-dev.js'), 'utf-8')}</script>`
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    new Jarvis({
+      port: 1337
+    })
   ]
 })
