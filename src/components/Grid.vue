@@ -87,8 +87,9 @@ export default {
       return {
         'color': colorPlz,
         'background-color': bgPlz,
-        'height': show.slots * 25 + 'px',
-        'margin-top': marginTopPlz + 'px'
+        'height': (show.timestamp_end - show.timestamp) / 36 + 'px',
+        'margin-top': marginTopPlz + 'px',
+        'box-shadow': 'inset 0 1px #000'
       }
     },
     displaySource (day, index) {
