@@ -52,33 +52,41 @@ class Admin {
 
   private function saveStats($f3, $json) {
     $stats = $f3->get('stats');
-    $count = [];
-    $total = 0;
+    $minutes = [];
+    $slots = [];
+    $totalMin = 0;
+    $totalSlots = 0;
 
     // Count how many times a show airs in the day
     foreach ($json->schedule as $block) {
-      if (array_key_exists($block->show, $count)) {
-        $count[$block->show] += $block->slots;
+      $min = ($block->timestamp_end - $block->timestamp) / 60;
+
+      if (array_key_exists($block->show, $minutes)) {
+        $slots[$block->show] += $block->slots;
+        $minutes[$block->show] += $min;
       } else {
-        $count[$block->show] = $block->slots;
+        $slots[$block->show] = $block->slots;
+        $minutes[$block->show] = $min;
       }
 
-      $total += $block->slots;
+      $totalMin += $min;
+      $totalSlots += $block->slots;
     }
 
     // Now save that with percentage
     $res = [];
-    foreach ($count as $title => $slots) {
+    foreach ($minutes as $title => $min) {
       $res[] = array(
-        'title' => $title,
-        'slots' => $slots,
-        'percentage' => floor($slots / $total * 100)
+        'title' => (string)$title,
+        'minutes' => (int)$min,
+        'slots' => (int)$slots[$title],
+        'percentage' => (float)sprintf('%1.1f', ($min / $totalMin * 100)) // precision: 1 decimal
       );
     }
 
-    // Sort DESC by slots
+    // Sort DESC by minutes
     usort($res, function ($item1, $item2) {
-        return $item2['slots'] <=> $item1['slots'];
+        return $item2['minutes'] <=> $item1['minutes'];
     });
 
     // Fetch if we already have that date
