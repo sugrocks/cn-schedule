@@ -73,8 +73,9 @@ export default {
         }
       }
 
-      if (show.color) {
-        bgPlz = show.color
+      if (this.$parent.config.colors && show.colors) {
+        colorPlz = show.colors.foreground
+        bgPlz = show.colors.background
       } else if (this.$parent.config.colors && (show.show !== 'SPECIAL' && show.show !== 'MOVIE')) {
         let li = (show.show.length % 10) / 10
         let colorHash = new ColorHash({ lightness: li })

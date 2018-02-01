@@ -52,6 +52,7 @@ class Admin {
 
   private function saveStats($f3, $json) {
     $stats = $f3->get('stats');
+    $colors = [];
     $minutes = [];
     $slots = [];
     $totalMin = 0;
@@ -65,6 +66,7 @@ class Admin {
         $slots[$block->show] += $block->slots;
         $minutes[$block->show] += $min;
       } else {
+        $colors[$block->show] = $block->colors->background;
         $slots[$block->show] = $block->slots;
         $minutes[$block->show] = $min;
       }
@@ -78,6 +80,7 @@ class Admin {
     foreach ($minutes as $title => $min) {
       $res[] = array(
         'title' => (string)$title,
+        'color' => (string)$colors[$title],
         'minutes' => (int)$min,
         'slots' => (int)$slots[$title],
         'percentage' => (float)sprintf('%1.1f', ($min / $totalMin * 100)) // precision: 1 decimal

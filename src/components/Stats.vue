@@ -75,12 +75,19 @@ export default {
       // Count blocks and add to chart
       this.totalBlocks = 0
       this.dayStats.forEach(el => {
-        let colorHash = new ColorHash({ lightness: (el.title % 10) / 10 })
+        let color = '#fff'
+
+        if (el.color) {
+          color = el.color
+        } else {
+          let colorHash = new ColorHash({ lightness: (el.title % 10) / 10 })
+          color = colorHash.hex(el.title)
+        }
 
         this.totalBlocks += el.slots
         this.statsCharts.labels.push(el.title)
         this.statsCharts.datasets[0].data.push(el.slots)
-        this.statsCharts.datasets[0].backgroundColor.push(colorHash.hex(el.title))
+        this.statsCharts.datasets[0].backgroundColor.push(color)
       })
 
       // Load chart
