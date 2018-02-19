@@ -14,7 +14,7 @@
     "babel-eslint": "^8.2.1",
     "chart.js": "^2.7.1",
     "color-hash": "^1.0.3",
-    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-config-standard": "^11.0.0",
     "eslint-plugin-html": "^4.0.2",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^6.0.0",
