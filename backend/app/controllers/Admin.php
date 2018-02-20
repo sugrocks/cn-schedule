@@ -31,7 +31,7 @@ class Admin {
 
     // tempfix: For some reason 2018-01-01 is in the wrong order
     $sh = json_decode(json_encode($json->schedule), true);
-    usort($sh, function ($item1, $item2) {
+    usort($sh, function($item1, $item2) {
       return $item1['timestamp'] <=> $item2['timestamp'];
     });
 
@@ -88,8 +88,8 @@ class Admin {
     }
 
     // Sort DESC by minutes
-    usort($res, function ($item1, $item2) {
-        return $item2['minutes'] <=> $item1['minutes'];
+    usort($res, function($item1, $item2) {
+      return $item2['minutes'] <=> $item1['minutes'];
     });
 
     // Fetch if we already have that date
@@ -127,6 +127,8 @@ class Admin {
     $keys->load(
       array('value=?', $f3->get('HEADERS.X-Api-Key'))
     );
+
+    // If key not found, drop a 403
     if ($keys->dry()) {
       $f3->error(403);
       return;

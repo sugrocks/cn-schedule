@@ -1,32 +1,36 @@
 <template>
   <div class="stats">
     <div class="stats-resume">
-      We have {{ totalBlocks }} time slots with {{ dayStats.length }} shows.
+      There's {{ dayStats.length }} shows listed for {{ pd(day.date) }}.
     </div>
+
+    <div class="source">
+      Source of data: {{ source }}
+    </div>
+
     <div class="two-columns-stats">
       <table class="top-shows">
         <thead>
           <tr>
             <th>Show</th>
-            <th colspan="2">Slots</th>
+            <th colspan="2">Minutes</th>
           </tr>
         </thead>
+
         <tbody>
           <tr
             v-for="show in dayStats"
             :key="show.title">
             <td>{{ show.title }}</td>
-            <td style="text-align: right;">{{ show.slots }}</td>
+            <td style="text-align: right;">{{ show.minutes || (show.slots * 15) }}</td>
             <td>~{{ show.percentage }}%</td>
           </tr>
         </tbody>
       </table>
+
       <div class="show-chart">
         <canvas id="chart" width="200" height="200"></canvas>
       </div>
-    </div>
-    <div class="source">
-      Source of data: {{ source }}
     </div>
   </div>
 </template>
@@ -41,7 +45,6 @@ export default {
   props: ['day'],
   data () {
     return {
-      totalBlocks: 0,
       dayStats: {},
       source: '',
       ready: false,
@@ -72,8 +75,7 @@ export default {
         this.dayStats = day.zap
       }
 
-      // Count blocks and add to chart
-      this.totalBlocks = 0
+      // Add to chart
       this.dayStats.forEach(el => {
         let color = '#fff'
 
@@ -84,9 +86,8 @@ export default {
           color = colorHash.hex(el.title)
         }
 
-        this.totalBlocks += el.slots
         this.statsCharts.labels.push(el.title)
-        this.statsCharts.datasets[0].data.push(el.slots)
+        this.statsCharts.datasets[0].data.push(el.minutes || (el.slots * 15))
         this.statsCharts.datasets[0].backgroundColor.push(color)
       })
 
@@ -132,8 +133,12 @@ export default {
   text-align: center;
 
   .stats-resume {
-    margin-bottom: 1em;
     font-weight: bold;
+  }
+
+  .source {
+    font-size: small;
+    margin-bottom: 1.5em;
   }
 
   .top-shows {
@@ -147,11 +152,6 @@ export default {
 
   .show-chart {
     padding: 50px;
-  }
-
-  .source {
-    font-size: small;
-    margin-top: 1em;
   }
 }
 

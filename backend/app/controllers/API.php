@@ -136,6 +136,7 @@ class API {
 
     // Count how many times a show airs in the day
     foreach ($output as $day => $data) {
+      // CN
       if ($data['cn']) {
         foreach ($data['cn'] as $show) {
           if (array_key_exists($show->title, $count_cn)) {
@@ -147,6 +148,7 @@ class API {
         }
       }
 
+      // Zap2it
       if ($data['zap']) {
         foreach ($data['zap'] as $show) {
           if (array_key_exists($show->title, $count_zap)) {
@@ -158,6 +160,7 @@ class API {
         }
       }
 
+      // [as]
       if ($data['as']) {
         foreach ($data['as'] as $show) {
           if (array_key_exists($show->title, $count_as)) {
@@ -171,6 +174,7 @@ class API {
     }
 
     // Now save that with percentage
+    // CN
     $res_cn = [];
     foreach ($count_cn as $title => $slots) {
       $res_cn[] = array(
@@ -179,11 +183,12 @@ class API {
         'percentage' => floor($slots / $total_cn * 100)
       );
     }
-    usort($res_cn, function ($item1, $item2) {
-        return $item2['slots'] <=> $item1['slots'];
+    usort($res_cn, function($item1, $item2) {
+      return $item2['slots'] <=> $item1['slots'];
     });
     if (!$res_cn) $res_cn = null;
 
+    // Zap2it
     $res_zap = [];
     foreach ($count_zap as $title => $slots) {
       $res_zap[] = array(
@@ -192,11 +197,12 @@ class API {
         'percentage' => floor($slots / $total_zap * 100)
       );
     }
-    usort($res_zap, function ($item1, $item2) {
-        return $item2['slots'] <=> $item1['slots'];
+    usort($res_zap, function($item1, $item2) {
+      return $item2['slots'] <=> $item1['slots'];
     });
     if (!$res_zap) $res_zap = null;
 
+    // [as]
     $res_as = [];
     foreach ($count_as as $title => $slots) {
       $res_as[] = array(
@@ -205,8 +211,8 @@ class API {
         'percentage' => floor($slots / $total_as * 100)
       );
     }
-    usort($res_as, function ($item1, $item2) {
-        return $item2['slots'] <=> $item1['slots'];
+    usort($res_as, function($item1, $item2) {
+      return $item2['slots'] <=> $item1['slots'];
     });
     if (!$res_as) $res_as = null;
 

@@ -85,10 +85,14 @@ export default {
         bgPlz = (show.time.search(':00') > 0 || show.time.search(':15') > 0) ? '#333' : '#3e3e3e'
       }
 
+      if (!show.minutes) {
+        show.minutes = (show.timestamp_end - show.timestamp) / 60
+      }
+
       return {
         'color': colorPlz,
         'background-color': bgPlz,
-        'height': (show.timestamp_end - show.timestamp) / 36 + 'px',
+        'height': show.minutes / 0.6 + 'px',
         'margin-top': marginTopPlz + 'px',
         'box-shadow': 'inset 0 1px #000'
       }
