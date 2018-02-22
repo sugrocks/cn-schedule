@@ -2804,10 +2804,6 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-full-icu@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/full-icu/-/full-icu-1.2.1.tgz#28d7f1caafb14cac262364ca584fe7f2044a4ab2"
-
 function-bind@^1.0.2:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -3907,11 +3903,9 @@ lru-cache@^4.0.1, lru-cache@^4.1.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-luxon@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-0.5.2.tgz#80d93f8e8a30e3a5bafa1d05a464872920e08be1"
-  dependencies:
-    full-icu "^1.2.0"
+luxon@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-0.5.3.tgz#d7bfbeddbd76d177a7cc507ba7ef99bdd5247d90"
 
 macaddress@^0.2.8:
   version "0.2.8"
