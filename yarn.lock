@@ -2671,7 +2671,7 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flatpickr@^4.2.4:
+flatpickr@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.3.2.tgz#6a477043c075ef36c3ff54fadb49b936a64d635f"
 
@@ -6335,11 +6335,11 @@ vue-analytics@^5.9.0:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.9.0.tgz#c2e61f67cbb7e5221e533dc511b547af23deeaaa"
 
-vue-flatpickr-component@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/vue-flatpickr-component/-/vue-flatpickr-component-6.2.0.tgz#911b70672de9dfe16adbe78e1ed83adc718133cb"
+vue-flatpickr-component@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/vue-flatpickr-component/-/vue-flatpickr-component-7.0.0.tgz#ad7f9490db0048ce2c721f34ad0e5085a004e9ac"
   dependencies:
-    flatpickr "^4.2.4"
+    flatpickr "^4.3.2"
 
 vue-hot-reload-api@^2.2.0:
   version "2.2.4"
