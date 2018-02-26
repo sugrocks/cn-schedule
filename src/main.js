@@ -3,7 +3,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 // Polyfills
-import Promise from 'promise-polyfill'
+import 'promise-polyfill/src/polyfill'
 import 'whatwg-fetch'
 // Our app
 import App from './App'
@@ -17,11 +17,6 @@ import 'flatpickr/dist/flatpickr.css'
 import 'flatpickr/dist/themes/dark.css'
 // The router
 import router from './Router'
-
-// Apply polyfill
-if (!window.Promise) {
-  window.Promise = Promise
-}
 
 // Tests for old browsers (no console.* for weird browsers || ie 7-10 || Server-side Opera Mini)
 if (typeof console === 'undefined' ||
