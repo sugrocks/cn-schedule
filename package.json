@@ -73,7 +73,7 @@
     "vue-router": "^3.0.1",
     "vue-style-loader": "^4.0.2",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^3.11.0",
+    "webpack": "^4.0.0",
     "webpack-bundle-analyzer": "^2.11.0",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-hot-middleware": "^2.21.0",
