@@ -1,4 +1,6 @@
 # CN Schedule
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/sugrocks/cn-schedule.svg)](https://greenkeeper.io/)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-green.svg)](http://standardjs.com/)
 [![Code Climate](https://img.shields.io/codeclimate/github/sugrocks/cn-schedule.svg)](https://codeclimate.com/github/sugrocks/cn-schedule)
 [![Travis Build Status](https://travis-ci.org/sugrocks/cn-schedule.svg?branch=master)](https://travis-ci.org/sugrocks/cn-schedule)
