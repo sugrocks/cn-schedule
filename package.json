@@ -55,7 +55,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "git-revision-webpack-plugin": "^2.5.1",
     "html-webpack-plugin": "webpack-contrib/html-webpack-plugin",
-    "http-proxy-middleware": "^0.17.4",
+    "http-proxy-middleware": "^0.18.0",
     "lodash": "^4.17.5",
     "node-sass": "^4.7.2",
     "opn": "^5.2.0",
