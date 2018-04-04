@@ -11,6 +11,17 @@
       </h2>
 
       <p>
+        <label for="fallback">Fallback source: </label>
+        <select
+          id="fallback"
+          @change="saveSettings"
+          v-model="$parent.config.fallback">
+          <option value="zap">Zap2it</option>
+          <option value="tvguide">TVGuide</option>
+        </select>
+
+        <br/>
+
         <label for="localTime">Convert times to your timezone: </label>
         <input
           type="checkbox"

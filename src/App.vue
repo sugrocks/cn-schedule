@@ -46,7 +46,8 @@ export default {
         colors: false,
         listSize: 'normal',
         localTime: false,
-        theme: 'dark'
+        theme: 'dark',
+        fallback: 'zap'
       },
       schedule: {
         available: [],
@@ -72,6 +73,9 @@ export default {
     // Get config from store
     let conf = store.get('appDisplayConfig')
     if (conf !== undefined) {
+      // Transition
+      if (!conf.fallback) conf.fallback = 'zap'
+
       this.config = conf
     }
 

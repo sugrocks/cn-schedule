@@ -103,8 +103,8 @@ export default {
     displaySource (day, index) {
       // Add classes to specify source and if it's an old entry
       return {
-        'zap2it': (day.cn === null && day.zap),
-        'tvguide': (day.cn === null && day.zap === null && day.tvguide),
+        'zap2it': (day.cn === null && day.zap && this.$parent.config.fallback === 'zap'),
+        'tvguide': (day.cn === null && day.tvguide && this.$parent.config.fallback === 'tvguide'),
         'cn': (day.cn),
         'past': (getDate().replace('-', '') > index.replace('-', '')),
         'day': true
@@ -112,8 +112,8 @@ export default {
     },
     getSchedule (day) {
       if (day.cn) return day.cn
-      if (day.zap) return day.zap
-      if (day.tvguide) return day.tvguide
+      if (day.zap && this.$parent.config.fallback === 'zap') return day.zap
+      if (day.tvguide && this.$parent.config.fallback === 'tvguide') return day.tvguide
       return day.other
     },
     getTime (ts, str) {

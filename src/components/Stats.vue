@@ -42,7 +42,7 @@ import Chart from 'chart.js/dist/Chart.min.js'
 
 export default {
   name: 'stats',
-  props: ['day'],
+  props: ['day', 'fallback'],
   data () {
     return {
       dayStats: {},
@@ -70,7 +70,7 @@ export default {
       if (day.cn) {
         this.source = 'Cartoon Network'
         this.dayStats = day.cn
-      } else if (day.zap) {
+      } else if (day.zap && this.fallback !== 'tvguide') {
         this.source = 'Zap2it'
         this.dayStats = day.zap
       } else {
