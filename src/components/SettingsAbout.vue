@@ -68,7 +68,7 @@
 
       <p>
         Inspired by
-        <a class="as" target="_blank" rel="noopener" href="http://adultswim.x10.mx/">
+        <a class="as" target="_blank" rel="noopener" href="https://swimpedia.net/oldsched/">
           better [adult swim] schedule</a>.<br/>
         Cartoon Network's data extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.<br/>
         We check for updates every 30 minutes.<br/>
