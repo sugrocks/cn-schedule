@@ -71,6 +71,7 @@ class API {
       $entry = $f3->get('days')->cast();
       $entry['cn'] = json_decode($entry['cn']);
       $entry['zap'] = json_decode($entry['zap']);
+      $entry['tvguide'] = json_decode($entry['tvguide']);
       $entry['as'] = json_decode($entry['as']);
       unset($entry['id']);
 
@@ -94,6 +95,7 @@ class API {
     $entry = $f3->get('stats')->cast();
     $entry['cn'] = json_decode($entry['cn']);
     $entry['zap'] = json_decode($entry['zap']);
+    $entry['tvguide'] = json_decode($entry['tvguide']);
     $entry['as'] = json_decode($entry['as']);
     unset($entry['id']);
 
@@ -119,6 +121,7 @@ class API {
       $entry = $f3->get('stats')->cast();
       $entry['cn'] = json_decode($entry['cn']);
       $entry['zap'] = json_decode($entry['zap']);
+      $entry['tvguide'] = json_decode($entry['tvguide']);
       $entry['as'] = json_decode($entry['as']);
       unset($entry['id']);
 
@@ -129,9 +132,11 @@ class API {
     // Create a "total" from the range
     $count_cn = [];
     $count_zap = [];
+    $count_tvguide = [];
     $count_as = [];
     $total_cn = 0;
     $total_zap = 0;
+    $total_tvguide = 0;
     $total_as = 0;
 
     // Count how many times a show airs in the day
@@ -157,6 +162,18 @@ class API {
             $count_zap[$show->title] = $show->slots;
           }
           $total_zap += $show->slots;
+        }
+      }
+
+      // TVGuide
+      if ($data['tvguide']) {
+        foreach ($data['tvguide'] as $show) {
+          if (array_key_exists($show->title, $count_tvguide)) {
+            $count_tvguide[$show->title] += $show->slots;
+          } else {
+            $count_tvguide[$show->title] = $show->slots;
+          }
+          $total_tvguide += $show->slots;
         }
       }
 
@@ -202,6 +219,20 @@ class API {
     });
     if (!$res_zap) $res_zap = null;
 
+    // TVGuide
+    $res_tvguide = [];
+    foreach ($count_tvguide as $title => $slots) {
+      $res_tvguide[] = array(
+        'title' => $title,
+        'slots' => $slots,
+        'percentage' => floor($slots / $total_tvguide * 100)
+      );
+    }
+    usort($res_tvguide, function($item1, $item2) {
+      return $item2['slots'] <=> $item1['slots'];
+    });
+    if (!$res_tvguide) $res_tvguide = null;
+
     // [as]
     $res_as = [];
     foreach ($count_as as $title => $slots) {
@@ -219,6 +250,7 @@ class API {
     $output['total'] = array(
       'cn' => $res_cn,
       'zap' => $res_zap,
+      'tvguide' => $res_tvguide,
       'as' => $res_as,
     );
 

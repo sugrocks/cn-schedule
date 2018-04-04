@@ -18,7 +18,17 @@ class Fetch {
         break;
 
       case 'The Amazing World of Gumball':
+      case 'Gumball':
         return 'The Amazing World of Gumball';
+        break;
+
+      case 'OK K.O.! Let\'s Be Heroes!':
+      case 'OK K.O.!':
+        return 'OK K.O.! Let\'s Be Heroes';
+        break;
+
+      case 'Unikitty!':
+        return 'Unikitty';
         break;
 
       default:
@@ -30,7 +40,7 @@ class Fetch {
     $ep = explode('/', $episode);
 
     foreach ($ep as $e) {
-      //
+      // ...
     }
 
     return $episode;
@@ -41,6 +51,10 @@ class Fetch {
   }
 
   public function zap($f3) {
+    // ...
+  }
+
+  public function tvguide($f3) {
     // ...
   }
 

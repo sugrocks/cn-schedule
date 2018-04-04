@@ -40,6 +40,8 @@ class Admin {
       $day->cn = json_encode($sh);
     } else if ($json->source == 'Zap2it') {
       $day->zap = json_encode($sh);
+    } else if ($json->source == 'TVGuide') {
+      $day->tvguide = json_encode($sh);
     }  else if ($json->source == 'Adult Swim') {
       $day->as = json_encode($sh);
     } else {
@@ -111,6 +113,8 @@ class Admin {
       $stats->cn = json_encode($res);
     } else if ($json->source == 'Zap2it') {
       $stats->zap = json_encode($res);
+    } else if ($json->source == 'TVGuide') {
+      $stats->tvguide = json_encode($res);
     }  else if ($json->source == 'Adult Swim') {
       $stats->as = json_encode($res);
     } else {
