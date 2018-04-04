@@ -20,6 +20,9 @@
         <span class="zapSrc">
           (Zap2it)
         </span>
+        <span class="tvguideSrc">
+          (TVGuide)
+        </span>
       </div>
       <div
         class="slot"
@@ -101,6 +104,7 @@ export default {
       // Add classes to specify source and if it's an old entry
       return {
         'zap2it': (day.cn === null && day.zap),
+        'tvguide': (day.cn === null && day.zap === null && day.tvguide),
         'cn': (day.cn),
         'past': (getDate().replace('-', '') > index.replace('-', '')),
         'day': true
@@ -109,6 +113,7 @@ export default {
     getSchedule (day) {
       if (day.cn) return day.cn
       if (day.zap) return day.zap
+      if (day.tvguide) return day.tvguide
       return day.other
     },
     getTime (ts, str) {
@@ -173,7 +178,16 @@ export default {
   .zap2it .date {
     background-color: $zap2it;
 
-    span {
+    .zapSrc {
+      display: inline;
+    }
+  }
+
+  .tvguide .date {
+    color: $white;
+    background-color: $tvguide;
+
+    .tvguideSrc {
       display: inline;
     }
   }

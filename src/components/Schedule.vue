@@ -3,7 +3,7 @@
     <tabs :options="{ useUrlFragment: false, disableStorage: true }">
         <tab name="Official">
           <div class="message warn" v-if="!schedule.cn">
-            No data from Cartoon Network. Try with Zap2it!
+            No data from Cartoon Network. Try with Zap2it or TVGuide!
           </div>
           <table v-else>
             <schedule-el
@@ -17,11 +17,25 @@
 
         <tab name="Zap2it">
           <div class="message warn" v-if="!schedule.zap">
-            No data from Zap2it. Try with Cartoon Network!
+            No data from Zap2it. Try with Cartoon Network or TVGuide!
           </div>
           <table>
             <schedule-el
               v-for="block in schedule.zap"
+              :key="block.timestamp"
+              :block="block"
+              :config="$parent.config">
+            </schedule-el>
+          </table>
+        </tab>
+
+        <tab name="TVGuide">
+          <div class="message warn" v-if="!schedule.tvguide">
+            No data from TVGuide. Try with Cartoon Network or Zap2it!
+          </div>
+          <table>
+            <schedule-el
+              v-for="block in schedule.tvguide"
               :key="block.timestamp"
               :block="block"
               :config="$parent.config">

@@ -70,9 +70,12 @@ export default {
       if (day.cn) {
         this.source = 'Cartoon Network'
         this.dayStats = day.cn
-      } else {
+      } else if (day.zap) {
         this.source = 'Zap2it'
         this.dayStats = day.zap
+      } else {
+        this.source = 'TVGuide'
+        this.dayStats = day.tvguide
       }
 
       // Add to chart

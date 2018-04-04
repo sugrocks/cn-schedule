@@ -59,7 +59,7 @@
         Inspired by
         <a class="as" target="_blank" rel="noopener" href="http://adultswim.x10.mx/">
           better [adult swim] schedule</a>.<br/>
-        Cartoon Network's data extracted from "The Backdoor". Zap2it's from their APIs.<br/>
+        Cartoon Network's data extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.<br/>
         We check for updates every 30 minutes.<br/>
         <small>
           Want to know when a new day is available? <a class="discord" target="_blank" rel="noopener" href="https://discord.gg/Jr9Pnq9">Join our Discord.</a><br/>

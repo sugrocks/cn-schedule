@@ -308,6 +308,10 @@ table {
           background-image: url('./assets/zap2it.png');
         }
 
+        &[href="#tvguide"]::before {
+          background-image: url('./assets/tvguide.png');
+        }
+
         &[href="#stats"]::before {
           background-image: url('./assets/pie-chart.svg');
         }
@@ -327,7 +331,7 @@ table {
       border-bottom: 0;
       border-top: 0;
       display: grid;
-      grid-auto-columns: 33.33333333333333%;
+      grid-auto-columns: 25%;
 
       .tabs-component-tab {
         border-bottom: 3px solid $black;
