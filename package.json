@@ -53,7 +53,7 @@
     "extract-text-webpack-plugin": "^4.0.0-alpha.0",
     "file-loader": "^1.1.10",
     "friendly-errors-webpack-plugin": "^1.6.1",
-    "git-revision-webpack-plugin": "^2.5.1",
+    "git-revision-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "jantimon/html-webpack-plugin",
     "http-proxy-middleware": "^0.18.0",
     "lodash": "^4.17.5",
