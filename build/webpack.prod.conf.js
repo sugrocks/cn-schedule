@@ -5,6 +5,7 @@ var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
+var { VueLoaderPlugin } = require('vue-loader')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -45,10 +46,10 @@ var webpackConfig = merge(baseWebpackConfig, {
       'BRANCH': JSON.stringify(process.env.HEAD || gitRevisionPlugin.branch()),
       'process.env': env
     }),
+    new VueLoaderPlugin(),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[md5:contenthash:hex:20].css')
-
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
