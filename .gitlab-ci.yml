@@ -4,7 +4,7 @@ stages:
   - deploy
 
 lint:
-  image: node:latest
+  image: node:8
   stage: test
   cache:
     key: "v2-$CI_COMMIT_REF_NAME"
@@ -17,7 +17,7 @@ lint:
     - npm run lint
 
 build:
-  image: node:latest
+  image: node:8
   stage: build
   cache:
     key: "v2-$CI_COMMIT_REF_NAME"
