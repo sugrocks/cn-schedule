@@ -5,6 +5,7 @@ var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
+var { VueLoaderPlugin } = require('vue-loader')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var GitRevisionPlugin = require('git-revision-webpack-plugin')
@@ -32,6 +33,7 @@ module.exports = merge(baseWebpackConfig, {
       'BRANCH': JSON.stringify(gitRevisionPlugin.branch()),
       'process.env': config.dev.env
     }),
+    new VueLoaderPlugin(),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
