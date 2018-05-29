@@ -25,11 +25,15 @@ class API {
     # Remove incomplete zap entries
     if ($entry['zap']) {
       $l = array_values(array_slice($entry['zap'], -1))[0];
-      $ts = $l->timestamp_end;
-      $tz = new DateTimeZone('America/New_York');
-      $d = new DateTime("@$ts");
-      $d->setTimezone($tz);
-      if ($d->format('H') != '20') $entry['zap'] = null;
+
+      # timestamp_end isn't a thing with stats
+      if (property_exists($l, 'timestamp_end')) {
+        $ts = $l->timestamp_end;
+        $tz = new DateTimeZone('America/New_York');
+        $d = new DateTime("@$ts");
+        $d->setTimezone($tz);
+        if ($d->format('H') != '20') $entry['zap'] = null;
+      }
     }
 
     return $entry;
