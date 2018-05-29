@@ -52,7 +52,7 @@ class Admin {
     });
 
     // Add from the correct source
-    $day = encodeSource($day, $json, $sh);
+    $day = $this->encodeSource($day, $json, $sh);
 
     // Save
     $day->save();
@@ -115,7 +115,7 @@ class Admin {
     $stats->lastupdate = time();
 
     // Add from the correct source
-    $stats = encodeSource($stats, $json, $res);
+    $stats = $this->encodeSource($stats, $json, $res);
 
     // Save
     $stats->save();
