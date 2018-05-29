@@ -84,7 +84,8 @@ class API {
     }
 
     while(!$f3->get('days')->dry()) {
-      $output[$entry['date']] = $this->decodeEntry($f3->get('days')->cast());
+      $entry = $f3->get('days')->cast();
+      $output[$entry['date']] = $this->decodeEntry($entry);
       $f3->get('days')->next();
     }
 
@@ -122,7 +123,8 @@ class API {
     }
 
     while(!$f3->get('stats')->dry()) {
-      $output[$entry['date']] = $this->decodeEntry($f3->get('days')->cast());
+      $entry = $f3->get('days')->cast();
+      $output[$entry['date']] = $this->decodeEntry($entry);
       $f3->get('stats')->next();
     }
 
