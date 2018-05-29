@@ -15,7 +15,7 @@ class API {
     echo json_encode($output, JSON_PRETTY_PRINT);
   }
 
-  private function parseEntry($entry) {
+  private function decodeEntry($entry) {
     $entry['cn'] = json_decode($entry['cn']);
     $entry['zap'] = json_decode($entry['zap']);
     $entry['tvguide'] = json_decode($entry['tvguide']);
@@ -63,7 +63,7 @@ class API {
       return;
     }
 
-    $entry = $this->parseEntry($f3->get('days')->cast());
+    $entry = $this->decodeEntry($f3->get('days')->cast());
 
     echo json_encode($entry, JSON_PRETTY_PRINT);
   }
@@ -84,7 +84,7 @@ class API {
     }
 
     while(!$f3->get('days')->dry()) {
-      $output[$entry['date']] = $this->parseEntry($f3->get('days')->cast());
+      $output[$entry['date']] = $this->decodeEntry($f3->get('days')->cast());
       $f3->get('days')->next();
     }
 
@@ -101,7 +101,7 @@ class API {
       return;
     }
 
-    $entry = $this->parseEntry($f3->get('days')->cast());
+    $entry = $this->decodeEntry($f3->get('days')->cast());
 
     echo json_encode($entry, JSON_PRETTY_PRINT);
   }
@@ -122,7 +122,7 @@ class API {
     }
 
     while(!$f3->get('stats')->dry()) {
-      $output[$entry['date']] = $this->parseEntry($f3->get('days')->cast());
+      $output[$entry['date']] = $this->decodeEntry($f3->get('days')->cast());
       $f3->get('stats')->next();
     }
 

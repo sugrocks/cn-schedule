@@ -12,6 +12,22 @@ class Admin {
     $f3->reroute('https://api.ctoon.network/');
   }
 
+  private function encodeSource($obj, $json, $res) {
+    if ($json->source == 'Cartoon Network') {
+      $obj->cn = json_encode($res);
+    } else if ($json->source == 'Zap2it') {
+      $obj->zap = json_encode($res);
+    } else if ($json->source == 'TVGuide') {
+      $obj->tvguide = json_encode($res);
+    }  else if ($json->source == 'Adult Swim') {
+      $obj->as = json_encode($res);
+    } else {
+      $obj->other = json_encode($res);
+    }
+
+    return $obj;
+  }
+
   private function saveDay($f3, $json) {
     $day = $f3->get('days');
 
@@ -36,17 +52,7 @@ class Admin {
     });
 
     // Add from the correct source
-    if ($json->source == 'Cartoon Network') {
-      $day->cn = json_encode($sh);
-    } else if ($json->source == 'Zap2it') {
-      $day->zap = json_encode($sh);
-    } else if ($json->source == 'TVGuide') {
-      $day->tvguide = json_encode($sh);
-    }  else if ($json->source == 'Adult Swim') {
-      $day->as = json_encode($sh);
-    } else {
-      $day->other = json_encode($sh);
-    }
+    $day = encodeSource($day, $json, $sh);
 
     // Save
     $day->save();
@@ -109,17 +115,7 @@ class Admin {
     $stats->lastupdate = time();
 
     // Add from the correct source
-    if ($json->source == 'Cartoon Network') {
-      $stats->cn = json_encode($res);
-    } else if ($json->source == 'Zap2it') {
-      $stats->zap = json_encode($res);
-    } else if ($json->source == 'TVGuide') {
-      $stats->tvguide = json_encode($res);
-    }  else if ($json->source == 'Adult Swim') {
-      $stats->as = json_encode($res);
-    } else {
-      $stats->other = json_encode($res);
-    }
+    $stats = encodeSource($stats, $json, $res);
 
     // Save
     $stats->save();
