@@ -123,7 +123,7 @@ class API {
     }
 
     while(!$f3->get('stats')->dry()) {
-      $entry = $f3->get('days')->cast();
+      $entry = $f3->get('stats')->cast();
       $output[$entry['date']] = $this->decodeEntry($entry);
       $f3->get('stats')->next();
     }
