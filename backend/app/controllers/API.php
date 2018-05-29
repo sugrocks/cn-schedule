@@ -15,6 +15,26 @@ class API {
     echo json_encode($output, JSON_PRETTY_PRINT);
   }
 
+  private function parseEntry($entry) {
+    $entry['cn'] = json_decode($entry['cn']);
+    $entry['zap'] = json_decode($entry['zap']);
+    $entry['tvguide'] = json_decode($entry['tvguide']);
+    $entry['as'] = json_decode($entry['as']);
+    unset($entry['id']);
+
+    # Remove incomplete zap entries
+    if ($entry['zap']) {
+      $l = array_values(array_slice($entry['zap'], -1))[0];
+      $ts = $l->timestamp_end;
+      $tz = new DateTimeZone('America/New_York');
+      $d = new DateTime("@$ts");
+      $d->setTimezone($tz);
+      if ($d->format('H') != '20') $entry['zap'] = null;
+    }
+
+    return $entry;
+  }
+
   public function days($f3) {
     $output = [];
 
@@ -43,22 +63,7 @@ class API {
       return;
     }
 
-    $entry = $f3->get('days')->cast();
-    $entry['cn'] = json_decode($entry['cn']);
-    $entry['zap'] = json_decode($entry['zap']);
-    $entry['tvguide'] = json_decode($entry['tvguide']);
-    $entry['as'] = json_decode($entry['as']);
-    unset($entry['id']);
-
-    # Remove incomplete zap entries
-    if ($entry['zap']) {
-      $l = array_values(array_slice($entry['zap'], -1))[0];
-      $ts = $l->timestamp_end;
-      $tz = new DateTimeZone('America/New_York');
-      $d = new DateTime("@$ts");
-      $d->setTimezone($tz);
-      if ($d->format('H') != '20') $entry['zap'] = null;
-    }
+    $entry = $this->parseEntry($f3->get('days')->cast());
 
     echo json_encode($entry, JSON_PRETTY_PRINT);
   }
@@ -79,24 +84,7 @@ class API {
     }
 
     while(!$f3->get('days')->dry()) {
-      $entry = $f3->get('days')->cast();
-      $entry['cn'] = json_decode($entry['cn']);
-      $entry['zap'] = json_decode($entry['zap']);
-      $entry['tvguide'] = json_decode($entry['tvguide']);
-      $entry['as'] = json_decode($entry['as']);
-      unset($entry['id']);
-
-      # Remove incomplete zap entries
-      if ($entry['zap']) {
-        $l = array_values(array_slice($entry['zap'], -1))[0];
-        $ts = $l->timestamp_end;
-        $tz = new DateTimeZone('America/New_York');
-        $d = new DateTime("@$ts");
-        $d->setTimezone($tz);
-        if ($d->format('H') != '20') $entry['zap'] = null;
-      }
-
-      $output[$entry['date']] = $entry;
+      $output[$entry['date']] = $this->parseEntry($f3->get('days')->cast());
       $f3->get('days')->next();
     }
 
@@ -113,12 +101,7 @@ class API {
       return;
     }
 
-    $entry = $f3->get('stats')->cast();
-    $entry['cn'] = json_decode($entry['cn']);
-    $entry['zap'] = json_decode($entry['zap']);
-    $entry['tvguide'] = json_decode($entry['tvguide']);
-    $entry['as'] = json_decode($entry['as']);
-    unset($entry['id']);
+    $entry = $this->parseEntry($f3->get('days')->cast());
 
     echo json_encode($entry, JSON_PRETTY_PRINT);
   }
@@ -139,14 +122,7 @@ class API {
     }
 
     while(!$f3->get('stats')->dry()) {
-      $entry = $f3->get('stats')->cast();
-      $entry['cn'] = json_decode($entry['cn']);
-      $entry['zap'] = json_decode($entry['zap']);
-      $entry['tvguide'] = json_decode($entry['tvguide']);
-      $entry['as'] = json_decode($entry['as']);
-      unset($entry['id']);
-
-      $output[$entry['date']] = $entry;
+      $output[$entry['date']] = $this->parseEntry($f3->get('days')->cast());
       $f3->get('stats')->next();
     }
 
