@@ -11,9 +11,10 @@ lint:
     paths:
       - node_modules/
       - .yarn/
-  script:
+  before_script:
     - yarn config set cache-folder .yarn
     - yarn
+  script:
     - npm run lint
 
 build:
@@ -25,9 +26,10 @@ build:
       - node_modules/
       - .yarn/
     policy: pull
-  script:
+  before_script:
     - yarn config set cache-folder .yarn
     - yarn
+  script:
     - npm run build
   artifacts:
     expire_in: 3 days
@@ -37,7 +39,10 @@ build:
     - live
 
 deploy_master:
+  image: alpine:latest
   stage: deploy
+  before_script:
+    - apk add --no-cache curl
   script:
     - curl -X POST -d '' https://api.netlify.com/build_hooks/$NETLIFY_MASTER
   only:
