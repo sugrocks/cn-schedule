@@ -187,8 +187,8 @@ export default {
   }
 }
 
-// Make a two-column layout starting 630px in width
-@media screen and (min-width: 630px) {
+// Make a two-column layout starting 675px in width
+@media screen and (min-width: 675px) {
   .navbar {
     float: left;
     width: 200px;

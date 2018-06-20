@@ -72,7 +72,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 630px) {
+@media screen and (min-width: 675px) {
   .home {
     margin-left: 200px;
   }

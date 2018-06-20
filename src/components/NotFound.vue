@@ -35,7 +35,7 @@ export default {
   padding: 25px;
 }
 
-@media screen and (min-width: 630px) {
+@media screen and (min-width: 675px) {
   .notfound {
     margin-left: 200px;
   }

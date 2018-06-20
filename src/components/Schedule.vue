@@ -43,6 +43,20 @@
           </table>
         </tab>
 
+        <tab name="[as]">
+          <div class="message warn" v-if="!schedule.as">
+            No data from [adult swim]
+          </div>
+          <table>
+            <schedule-el
+              v-for="block in schedule.as"
+              :key="block.timestamp"
+              :block="block"
+              :config="$parent.config">
+            </schedule-el>
+          </table>
+        </tab>
+
         <tab name="Stats">
           <schedule-stats v-if="stats" :day="stats" :fallback="$parent.config.fallback"></schedule-stats>
           <div class="message warn" v-if="$parent.status.offline">

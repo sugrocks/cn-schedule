@@ -316,6 +316,10 @@ table {
           background-image: url('./assets/tvguide.png');
         }
 
+        &[href="#[as]"]::before {
+          background-image: url('./assets/as.png');
+        }
+
         &[href="#stats"]::before {
           background-image: url('./assets/pie-chart.svg');
         }
@@ -328,18 +332,19 @@ table {
   }
 }
 
-// If the browser width >= 630px
-@media screen and (min-width: 630px) {
+// If the browser width >= 675px
+@media screen and (min-width: 675px) {
   .tabs-component {
     .tabs-component-tabs {
       border-bottom: 0;
       border-top: 0;
-      display: grid;
-      grid-auto-columns: 25%;
+      display: flex;
+      flex-direction: row;
 
       .tabs-component-tab {
         border-bottom: 3px solid $black;
-        grid-row: 1;
+        flex-basis: 0;
+        flex-grow: 1;
 
         &.is-active {
           border-bottom: 3px solid $dark-red;

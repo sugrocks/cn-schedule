@@ -256,7 +256,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 630px) {
+@media screen and (min-width: 675px) {
   .grid {
     height: calc(100vh - 45px);
     overflow-y: scroll;

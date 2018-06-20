@@ -158,7 +158,7 @@ export default {
   }
 }
 
-@media screen and (min-width: 630px) {
+@media screen and (min-width: 675px) {
   .stats {
     .two-columns-stats {
       .top-shows {
