@@ -106,7 +106,7 @@ class API1 {
       return;
     }
 
-    $entry = $this->decodeEntry($f3->get('days')->cast());
+    $entry = $this->decodeEntry($f3->get('stats')->cast());
 
     echo json_encode($entry, JSON_PRETTY_PRINT);
   }
