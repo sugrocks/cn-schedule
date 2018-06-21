@@ -1,7 +1,7 @@
 <template>
   <div class="stats">
     <div class="stats-resume">
-      There's {{ dayStats.length }} shows listed for {{ pd(day.date) }}.
+      There's {{ dayStats.length }} shows listed.
     </div>
 
     <div class="source">
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { parseDate } from '../assets/dates'
 import ColorHash from 'color-hash'
 import Chart from 'chart.js/dist/Chart.min.js'
 
@@ -53,9 +52,6 @@ export default {
     }
   },
   methods: {
-    pd (date) {
-      return parseDate(date, true)
-    },
     showStats (day) {
       // Clear data
       this.statsCharts = {

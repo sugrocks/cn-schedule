@@ -45,7 +45,7 @@
 
         <tab name="[as]">
           <div class="message warn" v-if="!schedule.as">
-            No data from [adult swim]
+            No data from [adult swim].
           </div>
           <table>
             <schedule-el
@@ -59,8 +59,8 @@
 
         <tab name="Stats">
           <schedule-stats v-if="stats" :day="stats" :fallback="$parent.config.fallback"></schedule-stats>
-          <div class="message warn" v-if="$parent.status.offline">
-            No stats available when browsing offline.
+          <div class="message warn" v-else>
+            No stats available.
           </div>
         </tab>
     </tabs>
@@ -101,8 +101,8 @@ export default {
         return
       }
 
-      this.schedule = this.$parent.schedule.days[d]
-      this.stats = this.$parent.schedule.stats[d]
+      this.schedule = this.$parent.schedule.days[d]['schedule']
+      this.stats = this.$parent.schedule.days[d]['stats']
     }
   },
   watch: {

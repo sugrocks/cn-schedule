@@ -101,6 +101,7 @@ export default {
       }
     },
     displaySource (day, index) {
+      day = day['schedule']
       // Add classes to specify source and if it's an old entry
       return {
         'zap2it': (day.cn === null && day.zap && this.$parent.config.fallback === 'zap'),
@@ -111,6 +112,7 @@ export default {
       }
     },
     getSchedule (day) {
+      day = day['schedule']
       if (day.cn) return day.cn
       if (day.zap && this.$parent.config.fallback === 'zap') return day.zap
       if (day.tvguide) return day.tvguide
