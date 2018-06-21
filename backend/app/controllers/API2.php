@@ -15,49 +15,64 @@ class API2 {
     echo json_encode($output, JSON_PRETTY_PRINT);
   }
 
-  private function decodeEntry($schedule, $stats) {
-    $entry = array(
-      'schedule' => [],
-      'stats' => []
-    );
+  private function cleanZap($day) {
+    # Get latest schedule entry for the day
+    $l = array_values(array_slice($day['schedule']['zap'], -1))[0];
 
-    $entry['date'] = $schedule['date'];
-    $entry['lastupdate'] = $schedule['lastupdate'];
-
-    $entry['stats']['cn'] = json_decode($stats['cn']);
-    $entry['stats']['zap'] = json_decode($stats['zap']);
-    $entry['stats']['tvguide'] = json_decode($stats['tvguide']);
-    $entry['stats']['as'] = json_decode($stats['as']);
-
-    $entry['schedule']['cn'] = json_decode($schedule['cn']);
-    $entry['schedule']['zap'] = json_decode($schedule['zap']);
-    $entry['schedule']['tvguide'] = json_decode($schedule['tvguide']);
-    $entry['schedule']['as'] = json_decode($schedule['as']);
-
-    # Remove incomplete zap entries
-    $l = array_values(array_slice($entry['schedule']['zap'], -1))[0];
+    # Get its ending hour
     $ts = $l->timestamp_end;
     $tz = new DateTimeZone('America/New_York');
     $d = new DateTime("@$ts");
     $d->setTimezone($tz);
+
+    # If it doesn't end at 8pm (20h), data is complete
     if ($d->format('H') != '20') {
-      $entry['schedule']['zap'] = null;
-      $entry['stats']['zap'] = null;
+      # Empty schedule and stats from Zap2it
+      $day['schedule']['zap'] = null;
+      $day['stats']['zap'] = null;
     }
 
-    return $entry;
+    return $day;
+  }
+
+  private function makeDay($schedule, $stats) {
+    $day = array(
+      'schedule' => [],
+      'stats' => []
+    );
+
+    # Get selected date and the last update
+    $day['date'] = $schedule['date'];
+    $day['lastupdate'] = $schedule['lastupdate'];
+
+    # Decode stats' json
+    $day['stats']['cn'] = json_decode($stats['cn']);
+    $day['stats']['zap'] = json_decode($stats['zap']);
+    $day['stats']['tvguide'] = json_decode($stats['tvguide']);
+    $day['stats']['as'] = json_decode($stats['as']);
+
+    # Decode schedules' json
+    $day['schedule']['cn'] = json_decode($schedule['cn']);
+    $day['schedule']['zap'] = json_decode($schedule['zap']);
+    $day['schedule']['tvguide'] = json_decode($schedule['tvguide']);
+    $day['schedule']['as'] = json_decode($schedule['as']);
+
+    # Remove incomplete zap entries
+    $day = $this->cleanZap($day);
+
+    return $day;
   }
 
   public function days($f3) {
     $output = [];
 
+    // Load all entries
     $f3->get('days')->load(
       array(),
-      array(
-        'order' => 'date DESC'
-      )
+      array('order' => 'date DESC')
     );
 
+    // And save the date value
     while(!$f3->get('days')->dry()) {
       $output[] = $f3->get('days')->date;
       $f3->get('days')->next();
@@ -82,12 +97,12 @@ class API2 {
     }
 
     // Make our json
-    $entry = $this->decodeEntry(
+    $output = $this->makeDay(
       $f3->get('days')->cast(),
       $f3->get('stats')->cast()
     );
 
-    echo json_encode($entry, JSON_PRETTY_PRINT);
+    echo json_encode($output, JSON_PRETTY_PRINT);
   }
 
   public function range($f3) {
@@ -96,15 +111,11 @@ class API2 {
     // Load schedule and stats for the range
     $f3->get('days')->load(
       array('date >= ? AND date <= ?', $f3->get('PARAMS.start'), $f3->get('PARAMS.end')),
-      array(
-        'order' => 'date ASC'
-      )
+      array('order' => 'date ASC')
     );
     $f3->get('stats')->load(
       array('date >= ? AND date <= ?', $f3->get('PARAMS.start'), $f3->get('PARAMS.end')),
-      array(
-        'order' => 'date ASC'
-      )
+      array('order' => 'date ASC')
     );
 
     // Check for a 404
@@ -113,9 +124,10 @@ class API2 {
       return;
     }
 
-    // Make our json
+    // Go through all selected days
     while(!$f3->get('days')->dry()) {
-      $output[$f3->get('days')['date']] = $this->decodeEntry(
+      // Make our json
+      $output[$f3->get('days')['date']] = $this->makeDay(
         $f3->get('days')->cast(),
         $f3->get('stats')->cast()
       );
