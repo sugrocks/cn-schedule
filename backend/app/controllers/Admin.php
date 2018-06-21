@@ -54,6 +54,11 @@ class Admin {
     // Add from the correct source
     $day = $this->encodeSource($day, $json, $sh);
 
+    if (!$day->cn && !$day->zap && !$day->tvguide && !$day->as) {
+      # Empty day?
+      return;
+    }
+
     // Save
     $day->save();
   }
