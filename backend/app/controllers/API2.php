@@ -15,50 +15,27 @@ class API2 {
     echo json_encode($output, JSON_PRETTY_PRINT);
   }
 
-  private function cleanZap($day) {
-    # Get latest schedule entry for the day
-    $l = array_values(array_slice($day['schedule']['zap'], -1))[0];
-
-    # Get its ending hour
-    $ts = $l->timestamp_end;
-    $tz = new DateTimeZone('America/New_York');
-    $d = new DateTime("@$ts");
-    $d->setTimezone($tz);
-
-    # If it doesn't end at 8pm (20h), data is complete
-    if ($d->format('H') != '20') {
-      # Empty schedule and stats from Zap2it
-      $day['schedule']['zap'] = null;
-      $day['stats']['zap'] = null;
-    }
-
-    return $day;
-  }
-
   private function makeDay($schedule, $stats) {
     $day = array(
       'schedule' => [],
       'stats' => []
     );
 
-    # Get selected date and the last update
+    // Get selected date and the last update
     $day['date'] = $schedule['date'];
     $day['lastupdate'] = $schedule['lastupdate'];
 
-    # Decode stats' json
-    $day['stats']['cn'] = json_decode($stats['cn']);
-    $day['stats']['zap'] = json_decode($stats['zap']);
-    $day['stats']['tvguide'] = json_decode($stats['tvguide']);
-    $day['stats']['as'] = json_decode($stats['as']);
-
-    # Decode schedules' json
+    // Decode schedules' json
     $day['schedule']['cn'] = json_decode($schedule['cn']);
     $day['schedule']['zap'] = json_decode($schedule['zap']);
     $day['schedule']['tvguide'] = json_decode($schedule['tvguide']);
     $day['schedule']['as'] = json_decode($schedule['as']);
 
-    # Remove incomplete zap entries
-    $day = $this->cleanZap($day);
+    // Decode stats' json
+    $day['stats']['cn'] = json_decode($stats['cn']);
+    $day['stats']['zap'] = json_decode($stats['zap']);
+    $day['stats']['tvguide'] = json_decode($stats['tvguide']);
+    $day['stats']['as'] = json_decode($stats['as']);
 
     return $day;
   }

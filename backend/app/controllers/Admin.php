@@ -16,7 +16,9 @@ class Admin {
     if ($json->source == 'Cartoon Network') {
       $obj->cn = json_encode($res);
     } else if ($json->source == 'Zap2it') {
-      $obj->zap = json_encode($res);
+      $obj->zap = checkIncompleteZap(
+        json_encode($res)
+      );
     } else if ($json->source == 'TVGuide') {
       $obj->tvguide = json_encode($res);
     }  else if ($json->source == 'Adult Swim') {
@@ -26,6 +28,25 @@ class Admin {
     }
 
     return $obj;
+  }
+
+  private function checkIncompleteZap($day) {
+    // Get latest schedule entry for the day
+    $l = array_values(array_slice($day, -1))[0];
+
+    // Get its ending hour
+    $ts = $l->timestamp_end;
+    $tz = new DateTimeZone('America/New_York');
+    $d = new DateTime("@$ts");
+    $d->setTimezone($tz);
+
+    // If it doesn't end at 8pm (20h), data is complete
+    if ($d->format('H') != '20') {
+      // Empty schedule and stats from Zap2it
+      $day = null;
+    }
+
+    return $day;
   }
 
   private function saveDay($f3, $json) {
@@ -45,17 +66,17 @@ class Admin {
     $day->date = $json->date;
     $day->lastupdate = time();
 
-    // tempfix: For some reason 2018-01-01 is in the wrong order
+    // Make sure everything is in the correct order based on timestamp
     $sh = json_decode(json_encode($json->schedule), true);
     usort($sh, function($item1, $item2) {
       return $item1['timestamp'] <=> $item2['timestamp'];
     });
 
-    // Add from the correct source
+    // Encode our JSONs
     $day = $this->encodeSource($day, $json, $sh);
 
     if (!$day->cn && !$day->zap && !$day->tvguide && !$day->as) {
-      # Empty day?
+      // Empty day?
       return;
     }
 
