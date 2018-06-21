@@ -115,7 +115,7 @@ class API2 {
 
     // Make our json
     while(!$f3->get('days')->dry()) {
-      $output[$entry['date']] = $this->decodeEntry(
+      $output[$f3->get('days')['date']] = $this->decodeEntry(
         $f3->get('days')->cast(),
         $f3->get('stats')->cast()
       );
