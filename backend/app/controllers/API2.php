@@ -124,7 +124,7 @@ class API2 {
     // Make json with stats
     while(!$f3->get('stats')->dry()) {
       $entry = $f3->get('stats')->cast();
-      $output[$entry['date']]['stats'] = $this->decodeEntry($entry)['stats'];
+      $output[$entry['date']]['stats'] = $this->decodeEntry(false, $entry)['stats'];
       $f3->get('stats')->next();
     }
 
