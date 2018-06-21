@@ -12,24 +12,6 @@ class Admin {
     $f3->reroute('https://api.ctoon.network/');
   }
 
-  private function encodeSource($obj, $json, $res) {
-    if ($json->source == 'Cartoon Network') {
-      $obj->cn = json_encode($res);
-    } else if ($json->source == 'Zap2it') {
-      $obj->zap = checkIncompleteZap(
-        json_encode($res)
-      );
-    } else if ($json->source == 'TVGuide') {
-      $obj->tvguide = json_encode($res);
-    }  else if ($json->source == 'Adult Swim') {
-      $obj->as = json_encode($res);
-    } else {
-      $obj->other = json_encode($res);
-    }
-
-    return $obj;
-  }
-
   private function checkIncompleteZap($day) {
     // Get latest schedule entry for the day
     $l = array_values(array_slice($day, -1))[0];
@@ -47,6 +29,24 @@ class Admin {
     }
 
     return $day;
+  }
+
+  private function encodeSource($obj, $json, $res) {
+    if ($json->source == 'Cartoon Network') {
+      $obj->cn = json_encode($res);
+    } else if ($json->source == 'Zap2it') {
+      $obj->zap = $this->checkIncompleteZap(
+        json_encode($res)
+      );
+    } else if ($json->source == 'TVGuide') {
+      $obj->tvguide = json_encode($res);
+    }  else if ($json->source == 'Adult Swim') {
+      $obj->as = json_encode($res);
+    } else {
+      $obj->other = json_encode($res);
+    }
+
+    return $obj;
   }
 
   private function saveDay($f3, $json) {
@@ -91,6 +91,11 @@ class Admin {
     $slots = [];
     $totalMin = 0;
     $totalSlots = 0;
+
+    // Check if Zap2it's chedule is incomplete
+    if($json->source == 'Zap2it' && $this->checkIncompleteZap($json->schedule) === null) {
+      return;
+    }
 
     // Count how many times a show airs in the day
     foreach ($json->schedule as $block) {
