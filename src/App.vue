@@ -36,6 +36,7 @@ export default {
   data () {
     return {
       appTitle: 'CN Schedule',
+      apiBase: 'https://api.ctoon.network/schedule/future',
       status: {
         error: false,
         offline: false,
@@ -52,8 +53,7 @@ export default {
       schedule: {
         available: [],
         days: {},
-        selected: [],
-        stats: {}
+        selected: []
       }
     }
   },
@@ -85,7 +85,7 @@ export default {
       let sel = this.$route.params.date
 
       // Fetch our API
-      fetch('https://api.ctoon.network/schedule/days')
+      fetch(this.apiBase + '/days')
         .then(response => {
           // Directly return the JSON to our next promise
           return response.json()
@@ -93,7 +93,7 @@ export default {
           throw Error(err)
         })
         .then(data => {
-          let offset = -2
+          let offset = -1
           let early = data.indexOf(getDate(null, offset))
           let late = 0
           let firstRange = data.slice(late, early)
@@ -120,7 +120,7 @@ export default {
       this.status.offline = true
       this.appTitle += ' (offline)'
 
-      let cached = store.get('cachedSchedules')
+      let cached = store.get('cachedSchedule')
       if (cached === undefined) {
         this.status.error = 'We asked the browser, it says you\'re offline.\n Also, no cached schedule was found.'
       } else {
@@ -133,7 +133,7 @@ export default {
       this.status.ready = false
 
       if (from !== undefined) {
-        fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to)
+        fetch(this.apiBase + '/range/' + from + '/' + to)
           .then(response => {
             // Directly return the JSON to our next promise
             return response.json()
@@ -141,39 +141,31 @@ export default {
             console.error(err)
           })
           .then(data => {
-            this.schedule.selected = Object.keys(data)
             this.schedule.days = data
+            this.schedule.selected = Object.keys(data)
 
-            let cache = store.get('cachedSchedules')
-            if (!cache) cache = {}
-            Object.keys(data).forEach(i => {
-              cache[i] = data[i]
-            })
-            store.set('cachedSchedules', cache)
-
-            fetch('https://api.ctoon.network/schedule/range/' + from + '/' + to + '/stats')
-              .then(response => {
-                // Directly return the JSON to our next promise
-                return response.json()
-              }, err => {
-                console.error(err)
+            try {
+              let cache = {}
+              Object.keys(data).forEach(i => {
+                cache[i] = data[i]
               })
-              .then(data => {
-                this.schedule.stats = data
+              store.set('cachedSchedule', cache)
+            } catch (err) {
+              console.log('Couldn\'t save to localstorage', err)
+            }
 
-                // If the current route isn't in the selection, change path
-                if (this.$route.name === 'Schedule' && this.schedule.selected.indexOf(this.$route.params.date) === -1) {
-                  this.$router.push({ name: 'Schedule', params: { date: from } })
-                }
+            // If the current route isn't in the selection, change path
+            if (this.$route.name === 'Schedule' && this.schedule.selected.indexOf(this.$route.params.date) === -1) {
+              this.$router.push({ name: 'Schedule', params: { date: from } })
+            }
 
-                setTimeout(_ => {
-                  this.status.ready = true
-                }, 1000)
-              })
+            setTimeout(_ => {
+              this.status.ready = true
+            }, 1000)
           })
       } else {
         // load everything we have when offline
-        this.schedule.days = store.get('cachedSchedules')
+        this.schedule.days = store.get('cachedSchedule')
         this.schedule.selected = Object.keys(this.schedule.days)
 
         setTimeout(_ => {
