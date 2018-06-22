@@ -14,10 +14,10 @@ class Admin {
 
   private function checkIncompleteZap($day) {
     // Get latest schedule entry for the day
-    $l = array_values(array_slice($day, -1))[0];
+    $l = (array) array_values(array_slice($day, -1))[0];
 
     // Get its ending hour
-    $ts = $l->timestamp_end;
+    $ts = $l['timestamp_end'];
     $tz = new DateTimeZone('America/New_York');
     $d = new DateTime();
     $d->setTimestamp($ts);
