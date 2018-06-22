@@ -19,7 +19,8 @@ class Admin {
     // Get its ending hour
     $ts = $l->timestamp_end;
     $tz = new DateTimeZone('America/New_York');
-    $d = new DateTime("@$ts");
+    $d = new DateTime();
+    $d->setTimestamp($ts);
     $d->setTimezone($tz);
 
     // If it doesn't end at 8pm (20h), data is complete
@@ -31,13 +32,12 @@ class Admin {
     return $day;
   }
 
-  private function encodeSource($obj, $json, $res) {
+  private function encodeSource($obj, $json, $res, $stats=false) {
     if ($json->source == 'Cartoon Network') {
       $obj->cn = json_encode($res);
     } else if ($json->source == 'Zap2it') {
-      $obj->zap = $this->checkIncompleteZap(
-        json_encode($res)
-      );
+      if (!$stats) $res = $this->checkIncompleteZap($res);
+      $obj->zap = json_encode($res);
     } else if ($json->source == 'TVGuide') {
       $obj->tvguide = json_encode($res);
     }  else if ($json->source == 'Adult Swim') {
@@ -146,7 +146,7 @@ class Admin {
     $stats->lastupdate = time();
 
     // Add from the correct source
-    $stats = $this->encodeSource($stats, $json, $res);
+    $stats = $this->encodeSource($stats, $json, $res, true);
 
     // Save
     $stats->save();
