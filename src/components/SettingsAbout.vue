@@ -60,6 +60,15 @@
           <option value="normal">2-Lines</option>
           <option value="large">Large</option>
         </select>
+
+        <br/>
+
+        <label for="showAS">Show [adult swim]: </label>
+        <input
+          type="checkbox"
+          id="showAS"
+          @click="saveSettings"
+          v-model="$parent.config.showAS">
       </p>
     </div>
 

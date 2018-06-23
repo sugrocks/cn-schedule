@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       appTitle: 'CN Schedule',
-      apiBase: 'https://api.ctoon.network/schedule/future',
+      apiBase: 'https://api.ctoon.network/schedule/v2',
       status: {
         error: false,
         offline: false,
