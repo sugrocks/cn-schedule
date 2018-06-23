@@ -1,7 +1,7 @@
 {
   "name": "CN Schedule",
   "short_name": "Schedule",
-  "start_url": "https://cn.sug.rocks/",
+  "start_url": "/",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
