@@ -1,7 +1,0 @@
-{
-    "require": {
-        "bcosca/fatfree-core": "^3.6",
-        "filp/whoops": "^2.1",
-        "vlucas/phpdotenv": "^2.4"
-    }
-}
