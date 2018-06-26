@@ -43,7 +43,7 @@ if (process.env.NODE_ENV !== 'development') {
         git_commit: COMMITHASH,
         git_branch: BRANCH
       },
-      environment: process.env
+      environment: process.env.NODE_ENV
     })
     .addPlugin(RavenVue, Vue)
     .install()
