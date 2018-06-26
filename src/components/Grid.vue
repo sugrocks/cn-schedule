@@ -104,6 +104,7 @@ export default {
       day = day['schedule']
       // Add classes to specify source and if it's an old entry
       return {
+        'hidden': (day.cn === null && day.zap === null && day.tvguide === null),
         'zap2it': (day.cn === null && day.zap && this.$parent.config.fallback === 'zap'),
         'tvguide': (day.cn === null && day.tvguide && (this.$parent.config.fallback === 'tvguide' || !day.zap)),
         'cn': (day.cn),
@@ -238,6 +239,10 @@ export default {
     padding: 0 1px;
     vertical-align: top;
     width: 150px;
+
+    &.hidden {
+      display: none;
+    }
 
     .slot {
       // Vertical center alignment

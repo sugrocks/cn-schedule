@@ -1,6 +1,7 @@
 <template>
   <span class="schedule content">
     <tabs :options="{ useUrlFragment: false, disableStorage: true }">
+      <template v-if="!asOnly">
         <tab name="Official">
           <div class="message warn" v-if="!schedule.cn">
             No data from Cartoon Network. Try with Zap2it or TVGuide!
@@ -63,6 +64,30 @@
             No stats available.
           </div>
         </tab>
+      </template>
+      <template v-else>
+        <tab name="[as]">
+          <div class="message warn" v-if="!schedule.as">
+            No data from Cartoon Network nor [adult swim].<br/>
+            Looks like something went wrong or data was removed!
+          </div>
+          <div class="message warn" v-else-if="!$parent.config.showAS">
+            No data available for Cartoon Network.<br/>
+            Showing you the [adult swim] schedule.<br/>
+            <small>
+              Did you know you can now display the <em>[as]</em> tab in the settings?
+            </small>
+          </div>
+          <table>
+            <schedule-el
+              v-for="block in schedule.as"
+              :key="block.timestamp"
+              :block="block"
+              :config="$parent.config">
+            </schedule-el>
+          </table>
+        </tab>
+      </template>
     </tabs>
   </span>
 </template>
@@ -82,6 +107,7 @@ export default {
     return {
       schedule: {},
       stats: null,
+      asOnly: false,
       pageTitle: 'Loading...'
     }
   },
@@ -102,6 +128,15 @@ export default {
       }
 
       this.schedule = this.$parent.schedule.days[d]['schedule']
+
+      if (!this.schedule.cn && !this.schedule.zap && !this.schedule.tvguide) {
+        // No data from them
+        this.asOnly = true
+        return
+      } else {
+        this.asOnly = false
+      }
+
       this.stats = this.$parent.schedule.days[d]['stats']
     }
   },
