@@ -11,6 +11,15 @@
       </h2>
 
       <p>
+        <label for="showAS">Show [adult swim]: </label>
+        <input
+          type="checkbox"
+          id="showAS"
+          @click="saveSettings"
+          v-model="$parent.config.showAS">
+
+        <br/>
+
         <label for="fallback">Fallback source: </label>
         <select
           id="fallback"
@@ -20,7 +29,8 @@
           <option value="tvguide">TVGuide</option>
         </select>
 
-        <br/>
+        <br/><br/>
+
 
         <label for="localTime">Convert times to your timezone: </label>
         <input
@@ -60,15 +70,6 @@
           <option value="normal">2-Lines</option>
           <option value="large">Large</option>
         </select>
-
-        <br/>
-
-        <label for="showAS">Show [adult swim]: </label>
-        <input
-          type="checkbox"
-          id="showAS"
-          @click="saveSettings"
-          v-model="$parent.config.showAS">
       </p>
     </div>
 
@@ -79,9 +80,12 @@
         Inspired by
         <a class="as" target="_blank" rel="noopener" href="https://swimpedia.net/oldsched/">
           better [adult swim] schedule</a>.<br/>
-        Cartoon Network's data extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.<br/>
-        We check for updates every 30 minutes.<br/>
+        Cartoon Network's data extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.
+      </p>
+
+      <p>
         <small>
+          Webapp version: {{ appEnv.release }}<br/>
           Want to know when a new day is available? <a class="discord" target="_blank" rel="noopener" href="https://discord.gg/Jr9Pnq9">Join our Discord.</a><br/>
           Love from CTOON ❤️ · 2017-2018 ·
           <a class="twitter" target="_blank" rel="noopener" href="https://twitter.com/CTOONnet">

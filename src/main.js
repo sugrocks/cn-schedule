@@ -34,17 +34,31 @@ if (typeof console === 'undefined' ||
 // Stop posting tips
 Vue.config.productionTip = false
 
+// This env
+const appEnv = {
+  release: VERSION,
+  tags: {
+    git_commit: COMMITHASH,
+    git_branch: BRANCH
+  },
+  environment: process.env.NODE_ENV
+}
+
+// Set vue global
+Vue.mixin({
+  data: function () {
+    return {
+      get appEnv () {
+        return appEnv
+      }
+    }
+  }
+})
+
 // Enable plugins
-if (process.env.NODE_ENV !== 'development') {
+if (appEnv.environment !== 'development') {
   Raven
-    .config('https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540', {
-      release: VERSION,
-      tags: {
-        git_commit: COMMITHASH,
-        git_branch: BRANCH
-      },
-      environment: process.env.NODE_ENV
-    })
+    .config('https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540', appEnv)
     .addPlugin(RavenVue, Vue)
     .install()
   Vue.use(VueAnalytics, {
@@ -69,10 +83,10 @@ console.log(
   'font-style:italic;'
 )
 console.log(
-  '%cCommit: ' + COMMITHASH +
-  '\nVersion: ' + VERSION +
-  '\nBranch: ' + BRANCH +
-  '\nEnv: ' + process.env.NODE_ENV,
+  '%cCommit: ' + appEnv.tags.git_commit +
+  '\nVersion: ' + appEnv.release +
+  '\nBranch: ' + appEnv.tags.git_branch +
+  '\nEnv: ' + appEnv.environment,
   'color:green;'
 )
 
