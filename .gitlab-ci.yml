@@ -15,7 +15,7 @@ lint:
     - yarn config set cache-folder .yarn
     - yarn
   script:
-    - npm run lint
+    - yarn lint
 
 build:
   image: node:8
@@ -30,7 +30,8 @@ build:
     - yarn config set cache-folder .yarn
     - yarn
   script:
-    - npm run build
+    - yarn build
+    - if [ ! -d dist/ ]; then exit 1; fi
   artifacts:
     expire_in: 3 days
     paths:

@@ -1,7 +1,15 @@
 dist: trusty
 sudo: false
 language: node_js
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - "node_modules"
 node_js:
   - "lts/*"
-script: yarn lint
+before_script:
+  - rm yarn.lock
+script:
+  - npm run lint
+  - npm run build
+  - if [ ! -d dist/ ]; then exit 1; fi
