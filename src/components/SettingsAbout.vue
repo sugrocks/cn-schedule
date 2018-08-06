@@ -11,7 +11,7 @@
       </h2>
 
       <p>
-        <label for="showAS">Show [adult swim]: </label>
+        <label for="showAS">Show [adult swim] tab: </label>
         <input
           type="checkbox"
           id="showAS"
@@ -20,7 +20,7 @@
 
         <br/>
 
-        <label for="fallback">Fallback source: </label>
+        <label for="fallback">Main fallback source: </label>
         <select
           id="fallback"
           @change="saveSettings"
@@ -29,8 +29,7 @@
           <option value="tvguide">TVGuide</option>
         </select>
 
-        <br/><br/>
-
+        <br/>
 
         <label for="localTime">Convert times to your timezone: </label>
         <input
@@ -39,7 +38,7 @@
           @click="saveSettings"
           v-model="$parent.config.localTime">
 
-        <br/>
+        <br/><br/>
 
         <label for="colors">Colorful grid: </label>
         <input
@@ -137,6 +136,10 @@ export default {
     padding: 25px;
 
     &.settings {
+      p {
+        line-height: 1.5em;
+      }
+
       small {
         color: $gray;
         font-family: Arial, Helvetica, sans-serif;
