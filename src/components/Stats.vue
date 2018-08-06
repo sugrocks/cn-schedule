@@ -66,7 +66,7 @@ export default {
       if (day.cn) {
         this.source = 'Cartoon Network'
         this.dayStats = day.cn
-      } else if (day.zap && this.fallback !== 'tvguide') {
+      } else if (day.zap && (this.fallback === 'zap' || !day.tvguide)) {
         this.source = 'Zap2it'
         this.dayStats = day.zap
       } else {
