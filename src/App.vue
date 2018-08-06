@@ -48,10 +48,12 @@ export default {
         listSize: 'normal',
         localTime: false,
         theme: 'dark',
-        fallback: 'zap'
+        fallback: 'zap',
+        showAS: false
       },
       schedule: {
         available: [],
+        asOnly: [],
         days: {},
         selected: []
       }
@@ -74,7 +76,8 @@ export default {
     let conf = store.get('appDisplayConfig')
     if (conf !== undefined) {
       // Transition
-      if (!conf.fallback) conf.fallback = 'zap'
+      if (conf.fallback === undefined) conf.fallback = 'zap'
+      if (conf.showAS === undefined) conf.showAS = false
 
       this.config = conf
     }
@@ -148,6 +151,11 @@ export default {
               let cache = {}
               Object.keys(data).forEach(i => {
                 cache[i] = data[i]
+                let s = data[i].schedule
+
+                if (!s.cn && !s.tvguide && !s.zap) {
+                  if (s.as) this.schedule.asOnly.push(data[i].date)
+                }
               })
               store.set('cachedSchedule', cache)
             } catch (err) {

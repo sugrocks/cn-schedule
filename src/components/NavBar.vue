@@ -78,12 +78,13 @@
 
     <tr
       v-for="day in $parent.schedule.selected"
-      :key="day">
+      :key="day"
+      v-if="!asOnly(day) || asOnly(day) && $parent.config.showAS">
       <router-link
         :to="`/view/` + day"
         tag="td"
         colspan="3">
-        {{ pd(day) }}
+        <template v-if="asOnly(day)">[</template>{{ pd(day) }}<template v-if="asOnly(day)">]</template>
       </router-link>
     </tr>
   </table>
@@ -131,6 +132,9 @@ export default {
     },
     pd (ymd) {
       return parseDate(ymd)
+    },
+    asOnly (day) {
+      return this.$parent.schedule.asOnly.indexOf(day) > -1
     }
   }
 }
