@@ -11,7 +11,7 @@
     "start": "node build/dev-server.js"
   },
   "dependencies": {
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^9.0.0",
     "chart.js": "^2.7.2",
     "color-hash": "^1.0.3",
     "eslint-config-standard": "^11.0.0",
