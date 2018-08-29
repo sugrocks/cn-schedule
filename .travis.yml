@@ -8,7 +8,7 @@ cache:
 node_js:
   - "lts/*"
 before_install:
-  - rm yarn.lock
+  - if [ -f yarn.lock ]; then rm yarn.lock; fi
 script:
   - yarn lint
   - yarn build
