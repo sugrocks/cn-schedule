@@ -132,7 +132,7 @@ export default {
   mounted () {
     this.times = []
 
-    for (let i = 6; i < 20; i += 0.5) {
+    for (let i = 6; i < 21; i += 0.5) {
       let dt = DateTime.fromObject({
         hour: i,
         minute: (i % 1 === 0 ? 0 : 30),
