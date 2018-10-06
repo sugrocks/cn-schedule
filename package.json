@@ -59,7 +59,7 @@
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^4.0.0-alpha.0",
-    "file-loader": "^1.1.11",
+    "file-loader": "^2.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "git-revision-webpack-plugin": "^3.0.3",
     "html-webpack-plugin": "jantimon/html-webpack-plugin",
