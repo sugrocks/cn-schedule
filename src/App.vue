@@ -24,14 +24,12 @@ import { getDate } from './assets/dates.js'
 import store from 'store/dist/store.modern'
 import Loading from '@/components/Loading.vue'
 import NavBar from '@/components/NavBar.vue'
-import NotFound from '@/components/NotFound.vue'
 
 export default {
   name: 'app',
   components: {
     'app-loading': Loading,
-    'app-navbar': NavBar,
-    'app-notfound': NotFound
+    'app-navbar': NavBar
   },
   data () {
     return {

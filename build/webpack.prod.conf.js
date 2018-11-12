@@ -66,6 +66,15 @@ var webpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       favicon: 'favicon.ico',
       inject: true,
+      templateParameters: (compilation, assets, options) => ({
+        webpack: compilation.getStats().toJson(),
+        compilation: compilation,
+        webpackConfig: compilation.options,
+        htmlWebpackPlugin: {
+          files: assets,
+          options: options
+        }
+      }),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -73,8 +82,6 @@ var webpackConfig = merge(baseWebpackConfig, {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency',
       serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
         './service-worker-prod.js'), 'utf-8')}</script>`
     }),
