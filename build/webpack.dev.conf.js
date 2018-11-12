@@ -41,6 +41,15 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
+      templateParameters: (compilation, assets, options) => ({
+        webpack: compilation.getStats().toJson(),
+        compilation: compilation,
+        webpackConfig: compilation.options,
+        htmlWebpackPlugin: {
+          files: assets,
+          options: options
+        }
+      }),
       serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
         './service-worker-dev.js'), 'utf-8')}</script>`
     }),

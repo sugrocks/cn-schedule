@@ -66,6 +66,15 @@ var webpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       favicon: 'favicon.ico',
       inject: true,
+      templateParameters: (compilation, assets, options) => ({
+        webpack: compilation.getStats().toJson(),
+        compilation: compilation,
+        webpackConfig: compilation.options,
+        htmlWebpackPlugin: {
+          files: assets,
+          options: options
+        }
+      }),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
