@@ -1,7 +1,7 @@
 <template>
   <span class="schedule content">
     <tabs :options="{ useUrlFragment: false, disableStorage: true }">
-      <template v-if="!asOnly && !schedule.as">
+      <template v-if="!asOnly">
         <tab name="Official" v-if="schedule.cn">
           <div class="message warn" v-if="!schedule.cn">
             No data from Cartoon Network. Try with Zap2it or TVGuide!
