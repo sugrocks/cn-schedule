@@ -7862,8 +7862,8 @@ vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
     loader-utils "^1.0.2"
 
 "vue-tabs-component@https://github.com/mkody/vue-tabs-component.git#disable-storage":
-  version "1.4.0"
-  resolved "https://github.com/mkody/vue-tabs-component.git#db537bea14731beccd6fb70599b2bbe06a0ad8ee"
+  version "1.5.0"
+  resolved "https://github.com/mkody/vue-tabs-component.git#4a5bfe00e764591b2f2b90afb8faad571825d285"
 
 vue-template-compiler@^2.6.10:
   version "2.6.10"

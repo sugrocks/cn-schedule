@@ -1,6 +1,6 @@
 <template>
   <span class="schedule content">
-    <tabs :options="{ useUrlFragment: false, disableStorage: true }">
+    <tabs :options="tabSettings">
       <template v-if="!asOnly">
         <tab name="Official" v-if="schedule.cn">
           <div class="message warn" v-if="!schedule.cn">
@@ -108,7 +108,11 @@ export default {
       schedule: {},
       stats: null,
       asOnly: false,
-      pageTitle: 'Loading...'
+      pageTitle: 'Loading...',
+      tabSettings: {
+        useUrlFragment: false,
+        disableStorage: true
+      }
     }
   },
   metaInfo () {
