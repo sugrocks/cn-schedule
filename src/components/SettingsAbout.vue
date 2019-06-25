@@ -11,7 +11,7 @@
       </h2>
 
       <p>
-        <label for="showAS">Show [adult swim] tab: </label>
+        <label for="showAS">Show [adult swim] tab <small>(if available)</small>: </label>
         <input
           type="checkbox"
           id="showAS"
@@ -79,14 +79,14 @@
         Inspired by
         <a class="as" target="_blank" rel="noopener" href="https://swimpedia.net/oldsched/">
           better [adult swim] schedule</a>.<br/>
-        Cartoon Network's data extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.
+        Official schedule was extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.
       </p>
 
       <p>
         <small>
           Webapp version: {{ appEnv.release }}<br/>
           Want to know when a new day is available? <a class="discord" target="_blank" rel="noopener" href="https://discord.gg/Jr9Pnq9">Join our Discord.</a><br/>
-          Love from CTOON ❤️ · 2017-2018 ·
+          Love from CTOON ❤️ · 2017-2019 ·
           <a class="twitter" target="_blank" rel="noopener" href="https://twitter.com/CTOONnet">
             @CTOONnet</a>
         </small>

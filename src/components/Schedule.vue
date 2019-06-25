@@ -1,8 +1,8 @@
 <template>
   <span class="schedule content">
     <tabs :options="{ useUrlFragment: false, disableStorage: true }">
-      <template v-if="!asOnly">
-        <tab name="Official">
+      <template v-if="!asOnly && !schedule.as">
+        <tab name="Official" v-if="schedule.cn">
           <div class="message warn" v-if="!schedule.cn">
             No data from Cartoon Network. Try with Zap2it or TVGuide!
           </div>
@@ -18,7 +18,7 @@
 
         <tab name="Zap2it">
           <div class="message warn" v-if="!schedule.zap">
-            No data from Zap2it. Try with Cartoon Network or TVGuide!
+            No data from Zap2it. Try with TVGuide!
           </div>
           <table>
             <schedule-el
@@ -32,7 +32,7 @@
 
         <tab name="TVGuide">
           <div class="message warn" v-if="!schedule.tvguide">
-            No data from TVGuide. Try with Cartoon Network or Zap2it!
+            No data from TVGuide. Try with Zap2it!
           </div>
           <table>
             <schedule-el
@@ -44,7 +44,7 @@
           </table>
         </tab>
 
-        <tab v-if="$parent.config.showAS" name="[as]">
+        <tab v-if="$parent.config.showAS && schedule.as" name="[as]">
           <div class="message warn" v-if="!schedule.as">
             No data from [adult swim].
           </div>
