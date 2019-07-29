@@ -255,6 +255,7 @@ export default {
       text-align: center;
 
       .show {
+        font-weight: 600;
         overflow: hidden;
         white-space: normal;
         word-break: break-word;
