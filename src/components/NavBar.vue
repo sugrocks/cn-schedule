@@ -116,8 +116,8 @@ export default {
   },
   methods: {
     onDateSelect (date) {
-      let early = getDate(date[0])
-      let late = getDate(date[1])
+      const early = getDate(date[0])
+      const late = getDate(date[1])
 
       if (this.lastDate !== early + ' to ' + late) {
         this.$parent.loadRange(

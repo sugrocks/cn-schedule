@@ -80,8 +80,8 @@ export default {
         colorPlz = show.colors.foreground
         bgPlz = show.colors.background
       } else if (this.$parent.config.colors && (show.show !== 'SPECIAL' && show.show !== 'MOVIE')) {
-        let li = (show.show.length % 10) / 10
-        let colorHash = new ColorHash({ lightness: li })
+        const li = (show.show.length % 10) / 10
+        const colorHash = new ColorHash({ lightness: li })
         if (li >= 0.8) colorPlz = '#000'
         bgPlz = colorHash.hex(show.show)
       } else {
@@ -93,9 +93,9 @@ export default {
       }
 
       return {
-        'color': colorPlz,
+        color: colorPlz,
         'background-color': bgPlz,
-        'height': show.minutes / 0.6 + 'px',
+        height: show.minutes / 0.6 + 'px',
         'margin-top': marginTopPlz + 'px',
         'box-shadow': 'inset 0 1px #000'
       }
@@ -104,12 +104,12 @@ export default {
       day = day['schedule']
       // Add classes to specify source and if it's an old entry
       return {
-        'hidden': this.$parent.schedule.asOnly.indexOf(index) > -1,
-        'zap2it': (day.cn === null && day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)),
-        'tvguide': (day.cn === null && day.tvguide && (this.$parent.config.fallback === 'tvguide' || !day.zap)),
-        'cn': (day.cn),
-        'past': (getDate().replace('-', '') > index.replace('-', '')),
-        'day': true
+        hidden: this.$parent.schedule.asOnly.indexOf(index) > -1,
+        zap2it: (day.cn === null && day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)),
+        tvguide: (day.cn === null && day.tvguide && (this.$parent.config.fallback === 'tvguide' || !day.zap)),
+        cn: (day.cn),
+        past: (getDate().replace('-', '') > index.replace('-', '')),
+        day: true
       }
     },
     getSchedule (day) {
@@ -122,7 +122,7 @@ export default {
     getTime (ts, str) {
       if (!this.$parent.config.localTime) return str
 
-      let dt = DateTime.fromMillis(ts * 1000)
+      const dt = DateTime.fromMillis(ts * 1000)
       return dt.toLocaleString(DateTime.TIME_SIMPLE)
     },
     pd (date) {
@@ -255,6 +255,7 @@ export default {
       text-align: center;
 
       .show {
+        font-weight: 600;
         overflow: hidden;
         white-space: normal;
         word-break: break-word;

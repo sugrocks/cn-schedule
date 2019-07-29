@@ -81,7 +81,7 @@ export default {
         if (el.color) {
           color = el.color
         } else {
-          let colorHash = new ColorHash({ lightness: (el.title % 10) / 10 })
+          const colorHash = new ColorHash({ lightness: (el.title % 10) / 10 })
           color = colorHash.hex(el.title)
         }
 

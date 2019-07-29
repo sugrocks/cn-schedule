@@ -123,7 +123,7 @@ export default {
   methods: {
     getSchedule (route) {
       // Get date from route
-      let d = route.params.date
+      const d = route.params.date
       this.pageTitle = parseDate(d)
 
       if (!this.$parent.status.ready) {
@@ -146,7 +146,7 @@ export default {
   },
   watch: {
     // on route changes, load schedule
-    '$route': 'getSchedule'
+    $route: 'getSchedule'
   },
   mounted () {
     this.getSchedule(this.$route)

@@ -14,7 +14,7 @@ Vue.use(Router)
 Vue.use(Meta)
 
 // Specify our routes and names
-let router = new Router({
+const router = new Router({
   mode: 'history',
   linkActiveClass: 'selected',
   routes: [
