@@ -30,18 +30,18 @@ export default {
     getTime (ts, str) {
       if (!this.config.localTime) return str
 
-      let dt = DateTime.fromMillis(ts * 1000)
+      const dt = DateTime.fromMillis(ts * 1000)
       return dt.toLocaleString(DateTime.TIME_SIMPLE)
     }
   },
   computed: {
     lineStyle: function () {
       // Get current timestamp and check if current element is on air
-      let tsCurr = parseInt(Date.now() / 1000, 10)
+      const tsCurr = parseInt(Date.now() / 1000, 10)
 
       return {
-        'compact': this.config.listSize === 'compact',
-        'large': this.config.listSize === 'large',
+        compact: this.config.listSize === 'compact',
+        large: this.config.listSize === 'large',
         'on-air': this.block.timestamp < tsCurr && tsCurr < this.block.timestamp_end
       }
     }

@@ -71,7 +71,7 @@ export default {
     }
 
     // Get config from store
-    let conf = store.get('appDisplayConfig')
+    const conf = store.get('appDisplayConfig')
     if (conf !== undefined) {
       // Transition
       if (conf.fallback === undefined) conf.fallback = 'zap'
@@ -83,7 +83,7 @@ export default {
     // Test if online
     if (navigator.onLine) {
       // If we start the app with a selected date
-      let sel = this.$route.params.date
+      const sel = this.$route.params.date
 
       // Fetch our API
       fetch(this.apiBase + '/days')
@@ -94,10 +94,10 @@ export default {
           throw Error(err)
         })
         .then(data => {
-          let offset = -1
+          const offset = -1
           let early = data.indexOf(getDate(null, offset))
           let late = 0
-          let firstRange = data.slice(late, early)
+          const firstRange = data.slice(late, early)
 
           if (sel) {
             if (data.indexOf(sel) === -1) {
@@ -121,7 +121,7 @@ export default {
       this.status.offline = true
       this.appTitle += ' (offline)'
 
-      let cached = store.get('cachedSchedule')
+      const cached = store.get('cachedSchedule')
       if (cached === undefined) {
         this.status.error = 'We asked the browser, it says you\'re offline.\n Also, no cached schedule was found.'
       } else {
@@ -146,10 +146,10 @@ export default {
             this.schedule.selected = Object.keys(data)
 
             try {
-              let cache = {}
+              const cache = {}
               Object.keys(data).forEach(i => {
                 cache[i] = data[i]
-                let s = data[i].schedule
+                const s = data[i].schedule
 
                 if (!s.cn && !s.tvguide && !s.zap) {
                   if (s.as) this.schedule.asOnly.push(data[i].date)
