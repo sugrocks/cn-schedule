@@ -27,7 +27,7 @@
     "vue-analytics": "^5.17.0",
     "vue-flatpickr-component": "^8.1.2",
     "vue-meta": "^2.2.0",
-    "vue-perfect-scrollbar": "^0.1.0",
+    "vue-perfect-scrollbar": "^0.2.0",
     "vue-tabs-component": "https://github.com/mkody/vue-tabs-component.git#disable-storage",
     "whatwg-fetch": "^3.0.0"
   },
