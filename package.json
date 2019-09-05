@@ -16,7 +16,7 @@
     "color-hash": "^1.0.3",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "luxon": "^1.17.2",
     "perfect-scrollbar": "^1.4.0",
