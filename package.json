@@ -24,7 +24,7 @@
     "raven-js": "^3.27.2",
     "smoothscroll": "^0.4.0",
     "store": "^2.0.12",
-    "vue-analytics": "^5.17.0",
+    "vue-analytics": "^5.17.2",
     "vue-flatpickr-component": "^8.1.2",
     "vue-meta": "^2.2.0",
     "vue-perfect-scrollbar": "^0.2.0",
