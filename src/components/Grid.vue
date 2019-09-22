@@ -101,7 +101,7 @@ export default {
       }
     },
     displaySource (day, index) {
-      day = day['schedule']
+      day = day.schedule
       // Add classes to specify source and if it's an old entry
       return {
         hidden: this.$parent.schedule.asOnly.indexOf(index) > -1,
@@ -113,7 +113,7 @@ export default {
       }
     },
     getSchedule (day) {
-      day = day['schedule']
+      day = day.schedule
       if (day.cn) return day.cn
       if (day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)) return day.zap
       if (day.tvguide) return day.tvguide

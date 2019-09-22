@@ -131,7 +131,7 @@ export default {
         return
       }
 
-      this.schedule = this.$parent.schedule.days[d]['schedule']
+      this.schedule = this.$parent.schedule.days[d].schedule
 
       if (!this.schedule.cn && !this.schedule.zap && !this.schedule.tvguide) {
         // No data from them
@@ -141,7 +141,7 @@ export default {
         this.asOnly = false
       }
 
-      this.stats = this.$parent.schedule.days[d]['stats']
+      this.stats = this.$parent.schedule.days[d].stats
     }
   },
   watch: {
