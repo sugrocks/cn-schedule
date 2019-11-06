@@ -17,7 +17,7 @@
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-vue": "^5.2.3",
+    "eslint-plugin-vue": "^6.0.0",
     "luxon": "^1.17.2",
     "perfect-scrollbar": "^1.4.0",
     "promise-polyfill": "^8.1.3",
