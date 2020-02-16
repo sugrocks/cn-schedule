@@ -63,7 +63,7 @@
     "friendly-errors-webpack-plugin": "^1.7.0",
     "git-revision-webpack-plugin": "^3.0.3",
     "html-webpack-plugin": "jantimon/html-webpack-plugin",
-    "http-proxy-middleware": "^0.20.0",
+    "http-proxy-middleware": "^0.21.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.12.0",
     "open": "^7.0.0",
