@@ -44,7 +44,7 @@
           </table>
         </tab>
 
-        <tab v-if="$parent.config.showAS && schedule.as" name="[as]">
+        <tab v-if="$parent.config.showAS" name="[as]">
           <div class="message warn" v-if="!schedule.as">
             No data from [adult swim].
           </div>
