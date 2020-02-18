@@ -7,8 +7,8 @@ import 'whatwg-fetch'
 // Our app
 import App from './App'
 // Some plugins and components
-import Raven from 'raven-js'
-import RavenVue from 'raven-js/plugins/vue'
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
 import VueAnalytics from 'vue-analytics'
 import Tabs from 'vue-tabs-component/src/index' // Broke?
 import flatPickr from 'vue-flatpickr-component'
@@ -56,10 +56,12 @@ Vue.mixin({
 
 // Enable plugins
 if (appEnv.environment !== 'development') {
-  Raven
-    .config('https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540', appEnv)
-    .addPlugin(RavenVue, Vue)
-    .install()
+  Sentry.init({
+    dsn: 'https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540',
+    integrations: [
+      new Integrations.Vue({ Vue, attachProps: true })
+    ]
+  })
   Vue.use(VueAnalytics, {
     id: 'UA-103935709-2',
     router
