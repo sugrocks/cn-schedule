@@ -11,7 +11,7 @@
       </h2>
 
       <p>
-        <label for="showAS">Show [adult swim] tab <small>(if available)</small>: </label>
+        <label for="showAS">Show [adult swim] tab: </label>
         <input
           type="checkbox"
           id="showAS"
@@ -79,7 +79,7 @@
         Inspired by
         <a class="as" target="_blank" rel="noopener" href="https://swimpedia.net/oldsched/">
           better [adult swim] schedule</a>.<br/>
-        Official schedule was extracted from "The Backdoor". Zap2it's and TVGuide's from their APIs.
+        Zap2it, TVGuide and [adult swim] data comes from their APIs.
       </p>
 
       <p>
