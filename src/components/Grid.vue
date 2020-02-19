@@ -134,7 +134,7 @@ export default {
 
     for (let i = 6; i < 21; i += 0.5) {
       let dt = DateTime.fromObject({
-        hour: i,
+        hour: Math.floor(i),
         minute: (i % 1 === 0 ? 0 : 30),
         zone: 'America/New_York'
       })
