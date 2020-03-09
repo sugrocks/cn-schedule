@@ -40,7 +40,7 @@
 
         <br/><br/>
 
-        <label for="colors">Colorful grid: </label>
+        <label for="colors">Show colors: </label>
         <input
           type="checkbox"
           id="colors"

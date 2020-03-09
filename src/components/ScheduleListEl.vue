@@ -13,7 +13,7 @@
       </span>
     </td>
     <td class="field-data">
-      <span class="field-show">{{ block.show }}</span>
+      <span :style="showColor(block)" class="field-show">{{ block.show }}</span>
       <br v-if="config.listSize !== 'compact'"/>
       <span class="field-title">{{ block.title }}</span>
     </td>
@@ -26,12 +26,30 @@ import { DateTime } from 'luxon'
 export default {
   name: 'schedule-el',
   props: ['block', 'config'],
+  data () {
+    return {
+      colors: false
+    }
+  },
+  mounted () {
+    this.colors = this.$parent.$parent.$parent.$parent.config.colors
+  },
   methods: {
     getTime (ts, str) {
       if (!this.config.localTime) return str
 
       const dt = DateTime.fromMillis(ts * 1000)
       return dt.toLocaleString(DateTime.TIME_SIMPLE)
+    },
+    showColor (block) {
+      if (this.colors && block.colors) {
+        return {
+          color: block.colors.foreground,
+          'background-color': block.colors.background
+        }
+      }
+
+      return {}
     }
   },
   computed: {
@@ -53,6 +71,11 @@ export default {
 @import '../assets/colors';
 
 tr {
+  span {
+    display: inline-block;
+    padding: 2px 5px;
+  }
+
   .field-time {
     color: $white;
     min-width: 80px;
@@ -103,7 +126,7 @@ tr {
     }
 
     .field-data {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       padding-left: 20px;
     }
 
