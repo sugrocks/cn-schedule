@@ -95,7 +95,7 @@ export default {
       return {
         color: colorPlz,
         'background-color': bgPlz,
-        height: show.minutes / 0.6 + 'px',
+        height: show.minutes * 2 + 'px',
         'margin-top': marginTopPlz + 'px',
         'box-shadow': 'inset 0 1px #000'
       }
@@ -218,7 +218,7 @@ export default {
       align-items: center;
       box-shadow: inset 0 0 0 1px $black;
       display: flex;
-      height: 50px;
+      height: 60px;
       // Horizontal center alignment
       justify-content: center;
       padding: 0 5px;
