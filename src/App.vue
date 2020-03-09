@@ -47,7 +47,7 @@ export default {
         localTime: false,
         theme: 'dark',
         fallback: 'zap',
-        showAS: false
+        showAS: true
       },
       schedule: {
         available: [],

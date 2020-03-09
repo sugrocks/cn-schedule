@@ -113,11 +113,13 @@ export default {
       }
     },
     getSchedule (day) {
+      const sAs = this.$parent.config.showAS
       day = day.schedule
-      if (day.cn) return day.cn
-      if (day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)) return day.zap
-      if (day.tvguide) return day.tvguide
-      return day.other
+
+      if (day.cn) return (sAs && day.as ? day.cn.concat(day.as) : day.cn)
+      if (day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)) return (sAs && day.as ? day.zap.concat(day.as) : day.zap)
+      if (day.tvguide) return (sAs && day.as ? day.tvguide.concat(day.as) : day.tvguide)
+      return (sAs && day.as ? day.other.concat(day.as) : day.other)
     },
     getTime (ts, str) {
       if (!this.$parent.config.localTime) return str
@@ -131,10 +133,11 @@ export default {
   },
   mounted () {
     this.times = []
+    const max = this.$parent.config.showAS ? 24 : 14
 
-    for (let i = 6; i < 21; i += 0.5) {
+    for (let i = 0; i < max; i += 0.5) {
       let dt = DateTime.fromObject({
-        hour: Math.floor(i),
+        hour: Math.floor((i + 6) % 24),
         minute: (i % 1 === 0 ? 0 : 30),
         zone: 'America/New_York'
       })
