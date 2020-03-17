@@ -60,7 +60,7 @@
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^4.0.0-alpha.0",
-    "file-loader": "^5.0.1",
+    "file-loader": "^6.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "git-revision-webpack-plugin": "^3.0.3",
     "html-webpack-plugin": "jantimon/html-webpack-plugin",
