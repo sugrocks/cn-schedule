@@ -77,9 +77,9 @@
     </tr>
 
     <tr
+      v-if="!asOnly(day) || asOnly(day) && $parent.config.showAS"
       v-for="day in $parent.schedule.selected"
-      :key="day"
-      v-if="!asOnly(day) || asOnly(day) && $parent.config.showAS">
+      :key="day">
       <router-link
         :to="`/view/` + day"
         tag="td"

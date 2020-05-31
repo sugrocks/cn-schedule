@@ -27,9 +27,9 @@ module.exports = merge(baseWebpackConfig, {
   devtool: '#cheap-module-eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      'VERSION': JSON.stringify(gitRevisionPlugin.version()),
-      'COMMITHASH': JSON.stringify(gitRevisionPlugin.commithash()),
-      'BRANCH': JSON.stringify(gitRevisionPlugin.branch()),
+      VERSION: JSON.stringify(gitRevisionPlugin.version()),
+      COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash()),
+      BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
       'process.env': config.dev.env
     }),
     new VueLoaderPlugin(),

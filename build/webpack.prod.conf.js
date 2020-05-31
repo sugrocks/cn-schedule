@@ -41,9 +41,9 @@ var webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'VERSION': JSON.stringify(gitRevisionPlugin.version()),
-      'COMMITHASH': JSON.stringify(process.env.COMMIT_REF || gitRevisionPlugin.commithash()),
-      'BRANCH': JSON.stringify(process.env.HEAD || gitRevisionPlugin.branch()),
+      VERSION: JSON.stringify(gitRevisionPlugin.version()),
+      COMMITHASH: JSON.stringify(process.env.COMMIT_REF || gitRevisionPlugin.commithash()),
+      BRANCH: JSON.stringify(process.env.HEAD || gitRevisionPlugin.branch()),
       'process.env': env
     }),
     new VueLoaderPlugin(),
