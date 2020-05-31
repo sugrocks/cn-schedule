@@ -31,6 +31,8 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {
   log: false
 })
+
+/* -- broken with Webpack 4
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
@@ -38,6 +40,7 @@ compiler.plugin('compilation', function (compilation) {
     cb()
   })
 })
+*/
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {
