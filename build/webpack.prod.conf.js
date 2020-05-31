@@ -86,21 +86,25 @@ var webpackConfig = merge(baseWebpackConfig, {
         './service-worker-prod.js'), 'utf-8')}</script>`
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      },
-      {
-        // redirects config for netlify
-        from: path.resolve(__dirname, '../_redirects')
-      },
-      {
-        // 404 page
-        from: path.resolve(__dirname, '../404.html')
-      }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../static'),
+          to: config.build.assetsSubDirectory,
+          globOptions: {
+            ignore: ['.*']
+          }
+        },
+        {
+          // redirects config for netlify
+          from: path.resolve(__dirname, '../_redirects')
+        },
+        {
+          // 404 page
+          from: path.resolve(__dirname, '../404.html')
+        }
+      ]
+    }),
     // service worker caching
     new SWPrecacheWebpackPlugin({
       cacheId: 'cn-schedule',
