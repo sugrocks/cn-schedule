@@ -41,9 +41,9 @@ var webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'VERSION': JSON.stringify(gitRevisionPlugin.version()),
-      'COMMITHASH': JSON.stringify(process.env.COMMIT_REF || gitRevisionPlugin.commithash()),
-      'BRANCH': JSON.stringify(process.env.HEAD || gitRevisionPlugin.branch()),
+      VERSION: JSON.stringify(gitRevisionPlugin.version()),
+      COMMITHASH: JSON.stringify(process.env.COMMIT_REF || gitRevisionPlugin.commithash()),
+      BRANCH: JSON.stringify(process.env.HEAD || gitRevisionPlugin.branch()),
       'process.env': env
     }),
     new VueLoaderPlugin(),
@@ -86,21 +86,25 @@ var webpackConfig = merge(baseWebpackConfig, {
         './service-worker-prod.js'), 'utf-8')}</script>`
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      },
-      {
-        // redirects config for netlify
-        from: path.resolve(__dirname, '../_redirects')
-      },
-      {
-        // 404 page
-        from: path.resolve(__dirname, '../404.html')
-      }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../static'),
+          to: config.build.assetsSubDirectory,
+          globOptions: {
+            ignore: ['.*']
+          }
+        },
+        {
+          // redirects config for netlify
+          from: path.resolve(__dirname, '../_redirects')
+        },
+        {
+          // 404 page
+          from: path.resolve(__dirname, '../404.html')
+        }
+      ]
+    }),
     // service worker caching
     new SWPrecacheWebpackPlugin({
       cacheId: 'cn-schedule',
