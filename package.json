@@ -65,7 +65,7 @@
     "git-revision-webpack-plugin": "^3.0.6",
     "html-webpack-plugin": "jantimon/html-webpack-plugin",
     "http-proxy-middleware": "^1.0.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "node-sass": "^4.14.1",
     "open": "^7.0.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
