@@ -92,12 +92,21 @@ export default {
         show.minutes = (show.timestamp_end - show.timestamp) / 60
       }
 
+      let toonami = {}
+      if (colorPlz === '#17b7dd' && bgPlz === '#1b0120') {
+        toonami = {
+          'font-family': 'tsoonami',
+          'font-weight': '300'
+        }
+      }
+
       return {
         color: colorPlz,
         'background-color': bgPlz,
         height: show.minutes * 2 + 'px',
         'margin-top': marginTopPlz + 'px',
-        'box-shadow': 'inset 0 1px #000'
+        'box-shadow': 'inset 0 1px #000',
+        ...toonami
       }
     },
     displaySource (day, index) {
@@ -252,13 +261,13 @@ export default {
       align-items: center;
       box-shadow: inset 0 0 0 1px $black;
       display: flex;
+      font-weight: 600;
       // Horizontal center alignment
       justify-content: center;
       overflow: hidden;
       text-align: center;
 
       .show {
-        font-weight: 600;
         overflow: hidden;
         white-space: normal;
         word-break: break-word;

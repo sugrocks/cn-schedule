@@ -43,6 +43,16 @@ export default {
     },
     showColor (block) {
       if (this.colors && block.colors) {
+        if (block.colors.foreground === '#17b7dd' &&
+            block.colors.background === '#1b0120') {
+          return {
+            color: block.colors.foreground,
+            'background-color': block.colors.background,
+            'font-family': 'tsoonami',
+            'font-size': '0.9em'
+          }
+        }
+
         return {
           color: block.colors.foreground,
           'background-color': block.colors.background

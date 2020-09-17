@@ -17,4 +17,4 @@
 
 
 ### Update browser support
-`npx browserlist-ga`, login and select the correct GA site.
+`npx browserslist-ga`, login and select the correct GA site.
