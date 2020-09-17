@@ -194,6 +194,11 @@ export default {
   src: url('./assets/fonts/cn_bold.woff') format('woff'), url('./assets/fonts/cn_bold.ttf') format('ttf'), url('./assets/fonts/cn_bold.otf') format('otf'), url('./assets/fonts/cn_bold.eot'), url('./assets/fonts/cn_bold.eot?#iefix') format('embedded-opentype');
 }
 
+@font-face {
+  font-family: 'tsoonami';
+  src: url('./assets/fonts/subatomic.tsoonami.ttf');
+}
+
 body {
   background-color: $black;
   color: $white;

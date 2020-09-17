@@ -78,6 +78,7 @@
       <p>
         Inspired by
         <span class="as">better [adult swim] schedule</span>.<br/>
+        Toonami-like font "<span class="tsoonami">Tsoonami</span>" by subatomicglue.com<br/>
         CN, Zap2it, TVGuide and [adult swim] data comes from their APIs.
       </p>
 
@@ -154,10 +155,14 @@ export default {
       .as {
         background-color: $black;
         color: $white;
-        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-family: 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
         font-weight: 900;
         padding: 0 5px;
         text-decoration: none;
+      }
+
+      .tsoonami {
+        font-family: 'tsoonami';
       }
 
       .discord,
