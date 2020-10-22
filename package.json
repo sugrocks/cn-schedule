@@ -16,7 +16,7 @@
     "@sentry/browser": "^5.20.1",
     "@sentry/integrations": "^5.20.1",
     "babel-eslint": "^10.1.0",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "color-hash": "^1.0.3",
     "luxon": "^1.24.1",
     "perfect-scrollbar": "^1.5.0",
