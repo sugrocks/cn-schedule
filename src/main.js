@@ -22,7 +22,7 @@ import router from './Router'
 if (typeof console === 'undefined' ||
     (document.all && window.XMLHttpRequest) ||
     Object.prototype.toString.call(window.operamini) === '[object OperaMini]') {
-  var errorMsgUnsupported = '<h1>CN Schedule</h1>'
+  let errorMsgUnsupported = '<h1>CN Schedule</h1>'
   errorMsgUnsupported += '<b>You\'re currently using an unsupported browser</b>.<br>'
   errorMsgUnsupported += 'Please upgrade to the latest version of Chrome, Opera, Brave, Firefox, Microsoft Edge or Safari to continue.<br>'
   errorMsgUnsupported += '<a href="https://whatbrowser.org/">More details on having a good and updated browser here.</a>'
