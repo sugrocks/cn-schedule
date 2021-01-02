@@ -237,12 +237,6 @@ h2 {
   opacity: 0
 }
 
-// Scrollbars
-.ps__scrollbar-x-rail,
-.ps__scrollbar-y-rail {
-  z-index: 30;
-}
-
 // Offline
 .offline {
   td[data-toggle] {
