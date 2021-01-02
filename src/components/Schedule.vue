@@ -1,5 +1,5 @@
 <template>
-  <span class="schedule content">
+  <div class="schedule content">
     <tabs :options="tabSettings">
       <template v-if="!asOnly">
         <tab name="Official" v-if="schedule.cn">
@@ -89,7 +89,7 @@
         </tab>
       </template>
     </tabs>
-  </span>
+  </div>
 </template>
 
 <script>

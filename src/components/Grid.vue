@@ -1,5 +1,5 @@
 <template>
-  <VuePerfectScrollbar class="grid content">
+  <div class="grid content">
     <div class="time-table">
       <div class="time-head">
         Times
@@ -36,20 +36,16 @@
           }}</span>
       </div>
     </div>
-  </VuePerfectScrollbar>
+  </div>
 </template>
 
 <script>
 import { getDate, parseDate } from '../assets/dates'
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import ColorHash from 'color-hash'
 import { DateTime } from 'luxon'
 
 export default {
   name: 'grid',
-  components: {
-    VuePerfectScrollbar
-  },
   metaInfo () {
     return {
       title: 'Grid'
@@ -220,7 +216,6 @@ export default {
     font-size: 10px;
     left: 0;
     margin-right: -3px;
-    padding: 0 1px 5px 0;
     position: sticky;
     vertical-align: top;
     z-index: 26;
