@@ -16,16 +16,16 @@ module.exports = {
     'plugin:vue/essential'
   ],
   // required to lint *.vue files
-  'plugins': [
+  plugins: [
     'vue'
   ],
-  'globals': {
-    'VERSION': true,
-    'COMMITHASH': true,
-    'BRANCH': true
+  globals: {
+    VERSION: true,
+    COMMITHASH: true,
+    BRANCH: true
   },
   // add your custom rules here
-  'rules': {
+  rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
@@ -33,6 +33,8 @@ module.exports = {
     // allow v-if with v-for
     'vue/no-use-v-if-with-v-for': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    // whatever that is
+    'vue/experimental-script-setup-vars': 0
   }
 }
