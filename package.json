@@ -20,7 +20,7 @@
     "luxon": "^1.25.0",
     "promise-polyfill": "^8.2.0",
     "smoothscroll": "^0.4.0",
-    "snyk": "^1.437.3",
+    "snyk": "^1.518.0",
     "store": "^2.0.12",
     "vue-analytics": "^5.22.1",
     "vue-flatpickr-component": "8.1.6",
