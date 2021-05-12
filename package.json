@@ -71,7 +71,7 @@
     "open": "^7.3.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "ora": "^5.2.0",
-    "postcss": "^8.2.2",
+    "postcss": "^8.2.10",
     "postcss-safe-parser": "^5.0.2",
     "rimraf": "^3.0.2",
     "sass-lint": "^1.13.1",
