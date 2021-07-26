@@ -143,7 +143,8 @@ export default {
     for (let i = 0; i < max; i += 0.5) {
       let dt = DateTime.fromObject({
         hour: Math.floor((i + 6) % 24),
-        minute: (i % 1 === 0 ? 0 : 30),
+        minute: (i % 1 === 0 ? 0 : 30)
+      }, {
         zone: 'America/New_York'
       })
       if (this.$parent.config.localTime) dt = dt.setZone('local')
