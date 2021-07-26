@@ -37,7 +37,8 @@
 
 <script>
 import ColorHash from 'color-hash'
-import Chart from 'chart.js/dist/Chart.min.js'
+import { Chart, ArcElement, DoughnutController } from 'chart.js'
+Chart.register(ArcElement, DoughnutController)
 
 export default {
   name: 'stats',

@@ -1,11 +1,8 @@
 <template>
   <div id="app" :class="[config.theme, (status.offline ? 'offline' : null)]">
     <div>
-      <router-link
-        to="/"
-        :title="appTitle"
-        tag="h1">
-        {{ appTitle }}
+      <router-link to="/" custom v-slot="{ navigate }">
+        <h1 :title="appTitle" @click="navigate">{{ appTitle }}</h1>
       </router-link>
     </div>
 
