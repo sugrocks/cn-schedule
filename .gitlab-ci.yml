@@ -7,7 +7,7 @@ lint:
   image: node:lts
   stage: test
   cache:
-    key: "v3-$CI_COMMIT_REF_NAME"
+    key: "v4-$CI_COMMIT_REF_NAME"
     paths:
       - node_modules/
       - .yarn/
@@ -21,7 +21,7 @@ build:
   image: node:lts
   stage: build
   cache:
-    key: "v3-$CI_COMMIT_REF_NAME"
+    key: "v4-$CI_COMMIT_REF_NAME"
     paths:
       - node_modules/
       - .yarn/
