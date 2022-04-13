@@ -1,6 +1,6 @@
 <template>
   <div class="schedule content">
-    <tabs :options="tabSettings">
+    <tabs cache-lifetime="0" :options="tabSettings">
       <template v-if="!asOnly">
         <tab name="Official" v-if="schedule.cn">
           <div class="message warn" v-if="!schedule.cn">
@@ -11,7 +11,7 @@
               v-for="block in schedule.cn"
               :key="block.timestamp"
               :block="block"
-              :config="$parent.config">
+              :config="mainStore.config">
             </schedule-el>
           </table>
         </tab>
@@ -25,7 +25,7 @@
               v-for="block in schedule.zap"
               :key="block.timestamp"
               :block="block"
-              :config="$parent.config">
+              :config="mainStore.config">
             </schedule-el>
           </table>
         </tab>
@@ -39,12 +39,12 @@
               v-for="block in schedule.tvguide"
               :key="block.timestamp"
               :block="block"
-              :config="$parent.config">
+              :config="mainStore.config">
             </schedule-el>
           </table>
         </tab>
 
-        <tab v-if="$parent.config.showAS" name="[as]">
+        <tab v-if="mainStore.config.showAS" name="[as]">
           <div class="message warn" v-if="!schedule.as">
             No data from [adult swim].
           </div>
@@ -53,13 +53,13 @@
               v-for="block in schedule.as"
               :key="block.timestamp"
               :block="block"
-              :config="$parent.config">
+              :config="mainStore.config">
             </schedule-el>
           </table>
         </tab>
 
         <tab name="Stats">
-          <schedule-stats v-if="stats" :day="stats" :fallback="$parent.config.fallback"></schedule-stats>
+          <schedule-stats v-if="stats" :day="stats" :fallback="mainStore.config.fallback"></schedule-stats>
           <div class="message warn" v-else>
             No stats available.
           </div>
@@ -71,7 +71,7 @@
             No data from Cartoon Network nor [adult swim].<br/>
             Looks like something went wrong or data was removed!
           </div>
-          <div class="message warn" v-else-if="!$parent.config.showAS">
+          <div class="message warn" v-else-if="!mainStore.config.showAS">
             No data available for Cartoon Network.<br/>
             Showing you the [adult swim] schedule.<br/>
             <small>
@@ -83,7 +83,7 @@
               v-for="block in schedule.as"
               :key="block.timestamp"
               :block="block"
-              :config="$parent.config">
+              :config="mainStore.config">
             </schedule-el>
           </table>
         </tab>
@@ -93,13 +93,18 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useStore } from '@/store'
 import { parseDate } from '../assets/dates'
+import { Tabs, Tab } from 'vue3-tabs-component'
 import ScheduleListEl from '@/components/ScheduleListEl'
 import Stats from '@/components/Stats'
 
 export default {
   name: 'schedule',
   components: {
+    tabs: Tabs,
+    tab: Tab,
     'schedule-el': ScheduleListEl,
     'schedule-stats': Stats
   },
@@ -120,18 +125,30 @@ export default {
       title: this.pageTitle
     }
   },
+  computed: {
+    ...mapStores(useStore)
+  },
+  watch: {
+    // on route changes, load schedule
+    $route: 'getSchedule'
+  },
+  mounted () {
+    this.getSchedule(this.$route)
+  },
   methods: {
     getSchedule (route) {
       // Get date from route
       const d = route.params.date
+      if (d === undefined) return
+
       this.pageTitle = parseDate(d)
 
-      if (!this.$parent.status.ready) {
+      if (!this.mainStore.status.ready) {
         setTimeout(this.getSchedule, 1000)
         return
       }
 
-      this.schedule = this.$parent.schedule.days[d].schedule
+      this.schedule = this.mainStore.schedule.days[d].schedule
 
       if (!this.schedule.cn && !this.schedule.zap && !this.schedule.tvguide) {
         // No data from them
@@ -141,15 +158,8 @@ export default {
         this.asOnly = false
       }
 
-      this.stats = this.$parent.schedule.days[d].stats
+      this.stats = this.mainStore.schedule.days[d].stats
     }
-  },
-  watch: {
-    // on route changes, load schedule
-    $route: 'getSchedule'
-  },
-  mounted () {
-    this.getSchedule(this.$route)
   }
 }
 </script>

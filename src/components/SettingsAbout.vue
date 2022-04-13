@@ -13,18 +13,18 @@
       <p>
         <label for="showAS">Show [adult swim]: </label>
         <input
-          type="checkbox"
           id="showAS"
-          @click="saveSettings"
-          v-model="$parent.config.showAS">
+          v-model="mainStore.config.showAS"
+          type="checkbox"
+          @click="saveSettings">
 
         <br/>
 
         <label for="fallback">Main fallback source: </label>
         <select
           id="fallback"
-          @change="saveSettings"
-          v-model="$parent.config.fallback">
+          v-model="mainStore.config.fallback"
+          @change="saveSettings">
           <option value="zap">Zap2it</option>
           <option value="tvguide">TVGuide</option>
         </select>
@@ -33,27 +33,27 @@
 
         <label for="localTime">Convert times to your timezone: </label>
         <input
-          type="checkbox"
           id="localTime"
-          @click="saveSettings"
-          v-model="$parent.config.localTime">
+          v-model="mainStore.config.localTime"
+          type="checkbox"
+          @click="saveSettings">
 
         <br/><br/>
 
         <label for="colors">Show colors: </label>
         <input
-          type="checkbox"
           id="colors"
-          @click="saveSettings"
-          v-model="$parent.config.colors">
+          v-model="mainStore.config.colors"
+          type="checkbox"
+          @click="saveSettings">
 
         <br/>
 
         <label for="theme">Theme: </label>
         <select
           id="theme"
-          @change="saveSettings"
-          v-model="$parent.config.theme">
+          v-model="mainStore.config.theme"
+          @change="saveSettings">
           <option value="dark">Dark</option>
           <option value="light" disabled>Light</option>
         </select>
@@ -63,8 +63,8 @@
         <label for="listSize">List size: </label>
         <select
           id="listSize"
-          @change="saveSettings"
-          v-model="$parent.config.listSize">
+          v-model="mainStore.config.listSize"
+          @change="saveSettings">
           <option value="compact">Compact</option>
           <option value="normal">2-Lines</option>
           <option value="large">Large</option>
@@ -79,16 +79,12 @@
         Inspired by
         <span class="as">better [adult swim] schedule</span>.<br/>
         Toonami-like font "<span class="tsoonami">Tsoonami</span>" by subatomicglue.com<br/>
-        CN, Zap2it, TVGuide and [adult swim] data comes from their APIs.
+        CN, Zap2it, TVGuide and [adult swim] data comes from their own APIs.
       </p>
 
       <p>
         <small>
-          Webapp version: {{ appEnv.release }}<br/>
-          Want to know when a new day is available? <a class="discord" target="_blank" rel="noopener" href="https://discord.gg/Jr9Pnq9">Join our Discord.</a><br/>
-          Love from CTOON ❤️ · 2017-2019 ·
-          <a class="twitter" target="_blank" rel="noopener" href="https://twitter.com/CTOONnet">
-            @CTOONnet</a>
+          Love from CTOON ❤️ · 2017-2022
         </small>
       </p>
     </div>
@@ -96,25 +92,30 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useStore } from '@/store'
 import store from 'store/dist/store.modern'
 
 export default {
   name: 'settings-about',
-  data () {
-    return {
-      saved: false
-    }
-  },
   metaInfo () {
     return {
       title: 'Settings & About'
     }
   },
+  data () {
+    return {
+      saved: false
+    }
+  },
+  computed: {
+    ...mapStores(useStore)
+  },
   methods: {
     saveSettings () {
       // Save your settings in your browser with store (add a delay to make sure model updates)
       setTimeout(_ => {
-        store.set('appDisplayConfig', this.$parent.config)
+        store.set('appDisplayConfig', this.mainStore.config)
 
         window.clearTimeout(this.saved)
         this.saved = setTimeout(_ => {
