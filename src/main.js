@@ -1,25 +1,21 @@
-/* globals VERSION COMMITHASH BRANCH */
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-// Polyfills
-import 'promise-polyfill/src/polyfill'
-import 'whatwg-fetch'
-// Our app
+/* globals CN_COMMITHASH */
+// Vue stuff
+import { createApp } from 'vue'
 import App from './App'
-// Some plugins and components
-import * as Sentry from '@sentry/browser'
-import * as Integrations from '@sentry/integrations'
-import VueAnalytics from 'vue-analytics'
-import Tabs from 'vue-tabs-component/src/index' // Broke?
-import flatPickr from 'vue-flatpickr-component'
-import 'flatpickr/dist/flatpickr.css'
-import 'flatpickr/dist/themes/dark.css'
-// The router
-import router from './Router'
+import router from './router'
+import { createPinia } from 'pinia'
 
-// Tests for old browsers (no console.* for weird browsers || ie 7-10 || Server-side Opera Mini)
+// Modules
+import * as Sentry from '@sentry/vue'
+import { Integrations } from '@sentry/tracing'
+import './registerServiceWorker'
+
+// Polyfill
+import { ResizeObserver as ResizeObserverPolyfill } from '@juggle/resize-observer'
+
+// Tests for old browsers or scripts (no console.* || no window.* || ie 7-10 || Opera Mini)
 if (typeof console === 'undefined' ||
+    typeof window === 'undefined' ||
     (document.all && window.XMLHttpRequest) ||
     Object.prototype.toString.call(window.operamini) === '[object OperaMini]') {
   let errorMsgUnsupported = '<h1>CN Schedule</h1>'
@@ -31,72 +27,37 @@ if (typeof console === 'undefined' ||
   throw new Error('Unsupported browser')
 }
 
-// Stop posting tips
-Vue.config.productionTip = false
+// Apply polyfill
+window.ResizeObserver = window.ResizeObserver || ResizeObserverPolyfill
 
-// This env
-const appEnv = {
-  release: VERSION,
-  tags: {
-    git_commit: COMMITHASH,
-    git_branch: BRANCH
-  },
-  environment: process.env.NODE_ENV
-}
+// Create our app
+const cnApp = createApp(App)
 
-// Set vue global
-Vue.mixin({
-  data: function () {
-    return {
-      get appEnv () {
-        return appEnv
-      }
-    }
-  }
-})
+// Plug the modules
+cnApp.use(router)
+cnApp.use(createPinia())
 
-// Enable plugins
-if (appEnv.environment !== 'development') {
+// Don't include tracking in dev
+if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
+    cnApp,
     dsn: 'https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540',
+    environment: process.env.NODE_ENV,
     integrations: [
-      new Integrations.Vue({ Vue, attachProps: true })
-    ]
+      new Integrations.BrowserTracing({
+        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+        tracingOrigins: [/schedule\./, /^\//]
+      })
+    ],
+    logErrors: true,
+    release: CN_COMMITHASH,
+    tracesSampleRate: 1.0
   })
-  Vue.use(VueAnalytics, {
-    id: 'UA-103935709-2',
-    router
-  })
-} else {
-  console.log('%cRaven and Analytics disabled in dev', 'color:orange;')
+
+  const shy = document.createElement('script')
+  shy.setAttribute('src', 'https://shy.ctoon.network/ingress/85c3200b-ebd6-49d7-b87d-6eb29fecc21b/script.js')
+  document.body.appendChild(shy)
 }
 
-Vue.use(Tabs)
-Vue.use(flatPickr)
-
-// Say hi to whoever opens the console
-console.log(
-  '%cCN Schedule',
-  'font-size:70px;color:#fff;text-shadow:0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);'
-)
-console.log(
-  '%cby CTOON Webmedia Group' +
-  '\nGit: https://gitlab.com/ctoon/cn-schedule',
-  'font-style:italic;'
-)
-console.log(
-  '%cCommit: ' + appEnv.tags.git_commit +
-  '\nVersion: ' + appEnv.release +
-  '\nBranch: ' + appEnv.tags.git_branch +
-  '\nEnv: ' + appEnv.environment,
-  'color:green;'
-)
-
-/* eslint-disable no-new */
-// Create vue app
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
-})
+// LET'S GOOOOOOO
+cnApp.mount('#app')

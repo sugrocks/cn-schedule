@@ -1,18 +1,15 @@
 stages:
   - test
   - build
-  - deploy
 
 lint:
   image: node:lts
   stage: test
   cache:
-    key: "v4-$CI_COMMIT_REF_NAME"
+    key: "v5-$CI_COMMIT_REF_NAME"
     paths:
       - node_modules/
-      - .yarn/
   before_script:
-    - yarn config set cache-folder .yarn
     - yarn
   script:
     - yarn lint
@@ -21,13 +18,11 @@ build:
   image: node:lts
   stage: build
   cache:
-    key: "v4-$CI_COMMIT_REF_NAME"
+    key: "v5-$CI_COMMIT_REF_NAME"
     paths:
       - node_modules/
-      - .yarn/
     policy: pull
   before_script:
-    - yarn config set cache-folder .yarn
     - yarn
   script:
     - yarn build
@@ -38,13 +33,3 @@ build:
       - dist
   except:
     - live
-
-deploy_master:
-  image: alpine:latest
-  stage: deploy
-  before_script:
-    - apk add --no-cache curl
-  script:
-    - curl -X POST -d '' https://api.netlify.com/build_hooks/$NETLIFY_MASTER
-  only:
-    - master

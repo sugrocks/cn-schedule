@@ -1,22 +1,24 @@
 <template>
-  <div id="app" :class="[config.theme, (status.offline ? 'offline' : null)]">
+  <div id="app" :class="[mainStore.config.theme, (mainStore.status.offline ? 'offline' : null)]">
     <div>
-      <router-link to="/" custom v-slot="{ navigate }">
+      <router-link v-slot="{ navigate }" to="/" custom>
         <h1 :title="appTitle" @click="navigate">{{ appTitle }}</h1>
       </router-link>
     </div>
 
-    <template v-if="status.ready">
+    <transition name="fade">
+      <app-loading v-if="!mainStore.status.ready"></app-loading>
+    </transition>
+    <template v-if="mainStore.status.ready">
       <app-navbar></app-navbar>
       <router-view></router-view>
     </template>
-    <transition v-else name="fade">
-      <app-loading></app-loading>
-    </transition>
   </div>
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useStore } from '@/store'
 import { getDate } from './assets/dates.js'
 import store from 'store/dist/store.modern'
 import Loading from '@/components/Loading.vue'
@@ -31,27 +33,7 @@ export default {
   data () {
     return {
       appTitle: 'CN Schedule',
-      apiBase: 'https://api.ctoon.network/schedule/v2',
-      status: {
-        error: false,
-        offline: false,
-        ready: false,
-        update: false
-      },
-      config: {
-        colors: false,
-        listSize: 'normal',
-        localTime: false,
-        theme: 'dark',
-        fallback: 'zap',
-        showAS: true
-      },
-      schedule: {
-        available: [],
-        asOnly: [],
-        days: {},
-        selected: []
-      }
+      apiBase: 'https://api.ctoon.network/schedule/v2'
     }
   },
   metaInfo () {
@@ -60,10 +42,13 @@ export default {
       titleTemplate: '%s | ' + this.appTitle
     }
   },
+  computed: {
+    ...mapStores(useStore)
+  },
   mounted () {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('controllerchange', _ => {
-        this.status.update = true
+      window.addEventListener('updated', e => {
+        this.mainStore.status.update = true
       })
     }
 
@@ -74,7 +59,7 @@ export default {
       if (conf.fallback === undefined) conf.fallback = 'zap'
       if (conf.showAS === undefined) conf.showAS = false
 
-      this.config = conf
+      this.mainStore.config = conf
     }
 
     // Test if online
@@ -107,20 +92,20 @@ export default {
             }
           }
 
-          this.schedule.available = data
+          this.mainStore.schedule.available = data
           this.loadRange(data[early], data[late])
         })
         .catch(err => {
-          this.status.error = '' + err
+          this.mainStore.status.error = '' + err
         })
     } else {
       console.warn('You are offline.')
-      this.status.offline = true
+      this.mainStore.status.offline = true
       this.appTitle += ' (offline)'
 
       const cached = store.get('cachedSchedule')
       if (cached === undefined) {
-        this.status.error = 'We asked the browser, it says you\'re offline.\n Also, no cached schedule was found.'
+        this.mainStore.status.error = 'We asked the browser, it says you\'re offline.\n Also, no cached schedule was found.'
       } else {
         this.loadRange()
       }
@@ -128,7 +113,7 @@ export default {
   },
   methods: {
     loadRange (from, to) {
-      this.status.ready = false
+      this.mainStore.status.ready = false
 
       if (from !== undefined) {
         fetch(this.apiBase + '/range/' + from + '/' + to)
@@ -139,8 +124,8 @@ export default {
             console.error(err)
           })
           .then(data => {
-            this.schedule.days = data
-            this.schedule.selected = Object.keys(data)
+            this.mainStore.schedule.days = data
+            this.mainStore.schedule.selected = Object.keys(data)
 
             try {
               const cache = {}
@@ -149,7 +134,7 @@ export default {
                 const s = data[i].schedule
 
                 if (!s.cn && !s.tvguide && !s.zap) {
-                  if (s.as) this.schedule.asOnly.push(data[i].date)
+                  if (s.as) this.mainStore.schedule.asOnly.push(data[i].date)
                 }
               })
               store.set('cachedSchedule', cache)
@@ -158,21 +143,21 @@ export default {
             }
 
             // If the current route isn't in the selection, change path
-            if (this.$route.name === 'Schedule' && this.schedule.selected.indexOf(this.$route.params.date) === -1) {
+            if (this.$route.name === 'Schedule' && this.mainStore.schedule.selected.indexOf(this.$route.params.date) === -1) {
               this.$router.push({ name: 'Schedule', params: { date: from } })
             }
 
             setTimeout(_ => {
-              this.status.ready = true
+              this.mainStore.status.ready = true
             }, 1000)
           })
       } else {
         // load everything we have when offline
-        this.schedule.days = store.get('cachedSchedule')
-        this.schedule.selected = Object.keys(this.schedule.days)
+        this.mainStore.schedule.days = store.get('cachedSchedule')
+        this.mainStore.schedule.selected = Object.keys(this.mainStore.schedule.days)
 
         setTimeout(_ => {
-          this.status.ready = true
+          this.mainStore.status.ready = true
         }, 1000)
       }
     }
@@ -260,6 +245,11 @@ table {
   }
 }
 
+// Have a minimum height to our pages, nicer for mobile too
+.content:not(.home) {
+  min-height: calc(100vh - 45px);
+}
+
 // Tabs
 .tabs-component {
   .tabs-component-tabs {
@@ -279,6 +269,10 @@ table {
       &.is-active {
         background-color: $dark-red;
         color: $white;
+
+        .tabs-component-tab-a[href="#stats"]::before {
+          background-color: #fff;
+        }
       }
 
       .tabs-component-tab-a {
@@ -315,7 +309,11 @@ table {
         }
 
         &[href="#stats"]::before {
-          background-image: url('./assets/pie-chart.svg');
+          -webkit-mask-image: url('./assets/pie-chart.svg');
+          -webkit-mask-size: contain;
+          mask-image: url('./assets/pie-chart.svg') contain;
+          mask-size: contain;
+          background-color: #000;
         }
       }
     }
