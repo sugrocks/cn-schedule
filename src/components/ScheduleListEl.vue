@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useStore } from '@/store'
 import { DateTime } from 'luxon'
 
 export default {
@@ -31,8 +33,18 @@ export default {
       colors: false
     }
   },
-  mounted () {
-    this.colors = this.$parent.$parent.$parent.$parent.config.colors
+  computed: {
+    lineStyle: function () {
+      // Get current timestamp and check if current element is on air
+      const tsCurr = parseInt(Date.now() / 1000, 10)
+
+      return {
+        compact: this.config.listSize === 'compact',
+        large: this.config.listSize === 'large',
+        'on-air': this.block.timestamp < tsCurr && tsCurr < this.block.timestamp_end
+      }
+    },
+    ...mapStores(useStore)
   },
   methods: {
     getTime (ts, str) {
@@ -42,7 +54,7 @@ export default {
       return dt.toLocaleString(DateTime.TIME_SIMPLE)
     },
     showColor (block) {
-      if (this.colors && block.colors) {
+      if (this.mainStore.config.colors && block.colors) {
         if (block.colors.foreground === '#17b7dd' &&
             block.colors.background === '#1b0120') {
           return {
@@ -60,18 +72,6 @@ export default {
       }
 
       return {}
-    }
-  },
-  computed: {
-    lineStyle: function () {
-      // Get current timestamp and check if current element is on air
-      const tsCurr = parseInt(Date.now() / 1000, 10)
-
-      return {
-        compact: this.config.listSize === 'compact',
-        large: this.config.listSize === 'large',
-        'on-air': this.block.timestamp < tsCurr && tsCurr < this.block.timestamp_end
-      }
     }
   }
 }

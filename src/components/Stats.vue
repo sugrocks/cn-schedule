@@ -37,8 +37,8 @@
 
 <script>
 import ColorHash from 'color-hash'
-import { Chart, ArcElement, DoughnutController } from 'chart.js'
-Chart.register(ArcElement, DoughnutController)
+import { Chart, ArcElement, DoughnutController, Tooltip } from 'chart.js'
+Chart.register(ArcElement, DoughnutController, Tooltip)
 
 export default {
   name: 'stats',
@@ -47,13 +47,23 @@ export default {
     return {
       dayStats: {},
       source: '',
-      ready: false,
       chartObj: undefined,
       statsCharts: {}
     }
   },
+  watch: {
+    day: function () {
+      this.showStats(this.day)
+    }
+  },
+  mounted () {
+    this.showStats(this.day)
+  },
   methods: {
-    async showStats (day) {
+    showStats (day) {
+      // We need to destroy the chart to re-use it
+      if (this.chartObj) this.chartObj.destroy()
+
       // Clear data
       this.statsCharts = {
         labels: [],
@@ -77,8 +87,9 @@ export default {
         this.dayStats = day.tvguide
       }
 
-      // Add to chart
-      await this.dayStats.forEach(el => {
+      // Add to chart data
+      this.dayStats.forEach(el => {
+        const title = (el.title.length > 25) ? el.title.substr(0, 22) + '…' : el.title
         let color = '#fff'
 
         if (el.color) {
@@ -88,41 +99,23 @@ export default {
           color = colorHash.hex(el.title)
         }
 
-        this.statsCharts.labels.push(el.title)
+        this.statsCharts.labels.push(title)
         this.statsCharts.datasets[0].data.push(el.minutes || (el.slots * 15))
         this.statsCharts.datasets[0].backgroundColor.push(color)
       })
 
       // Load chart
-      this.chartObj = new Chart('chart', {
+      this.chartObj = window.myChart = new Chart('chart', {
         type: 'doughnut',
         data: this.statsCharts,
         options: {
+          animation: false,
           layout: {
             padding: 15
-          },
-          legend: {
-            display: false
           }
         }
       })
-
-      // Set as ready
-      setTimeout(_ => {
-        this.ready = true
-      }, 500)
     }
-  },
-  watch: {
-    day: function () {
-      this.ready = false
-      this.chartObj.destroy() // We need to destroy the chart to re-use it
-      this.showStats(this.day)
-    }
-  },
-  mounted () {
-    this.ready = false
-    this.showStats(this.day)
   }
 }
 </script>

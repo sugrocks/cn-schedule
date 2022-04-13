@@ -5,14 +5,14 @@
         Times
       </div>
       <div
-        class="time-line"
         v-for="time in times"
-        :key="time">
+        :key="time"
+        class="time-line">
         <span class="time">{{ time }}</span>
       </div>
     </div>
     <div
-      v-for="(day, index) in $parent.schedule.days"
+      v-for="(day, index) in mainStore.schedule.days"
       :key="index"
       :class="displaySource(day, index)">
       <div class="date">
@@ -25,21 +25,25 @@
         </span>
       </div>
       <div
-        class="slot"
         v-for="(show, sIndex) in getSchedule(day)"
         :key="sIndex"
         :title="show.title + ' (' + getTime(show.timestamp, show.time) +')'"
-        :style="getSlotStyle(show, sIndex)">
-        <span class="show">{{
+        :style="getSlotStyle(show, sIndex)"
+        class="slot">
+        <span class="show">
+          {{
             (show.show === 'SPECIAL') ? show.title + ' (SPECIAL)' :
-              (show.show === 'MOVIE') ? show.title + ' (MOVIE)' : show.show
-          }}</span>
+            (show.show === 'MOVIE') ? show.title + ' (MOVIE)' : show.show
+          }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useStore } from '@/store'
 import { getDate, parseDate } from '../assets/dates'
 import ColorHash from 'color-hash'
 import { DateTime } from 'luxon'
@@ -49,6 +53,31 @@ export default {
   metaInfo () {
     return {
       title: 'Grid'
+    }
+  },
+  data () {
+    return {
+      times: []
+    }
+  },
+  computed: {
+    ...mapStores(useStore)
+  },
+  mounted () {
+    this.times = []
+    const max = this.mainStore.config.showAS ? 24 : 14
+
+    for (let i = 0; i < max; i += 0.5) {
+      let dt = DateTime.fromObject({
+        hour: Math.floor((i + 6) % 24),
+        minute: (i % 1 === 0 ? 0 : 30)
+      }, {
+        zone: 'America/New_York'
+      })
+      if (this.mainStore.config.localTime) dt = dt.setZone('local')
+      this.times.push(
+        dt.toLocaleString(DateTime.TIME_SIMPLE)
+      )
     }
   },
   methods: {
@@ -72,10 +101,10 @@ export default {
         }
       }
 
-      if (this.$parent.config.colors && show.colors) {
+      if (this.mainStore.config.colors && show.colors) {
         colorPlz = show.colors.foreground
         bgPlz = show.colors.background
-      } else if (this.$parent.config.colors && (show.show !== 'SPECIAL' && show.show !== 'MOVIE')) {
+      } else if (this.mainStore.config.colors && (show.show !== 'SPECIAL' && show.show !== 'MOVIE')) {
         const li = (show.show.length % 10) / 10
         const colorHash = new ColorHash({ lightness: li })
         if (li >= 0.8) colorPlz = '#000'
@@ -109,53 +138,31 @@ export default {
       day = day.schedule
       // Add classes to specify source and if it's an old entry
       return {
-        hidden: this.$parent.schedule.asOnly.indexOf(index) > -1,
-        zap2it: (day.cn === null && day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)),
-        tvguide: (day.cn === null && day.tvguide && (this.$parent.config.fallback === 'tvguide' || !day.zap)),
+        hidden: this.mainStore.schedule.asOnly.indexOf(index) > -1,
+        zap2it: (day.cn === null && day.zap && (this.mainStore.config.fallback === 'zap' || !day.tvguide)),
+        tvguide: (day.cn === null && day.tvguide && (this.mainStore.config.fallback === 'tvguide' || !day.zap)),
         cn: (day.cn),
         past: (getDate().replace('-', '') > index.replace('-', '')),
         day: true
       }
     },
     getSchedule (day) {
-      const sAs = this.$parent.config.showAS
+      const sAs = this.mainStore.config.showAS
       day = day.schedule
 
       if (day.cn) return (sAs && day.as ? day.cn.concat(day.as) : day.cn)
-      if (day.zap && (this.$parent.config.fallback === 'zap' || !day.tvguide)) return (sAs && day.as ? day.zap.concat(day.as) : day.zap)
+      if (day.zap && (this.mainStore.config.fallback === 'zap' || !day.tvguide)) return (sAs && day.as ? day.zap.concat(day.as) : day.zap)
       if (day.tvguide) return (sAs && day.as ? day.tvguide.concat(day.as) : day.tvguide)
       return (sAs && day.as ? day.other.concat(day.as) : day.other)
     },
     getTime (ts, str) {
-      if (!this.$parent.config.localTime) return str
+      if (!this.mainStore.config.localTime) return str
 
       const dt = DateTime.fromMillis(ts * 1000)
       return dt.toLocaleString(DateTime.TIME_SIMPLE)
     },
     pd (date) {
       return parseDate(date)
-    }
-  },
-  mounted () {
-    this.times = []
-    const max = this.$parent.config.showAS ? 24 : 14
-
-    for (let i = 0; i < max; i += 0.5) {
-      let dt = DateTime.fromObject({
-        hour: Math.floor((i + 6) % 24),
-        minute: (i % 1 === 0 ? 0 : 30)
-      }, {
-        zone: 'America/New_York'
-      })
-      if (this.$parent.config.localTime) dt = dt.setZone('local')
-      this.times.push(
-        dt.toLocaleString(DateTime.TIME_SIMPLE)
-      )
-    }
-  },
-  data () {
-    return {
-      times: []
     }
   }
 }

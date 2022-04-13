@@ -1,66 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Cool, basic stuff -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Quick access to the Cartoon Network (US) schedule.">
-    <meta name="author" content="CTOON">
-    <meta name="robots" content="nofollow">
+<head>
+  <!-- Cool, basic stuff -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Quick access to the Cartoon Network (US) schedule.">
+  <meta name="author" content="CTOON">
+  <meta name="robots" content="nofollow">
 
-    <title>CN Schedule</title>
+  <title>CN Schedule</title>
 
-    <!-- Verification stuff -->
-    <meta name="google-site-verification" content="Spx1iga7tn8nrcaqbLh7RnekjcXBKvtplgswT9rONa8" />
-    <meta name="flattr:id" content="22jl5v">
+  <!-- Verification stuff -->
+  <meta name="google-site-verification" content="Spx1iga7tn8nrcaqbLh7RnekjcXBKvtplgswT9rONa8" />
+  <meta name="flattr:id" content="22jl5v">
 
-    <!-- Twitter hell -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@CTOONnet">
-    <meta name="twitter:title" content="Cartoon Network Schedule" data-vue-meta="true">
-    <meta name="twitter:description" content="Quick access to the Cartoon Network schedule.">
-    <meta name="twitter:image" content="https://schedule.ctoon.network/static/img/icons/CN-Pink.png">
-    <meta name="twitter:image:alt" content="CN Schedule">
+  <!-- Twitter hell -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@CTOONnet">
+  <meta name="twitter:title" content="Cartoon Network Schedule" data-vue-meta="true">
+  <meta name="twitter:description" content="Quick access to the Cartoon Network schedule.">
+  <meta name="twitter:image" content="https://schedule.ctoon.network/img/icons/CN-Pink.png">
+  <meta name="twitter:image:alt" content="CN Schedule">
 
-    <!-- Open Graph hell -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="CN Schedule">
-    <meta property="og:title" content="Cartoon Network Schedule" data-vue-meta="true">
-    <meta property="og:description" content="Quick access to the Cartoon Network (US) schedule.">
-    <meta property="og:url" content="https://schedule.ctoon.network/" data-vue-meta="true">
-    <meta property="og:image" content="https://schedule.ctoon.network/static/img/icons/CN-Pink.png">
+  <!-- Open Graph hell -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CN Schedule">
+  <meta property="og:title" content="Cartoon Network Schedule" data-vue-meta="true">
+  <meta property="og:description" content="Quick access to the Cartoon Network (US) schedule.">
+  <meta property="og:url" content="https://schedule.ctoon.network/" data-vue-meta="true">
+  <meta property="og:image" content="https://schedule.ctoon.network/img/icons/CN-Pink.png">
 
-    <!-- App hell -->
-    <link rel="apple-touch-icon" href="/static/img/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/static/img/icons/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/img/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/img/icons/favicon-16x16.png">
-    <link rel="manifest" href="/static/manifest.webmanifest">
-    <link rel="mask-icon" href="/static/img/icons/safari-pinned-tab.svg" color="#ec018c">
-    <meta name="apple-mobile-web-app-title" content="Schedule">
-    <meta name="application-name" content="Schedule">
-    <meta name="msapplication-config" content="/static/browserconfig.xml">
-    <meta name="theme-color" content="#000000">
+  <!-- App hell -->
+  <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
+  <link rel="mask-icon" href="/img/icons/safari-pinned-tab.svg" color="#ec018c">
+  <meta name="apple-mobile-web-app-title" content="Schedule">
+  <meta name="application-name" content="Schedule">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="theme-color" content="#000000">
 
-    <% for (var chunk of webpack.chunks) {
-        for (var file of chunk.files) {
-          if (file.match(/\.(js|css)$/)) { %>
-    <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
-  </head>
-  <body>
-    <div id="jserror">
-      <noscript>
-        <h1>CN Schedule</h1>
-        <p>
-            <b>Please enable Javascript!</b>
-            Our app rely on it to fetch, store and display the data.<br>
-            Thanks!
-        </p>
-      </noscript>
-    </div>
+  <link rel="preconnect" href="https://shy.ctoon.network">
+</head>
+<body>
+  <div id="jserror">
+    <noscript>
+      <h1>CN Schedule</h1>
+      <p>
+          <b>Please enable Javascript!</b>
+          Our app rely on it to fetch, store and display the data.<br>
+          Thanks!
+      </p>
+      <img src="https://shy.ctoon.network/ingress/85c3200b-ebd6-49d7-b87d-6eb29fecc21b/pixel.gif">
+    </noscript>
+  </div>
 
-    <div id="app"></div>
+  <div id="app"></div>
 
-    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
-  </body>
+  <script type="module" src="/src/main.js"></script>
+  <script nomodule src="/oldbrowser.js"></script>
+</body>
 </html>
+
