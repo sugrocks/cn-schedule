@@ -53,14 +53,16 @@ export default {
     }
   },
   methods: {
-    showStats (day) {
+    async showStats (day) {
       // Clear data
       this.statsCharts = {
         labels: [],
         datasets: [{
-          backgroundColor: [],
-          data: []
-        }]
+          label: 'Minutes',
+          data: [],
+          backgroundColor: []
+        }],
+        hoverOffset: 4
       }
 
       // Load available sources
@@ -76,7 +78,7 @@ export default {
       }
 
       // Add to chart
-      this.dayStats.forEach(el => {
+      await this.dayStats.forEach(el => {
         let color = '#fff'
 
         if (el.color) {
