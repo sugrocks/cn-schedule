@@ -32,6 +32,8 @@ module.exports = {
     'generator-star-spacing': 0,
     // allow v-if with v-for
     'vue/no-use-v-if-with-v-for': 0,
+    // I have simple names you know
+    'vue/multi-word-component-names': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // whatever that is
