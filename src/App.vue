@@ -36,12 +36,6 @@ export default {
       apiBase: 'https://api.ctoon.network/schedule/v2'
     }
   },
-  metaInfo () {
-    return {
-      title: 'Loading...',
-      titleTemplate: '%s | ' + this.appTitle
-    }
-  },
   computed: {
     ...mapStores(useStore)
   },

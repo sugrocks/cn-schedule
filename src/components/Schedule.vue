@@ -113,16 +113,10 @@ export default {
       schedule: {},
       stats: null,
       asOnly: false,
-      pageTitle: 'Loading...',
       tabSettings: {
         useUrlFragment: false,
         disableStorage: true
       }
-    }
-  },
-  metaInfo () {
-    return {
-      title: this.pageTitle
     }
   },
   computed: {
@@ -141,7 +135,7 @@ export default {
       const d = route.params.date
       if (d === undefined) return
 
-      this.pageTitle = parseDate(d)
+      document.title = parseDate(d) + ' | CN Schedule'
 
       if (!this.mainStore.status.ready) {
         setTimeout(this.getSchedule, 1000)

@@ -45,16 +45,10 @@
 import { mapStores } from 'pinia'
 import { useStore } from '@/store'
 import { getDate, parseDate } from '../assets/dates'
-import ColorHash from 'color-hash'
 import { DateTime } from 'luxon'
 
 export default {
   name: 'grid',
-  metaInfo () {
-    return {
-      title: 'Grid'
-    }
-  },
   data () {
     return {
       times: []
@@ -64,6 +58,7 @@ export default {
     ...mapStores(useStore)
   },
   mounted () {
+    document.title = 'Grid | CN Schedule'
     this.times = []
     const max = this.mainStore.config.showAS ? 24 : 14
 
@@ -104,11 +99,6 @@ export default {
       if (this.mainStore.config.colors && show.colors) {
         colorPlz = show.colors.foreground
         bgPlz = show.colors.background
-      } else if (this.mainStore.config.colors && (show.show !== 'SPECIAL' && show.show !== 'MOVIE')) {
-        const li = (show.show.length % 10) / 10
-        const colorHash = new ColorHash({ lightness: li })
-        if (li >= 0.8) colorPlz = '#000'
-        bgPlz = colorHash.hex(show.show)
       } else {
         bgPlz = (show.time.search(':00') > 0 || show.time.search(':15') > 0) ? '#333' : '#3e3e3e'
       }

@@ -98,11 +98,6 @@ import store from 'store/dist/store.modern'
 
 export default {
   name: 'settings-about',
-  metaInfo () {
-    return {
-      title: 'Settings & About'
-    }
-  },
   data () {
     return {
       saved: false
@@ -110,6 +105,9 @@ export default {
   },
   computed: {
     ...mapStores(useStore)
+  },
+  mounted () {
+    document.title = 'Settings & About | CN Schedule'
   },
   methods: {
     saveSettings () {

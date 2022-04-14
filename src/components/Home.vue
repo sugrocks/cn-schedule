@@ -50,10 +50,8 @@
 <script>
 export default {
   name: 'Home',
-  metaInfo () {
-    return {
-      title: 'Home'
-    }
+  mounted () {
+    document.title = 'CN Schedule'
   }
 }
 </script>

@@ -19,9 +19,8 @@ if (typeof console === 'undefined' ||
     (document.all && window.XMLHttpRequest) ||
     Object.prototype.toString.call(window.operamini) === '[object OperaMini]') {
   let errorMsgUnsupported = '<h1>CN Schedule</h1>'
-  errorMsgUnsupported += '<b>You\'re currently using an unsupported browser</b>.<br>'
-  errorMsgUnsupported += 'Please upgrade to the latest version of Chrome, Opera, Brave, Firefox, Microsoft Edge or Safari to continue.<br>'
-  errorMsgUnsupported += '<a href="https://whatbrowser.org/">More details on having a good and updated browser here.</a>'
+  errorMsgUnsupported += '<p><b>You\'re currently using an unsupported browser</b>.<br/>'
+  errorMsgUnsupported += 'Please upgrade to the latest version of Chrome, Opera, Brave, Firefox, Microsoft Edge or Safari to continue.</p>'
 
   document.getElementById('jserror').innerHTML = errorMsgUnsupported
   throw new Error('Unsupported browser')

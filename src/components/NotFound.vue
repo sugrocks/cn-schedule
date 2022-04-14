@@ -18,10 +18,8 @@ export default {
       lastPath: this.$route.params.lastPath
     }
   },
-  metaInfo () {
-    return {
-      title: 'Page not found'
-    }
+  mounted () {
+    document.title = 'Page not found | CN Schedule'
   }
 }
 </script>
