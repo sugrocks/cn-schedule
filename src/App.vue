@@ -39,7 +39,7 @@ export default {
   computed: {
     ...mapStores(useStore)
   },
-  mounted () {
+  async mounted () {
     if ('serviceWorker' in navigator) {
       window.addEventListener('updated', e => {
         this.mainStore.status.update = true
@@ -55,6 +55,8 @@ export default {
 
       this.mainStore.config = conf
     }
+
+    await this.$router.isReady()
 
     // Test if online
     if (navigator.onLine) {
