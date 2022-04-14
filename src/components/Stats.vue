@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import ColorHash from 'color-hash'
 import { Chart, ArcElement, DoughnutController, Tooltip } from 'chart.js'
 Chart.register(ArcElement, DoughnutController, Tooltip)
 
@@ -94,9 +93,6 @@ export default {
 
         if (el.color) {
           color = el.color
-        } else {
-          const colorHash = new ColorHash({ lightness: (el.title % 10) / 10 })
-          color = colorHash.hex(el.title)
         }
 
         this.statsCharts.labels.push(title)
