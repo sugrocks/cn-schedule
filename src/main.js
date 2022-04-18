@@ -41,7 +41,7 @@ if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
     cnApp,
     dsn: 'https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540',
-    environment: process.env.NODE_ENV,
+    environment: process.env.CONTEXT || process.env.NODE_ENV,
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),

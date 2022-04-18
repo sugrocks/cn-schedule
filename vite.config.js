@@ -11,6 +11,34 @@ import { GitRevisionPlugin } from 'git-revision-webpack-plugin'
 
 const gitRevisionPlugin = new GitRevisionPlugin()
 
+let netlifyConf = []
+if (process.env.NETLIFY && process.env.PULL_REQUEST !== 'true') {
+  netlifyConf = [
+    viteSentry({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      release: gitRevisionPlugin.commithash(),
+      deploy: {
+        env: process.env.CONTEXT
+      },
+      setCommits: {
+        auto: true
+      },
+      sourceMaps: {
+        include: [
+          './dist',
+          './dist/assets'
+        ],
+        ignore: [
+          'node_modules'
+        ],
+        urlPrefix: '~/assets'
+      }
+    })
+  ]
+}
+
 export default defineConfig((configEnv) => ({
   define: {
     CN_COMMITHASH: JSON.stringify(gitRevisionPlugin.commithash())
@@ -104,29 +132,8 @@ export default defineConfig((configEnv) => ({
         ]
       }
     }),
-    viteSentry({
-      authToken: process.env.SENTRY_AUTH_TOKEN,
-      org: process.env.SENTRY_ORG,
-      project: process.env.SENTRY_PROJECT,
-      release: gitRevisionPlugin.version(),
-      deploy: {
-        env: process.env.NODE_ENV
-      },
-      setCommits: {
-        auto: true
-      },
-      sourceMaps: {
-        include: [
-          './dist',
-          './dist/assets'
-        ],
-        ignore: [
-          'node_modules'
-        ],
-        urlPrefix: '~/assets'
-      }
-    }),
-    visualizer()
+    visualizer(),
+    ...netlifyConf
   ],
   build: {
     sourcemap: true
