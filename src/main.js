@@ -45,12 +45,13 @@ if (process.env.NODE_ENV !== 'development') {
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-        tracingOrigins: [/schedule\./, /^\//]
+        tracingOrigins: [/schedule\./, /^\//],
+        startTransactionOnLocationChange: false
       })
     ],
     logErrors: true,
     release: CN_COMMITHASH,
-    tracesSampleRate: 1.0
+    tracesSampleRate: 0.4
   })
 
   const shy = document.createElement('script')
