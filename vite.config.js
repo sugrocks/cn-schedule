@@ -6,8 +6,9 @@ import envCompatible from 'vite-plugin-env-compatible'
 import { EsLinter, linterPlugin } from 'vite-plugin-linter'
 import { VitePWA } from 'vite-plugin-pwa'
 import { visualizer } from 'rollup-plugin-visualizer'
-
+import viteSentry from 'vite-plugin-sentry'
 import { GitRevisionPlugin } from 'git-revision-webpack-plugin'
+
 const gitRevisionPlugin = new GitRevisionPlugin()
 
 export default defineConfig((configEnv) => ({
@@ -103,6 +104,31 @@ export default defineConfig((configEnv) => ({
         ]
       }
     }),
+    viteSentry({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      release: gitRevisionPlugin.version(),
+      deploy: {
+        env: process.env.NODE_ENV
+      },
+      setCommits: {
+        auto: true
+      },
+      sourceMaps: {
+        include: [
+          './dist',
+          './dist/assets'
+        ],
+        ignore: [
+          'node_modules'
+        ],
+        urlPrefix: '~/assets'
+      }
+    }),
     visualizer()
-  ]
+  ],
+  build: {
+    sourcemap: true
+  }
 }))
