@@ -37,11 +37,11 @@ cnApp.use(router)
 cnApp.use(createPinia())
 
 // Don't include tracking in dev
-if (process.env.NODE_ENV !== 'development') {
+if (import.meta.env.PROD) {
   Sentry.init({
     cnApp,
     dsn: 'https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540',
-    environment: process.env.CONTEXT || process.env.NODE_ENV,
+    environment: import.meta.env.MODE || import.meta.env.NODE_ENV,
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
