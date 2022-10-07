@@ -41,7 +41,7 @@
       <b>Notes:</b><br/>
       - By default, time is EST. You can change that in the settings to use your local timezone.<br/>
       &nbsp; <small>(You'll get some small delays when changing days or opening the grid view.)</small><br/>
-      - We try to use colors as close as the ones on the CN Schedule Archive. If a show's missing in our database, it will generate a temporary color.<br/>
+      - We try to use colors as close as the ones on the CN Schedule Archive. If a show's missing in our database, it will be gray like movies and specials.<br/>
       - The data is provided "as-is" from each service's "hidden" API.
     </p>
   </div>
