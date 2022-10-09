@@ -72,7 +72,7 @@ export default defineConfig((configEnv) => ({
       ],
       linters: [
         new EsLinter({
-          configEnv: configEnv,
+          configEnv,
           serveOptions: { clearCacheOnStart: true }
         })
       ]
@@ -136,6 +136,7 @@ export default defineConfig((configEnv) => ({
     ...netlifyConf
   ],
   build: {
-    sourcemap: true
+    sourcemap: true,
+    cssCodeSplit: false // hopefully prevents asking for preloading CSS which has issues on Safari and some Chromium? browser
   }
 }))
