@@ -120,6 +120,12 @@ export default {
             console.error(err)
           })
           .then(data => {
+            if (!data) {
+              console.error('Fetched data was falsy...')
+              this.mainStore.status.error = 'There was an error while trying to load data. Please check your browser or network isn\'t blocking trafic.'
+              return
+            }
+
             this.mainStore.schedule.days = data
             this.mainStore.schedule.selected = Object.keys(data)
 
@@ -150,7 +156,9 @@ export default {
       } else {
         // load everything we have when offline
         this.mainStore.schedule.days = store.get('cachedSchedule')
-        this.mainStore.schedule.selected = Object.keys(this.mainStore.schedule.days)
+        if (this.mainStore.schedule.days) {
+          this.mainStore.schedule.selected = Object.keys(this.mainStore.schedule.days)
+        }
 
         setTimeout(_ => {
           this.mainStore.status.ready = true
