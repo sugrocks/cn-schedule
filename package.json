@@ -18,7 +18,7 @@
     "@sentry/vue": "^7.14.2",
     "@snyk/protect": "^1.1025.0",
     "chart.js": "^3.9.1",
-    "luxon": "^3.0.4",
+    "luxon": "^3.2.1",
     "pinia": "^2.0.23",
     "store": "^2.0.12",
     "vite-plugin-env-compatible": "^1.1.1",
