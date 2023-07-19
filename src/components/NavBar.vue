@@ -131,7 +131,7 @@ export default {
       const early = getDate(date[0])
       const late = getDate(date[1])
 
-      if (this.lastDate[0] !== early && this.lastDate[1] !== late) {
+      if (this.lastDate[0] !== early || this.lastDate[1] !== late) {
         this.$parent.loadRange(
           early,
           late,

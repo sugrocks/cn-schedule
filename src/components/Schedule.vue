@@ -1,6 +1,6 @@
 <template>
   <div class="schedule content">
-    <tabs cache-lifetime="0" :options="tabSettings">
+    <tabs :cache-lifetime="0" :options="tabSettings">
       <template v-if="!asOnly">
         <tab name="Official" v-if="schedule.cn">
           <div class="message warn" v-if="!schedule.cn">
