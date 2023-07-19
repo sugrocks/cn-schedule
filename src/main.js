@@ -7,7 +7,6 @@ import { createPinia } from 'pinia'
 
 // Modules
 import * as Sentry from '@sentry/vue'
-import { Integrations } from '@sentry/tracing'
 import './registerServiceWorker'
 
 // Polyfill
@@ -39,11 +38,11 @@ cnApp.use(createPinia())
 // Don't include tracking in dev
 if (import.meta.env.PROD) {
   Sentry.init({
-    cnApp,
+    app: cnApp,
     dsn: 'https://c64d65a5b58a4852b77891b64cac04cc@sentry.io/213540',
     environment: import.meta.env.MODE || import.meta.env.NODE_ENV,
     integrations: [
-      new Integrations.BrowserTracing({
+      new Sentry.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
         tracingOrigins: [/schedule\./, /^\//],
         startTransactionOnLocationChange: false

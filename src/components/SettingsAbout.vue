@@ -84,7 +84,7 @@
 
       <p>
         <small>
-          Love from CTOON ❤️ · 2017-2022
+          Love from CTOON ❤️ · 2017-2023
         </small>
       </p>
     </div>
