@@ -68,7 +68,7 @@
       <template v-else>
         <tab name="[as]">
           <div class="message warn" v-if="!schedule.as">
-            No data from Cartoon Network nor [adult swim].<br/>
+            No schedule data available from any source for this day.<br/>
             Looks like something went wrong or data was removed!
           </div>
           <div class="message warn" v-else-if="!mainStore.config.showAS">
@@ -142,7 +142,7 @@ export default {
         return
       }
 
-      this.schedule = this.mainStore.schedule.days[d].schedule
+      this.schedule = this.mainStore.schedule.days[d]?.schedule || {}
 
       if (!this.schedule.cn && !this.schedule.zap && !this.schedule.tvguide) {
         // No data from them
@@ -152,7 +152,7 @@ export default {
         this.asOnly = false
       }
 
-      this.stats = this.mainStore.schedule.days[d].stats
+      this.stats = this.mainStore.schedule.days[d]?.stats
     }
   }
 }
